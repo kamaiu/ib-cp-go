@@ -1,0 +1,16 @@
+{
+  "session": "079a25c6dd3d344953a14382ec1c6e34",
+  "ssoExpires": 390257,
+  "collission": false,
+  "userId": 55056840,
+  "iserver": {
+    "tickle": true,
+    "authStatus": {
+      "authenticated": true,
+      "competing": false,
+      "connected": true,
+      "message": "",
+      "MAC": "48:DF:37:57:33:80"
+    }
+  }
+}
