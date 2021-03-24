@@ -7,20 +7,25 @@ import (
 	"strconv"
 )
 
-func (c *Client) Iserver_Scanner_Run_POST() (
-	_200 Iserver_Scanner_Run_POST_200_List,
+func (c *Client) Fyi_Notifications_More_GET(
+	// id of last notification in the list
+	id string,
+) (
+	_200 Notifications_List,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/scanner/run")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+	_, _ = _u.WriteString("/fyi/notifications/more")
+	_, _ = _u.WriteString("?id=")
+	_, _ = _u.WriteString(url.PathEscape(id))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = Iserver_Scanner_Run_POST_200_List{}
+			_200 = Notifications_List{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -33,26 +38,52 @@ func (c *Client) Iserver_Scanner_Run_POST() (
 	return
 }
 
-// Please note, if alertId is 0, it will activate/deactivate all alerts
-func (c *Client) Iserver_Account_AccountId_Alert_Activate_POST(
+func (c *Client) Portfolio_AccountId_Positions_Invalidate_POST(
 	// account id
 	accountId string,
 ) (
-	_200 *Iserver_Account_AccountId_Alert_Activate_POST_200,
+	_200 Any,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString("/portfolio/")
 	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/alert/activate")
+	_, _ = _u.WriteString("/positions/invalidate")
 	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = &Iserver_Account_AccountId_Alert_Activate_POST_200{}
+			_200 = Any{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Logs the user out of the gateway session. Any further activity requires re-authentication.
+func (c *Client) Logout_POST() (
+	_200 *Logout_POST_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/logout")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Logout_POST_200{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -105,23 +136,21 @@ func (c *Client) Trsrv_Stocks_GET(
 	return
 }
 
-// Returns a list of accounts the user has trading access to, their respective aliases
-// and the currently selected account. Note this endpoint must be called before modifying
-// an order or querying open orders.
-func (c *Client) Iserver_Accounts_GET() (
-	_200 *Iserver_Accounts_GET_200,
+// Validates the current session for the SSO user
+func (c *Client) Sso_Validate_GET() (
+	_200 *Sso_Validate_GET_200,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/accounts")
+	_, _ = _u.WriteString("/sso/validate")
 	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = &Iserver_Accounts_GET_200{}
+			_200 = &Sso_Validate_GET_200{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -134,24 +163,58 @@ func (c *Client) Iserver_Accounts_GET() (
 	return
 }
 
-// If an user has multiple accounts, and user wants to get orders, trades, etc. of an
-// account other than currently selected account, then user can update the currently
-// selected account using this API and then can fetch required information for the newly
-// updated account.
-func (c *Client) Iserver_Account_POST() (
-	_200 *Iserver_Account_POST_200,
+// Similar to /portfolio/{accountId}/allocation but returns a consolidated view of of
+// all the accounts returned by /portfolio/accounts. /portfolio/accounts or /portfolio/subaccounts
+// must be called prior to this endpoint.
+func (c *Client) Portfolio_Allocation_POST() (
+	_200 Allocation_List,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account")
+	_, _ = _u.WriteString("/portfolio/allocation")
 	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = &Iserver_Account_POST_200{}
+			_200 = Allocation_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// The endpoint is meant to be used in polling mode, e.g. requesting every x seconds.
+// The response will contain two objects, one is notification, the other is orders.
+//
+// Orders is the list of live orders (cancelled, filled, submitted).
+// Notifications contains information about execute orders as they happen, see status
+// field.
+// To receive streaming live orders the endpoint /ws can be used. Refer to [Streaming
+// WebSocket Data](https://interactivebrokers.github.io/cpwebapi/RealtimeSubscription.html)
+// for details.
+func (c *Client) Iserver_Account_Orders_GET() (
+	_200 *Iserver_Account_Orders_GET_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/orders")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Account_Orders_GET_200{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -194,109 +257,24 @@ func (c *Client) Portfolio_Subaccounts_GET() (
 	return
 }
 
-// Returns a summary of all account balances for the given accounts, if more than one
-// account is passed, the result is consolidated.
-func (c *Client) Pa_Summary_POST() (
-	_200 *Summary,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/pa/summary")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Summary{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-func (c *Client) Portfolio_AccountId_Positions_Invalidate_POST(
-	// account id
-	accountId string,
+func (c *Client) Fyi_Notifications_NotificationId_PUT(
+	// mark a notification read
+	notificationId string,
 ) (
 	_200 Any,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/positions/invalidate")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+	_, _ = _u.WriteString("/fyi/notifications/")
+	_, _ = _u.WriteString(url.PathEscape(notificationId))
+	err = c.Do("PUT", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
 			_200 = Any{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Cancel all market data request(s). To cancel market data for given conid, see /iserver/marketdata/{conid}/unsubscribe.
-//
-func (c *Client) Iserver_Marketdata_Unsubscribeall_GET() (
-	_200 *Iserver_Marketdata_Unsubscribeall_GET_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/marketdata/unsubscribeall")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Marketdata_Unsubscribeall_GET_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Current Authentication status to the Brokerage system. Market Data and Trading is
-// not possible if not authenticated, e.g. authenticated shows false
-func (c *Client) Iserver_Auth_Status_POST() (
-	_200 *AuthStatus,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/auth/status")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &AuthStatus{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -339,6 +317,65 @@ func (c *Client) Fyi_Disclaimer_Typecode_GET(
 	return
 }
 
+func (c *Client) Fyi_Disclaimer_Typecode_PUT(
+	// fyi code, for example --M8, EA
+	typecode string,
+) (
+	_200 *Fyi_Disclaimer_Typecode_PUT_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/fyi/disclaimer/")
+	_, _ = _u.WriteString(url.PathEscape(typecode))
+	err = c.Do("PUT", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Fyi_Disclaimer_Typecode_PUT_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns a list of accounts the user has trading access to, their respective aliases
+// and the currently selected account. Note this endpoint must be called before modifying
+// an order or querying open orders.
+func (c *Client) Iserver_Accounts_GET() (
+	_200 *Iserver_Accounts_GET_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/accounts")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Accounts_GET_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
 // Returns the total number of unread fyis
 func (c *Client) Fyi_Unreadnumber_GET() (
 	_200 *Fyi_Unreadnumber_GET_200,
@@ -366,21 +403,679 @@ func (c *Client) Fyi_Unreadnumber_GET() (
 	return
 }
 
-// Validates the current session for the SSO user
-func (c *Client) Sso_Validate_GET() (
-	_200 *Sso_Validate_GET_200,
+// Returns an object of all positions matching the conid for all the selected accounts.
+// For portfolio models the conid could be in more than one model, returning an array
+// with the name of the model it belongs to. /portfolio/accounts or /portfolio/subaccounts
+// must be called prior to this endpoint.
+func (c *Client) Portfolio_Positions_Conid_GET(
+	// contract id
+	conid int64,
+) (
+	_200 Position_List,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/sso/validate")
+	_, _ = _u.WriteString("/portfolio/positions/")
+	_, _ = _u.WriteString(url.PathEscape(strconv.FormatInt(int64(conid), 10)))
 	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = &Sso_Validate_GET_200{}
+			_200 = Position_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Information about the account's portfolio allocation by Asset Class, Industry and
+// Category.  /portfolio/accounts or /portfolio/subaccounts must be called prior to
+// this endpoint.
+func (c *Client) Portfolio_AccountId_Allocation_GET(
+	// account id
+	accountId string,
+) (
+	_200 Allocation_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/portfolio/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/allocation")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Allocation_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Each login user only has one mobile trading assistant (MTA) alert with it's own unique
+// tool id.
+// The tool id cannot be changed. When modified a new order Id is generated. MTA alerts
+// can not
+// be created or deleted. If you call delete /iserver/account/:accountId/alert/:alertId,
+// it will reset MTA to default. See [here](https://www.interactivebrokers.com/en/software/mobileiphonemobile/mobileiphone.htm#monitor/trading-assistant.htm)
+// for more information on MTA alerts.
+func (c *Client) Iserver_Account_Mta_GET() (
+	_200 *AlertResponse,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/mta")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &AlertResponse{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Using the Contract Identifier get contract info. You can use this to prefill your
+// order before you submit an order
+func (c *Client) Iserver_Contract_Conid_Info_GET(
+	// contract id
+	conid string,
+) (
+	_200 *Contract,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/contract/")
+	_, _ = _u.WriteString(url.PathEscape(conid))
+	_, _ = _u.WriteString("/info")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Contract{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Cancel all market data request(s). To cancel market data for given conid, see /iserver/marketdata/{conid}/unsubscribe.
+//
+func (c *Client) Iserver_Marketdata_Unsubscribeall_GET() (
+	_200 *Iserver_Marketdata_Unsubscribeall_GET_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/marketdata/unsubscribeall")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Marketdata_Unsubscribeall_GET_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Information regarding settled cash, cash balances, etc. in the account's base currency
+// and any other cash balances hold in other currencies.  /portfolio/accounts or /portfolio/subaccounts
+// must be called prior to this endpoint. The list of supported currencies is available
+// at https://www.interactivebrokers.com/en/index.php?f=3185.
+func (c *Client) Portfolio_AccountId_Ledger_GET(
+	// account id
+	accountId string,
+) (
+	_200 *Ledger,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/portfolio/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/ledger")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Ledger{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns trading related rules and info for contract
+func (c *Client) Iserver_Contract_Conid_InfoAndRules_GET(
+	// IBKR contract identifier
+	conid string,
+	// Side of the market rules apply too. Set to true for Buy Orders, set to false for
+	// Sell Orders
+	isBuy bool,
+) (
+	_200 *Iserver_Contract_Conid_InfoAndRules_GET_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/contract/")
+	_, _ = _u.WriteString(url.PathEscape(conid))
+	_, _ = _u.WriteString("/info-and-rules")
+	_, _ = _u.WriteString("?isBuy=")
+	_, _ = _u.WriteString(url.PathEscape(strconv.FormatBool(isBuy)))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Contract_Conid_InfoAndRules_GET_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+func (c *Client) Fyi_Notifications_GET(
+	// if set, don't set include
+	exclude string,
+	// if set, don't set exclude
+	include string,
+	// max number of fyis in response
+	max string,
+) (
+	_200 Notifications_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/fyi/notifications")
+	_, _ = _u.WriteString("?exclude=")
+	_, _ = _u.WriteString(url.PathEscape(exclude))
+	_, _ = _u.WriteString("&include=")
+	_, _ = _u.WriteString(url.PathEscape(include))
+	_, _ = _u.WriteString("&max=")
+	_, _ = _u.WriteString(url.PathEscape(max))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Notifications_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Provides Contract Details of Futures, Options, Warrants, Cash and CFDs based on conid.
+// To get the strike price for Options/Warrants use "/iserver/secdef/strikes" endpoint.
+// Must call /secdef/search for the underlying contract first.
+func (c *Client) Iserver_Secdef_Info_GET(
+	// underlying contract id
+	conid string,
+	// FUT/OPT/WAR/CASH/CFD
+	sectype string,
+	// contract month, only required for FUT/OPT/WAR in the format MMMYY, example JAN00
+	month string,
+	// optional, default is SMART
+	exchange string,
+	// optional, only required for OPT/WAR
+	strike string,
+	// C for call, P for put
+	right string,
+) (
+	_200 Iserver_Secdef_Info_GET_200_List,
+	_500 *Iserver_Secdef_Info_GET_500,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/secdef/info")
+	_, _ = _u.WriteString("?conid=")
+	_, _ = _u.WriteString(url.PathEscape(conid))
+	_, _ = _u.WriteString("&sectype=")
+	_, _ = _u.WriteString(url.PathEscape(sectype))
+	_, _ = _u.WriteString("&month=")
+	_, _ = _u.WriteString(url.PathEscape(month))
+	_, _ = _u.WriteString("&exchange=")
+	_, _ = _u.WriteString(url.PathEscape(exchange))
+	_, _ = _u.WriteString("&strike=")
+	_, _ = _u.WriteString(url.PathEscape(strike))
+	_, _ = _u.WriteString("&right=")
+	_, _ = _u.WriteString(url.PathEscape(right))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Iserver_Secdef_Info_GET_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		case 500:
+			_500 = &Iserver_Secdef_Info_GET_500{}
+			if body != nil {
+				return _500.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// The streaming API is documented under [Streaming WebSocket Data](https://interactivebrokers.github.io/cpwebapi/RealtimeSubscription.html)
+// for details.
+func (c *Client) Ws_POST() (
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/ws")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns a list of non-expired future contracts for given symbol(s)
+func (c *Client) Trsrv_Futures_GET(
+	// list of case-sensitive symbols separated by comma
+	symbols string,
+) (
+	_200 Futures_List,
+	_500 *Trsrv_Futures_GET_500,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/trsrv/futures")
+	_, _ = _u.WriteString("?symbols=")
+	_, _ = _u.WriteString(url.PathEscape(symbols))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Futures_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		case 500:
+			_500 = &Trsrv_Futures_GET_500{}
+			if body != nil {
+				return _500.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns the performance (MTM) for the given accounts, if more than one account is
+// passed, the result is consolidated.
+func (c *Client) Pa_Performance_POST() (
+	_200 *Performance,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/pa/performance")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Performance{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// When using the CP Gateway, this endpoint provides a way to reauthenticate to the
+// Brokerage system as long as there is a valid SSO session, see /sso/validate.
+func (c *Client) Iserver_Reauthenticate_POST() (
+	_200 *AuthStatus,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/reauthenticate")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &AuthStatus{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+func (c *Client) Iserver_Scanner_Run_POST() (
+	_200 Iserver_Scanner_Run_POST_200_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/scanner/run")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Iserver_Scanner_Run_POST_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns a list of all positions matching the conid. For portfolio models the conid
+// could be in more than one model, returning an array with the name of the model it
+// belongs to.  /portfolio/accounts or /portfolio/subaccounts must be called prior to
+// this endpoint.
+func (c *Client) Portfolio_AccountId_Position_Conid_GET(
+	// account id
+	accountId string,
+	// contract id
+	conid int64,
+) (
+	_200 Position_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/portfolio/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/position/")
+	_, _ = _u.WriteString(url.PathEscape(strconv.FormatInt(int64(conid), 10)))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Position_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// transaction history for a given number of conids and accounts.
+// Types of transactions include dividend payments, buy and sell transactions, transfers.
+func (c *Client) Pa_Transactions_POST() (
+	_200 *Transactions,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/pa/transactions")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Transactions{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns a list of trades for the currently selected account for current day and six
+// previous days. It is advised to call this endpoint once per session.
+func (c *Client) Iserver_Account_Trades_GET() (
+	_200 Iserver_Account_Trades_GET_200_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/trades")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Iserver_Account_Trades_GET_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// The response will contain both active and inactive alerts, but it won't have MTA
+// alert
+func (c *Client) Iserver_Account_AccountId_Alerts_GET(
+	// account id
+	accountId string,
+) (
+	_200 Iserver_Account_AccountId_Alerts_GET_200_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/alerts")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Iserver_Account_AccountId_Alerts_GET_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Query strikes for Options/Warrants. For available contract months and exchanges use
+// "/iserver/secdef/search"
+func (c *Client) Iserver_Secdef_Strikes_GET(
+	// contract id
+	conid string,
+	// OPT/WAR
+	sectype string,
+	// contract month
+	month string,
+	// optional, default is SMART
+	exchange string,
+) (
+	_200 *Iserver_Secdef_Strikes_GET_200,
+	_500 *Iserver_Secdef_Strikes_GET_500,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/secdef/strikes")
+	_, _ = _u.WriteString("?conid=")
+	_, _ = _u.WriteString(url.PathEscape(conid))
+	_, _ = _u.WriteString("&sectype=")
+	_, _ = _u.WriteString(url.PathEscape(sectype))
+	_, _ = _u.WriteString("&month=")
+	_, _ = _u.WriteString(url.PathEscape(month))
+	_, _ = _u.WriteString("&exchange=")
+	_, _ = _u.WriteString(url.PathEscape(exchange))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Secdef_Strikes_GET_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		case 500:
+			_500 = &Iserver_Secdef_Strikes_GET_500{}
+			if body != nil {
+				return _500.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns a summary of all account balances for the given accounts, if more than one
+// account is passed, the result is consolidated.
+func (c *Client) Pa_Summary_POST() (
+	_200 *Summary,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/pa/summary")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Summary{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -465,25 +1160,55 @@ func (c *Client) Iserver_Marketdata_History_GET(
 	return
 }
 
-// Configure which typecode you would like to enable/disable.
-func (c *Client) Fyi_Settings_Typecode_POST(
-	// fyi code
-	typecode string,
+func (c *Client) Fyi_Deliveryoptions_Email_PUT(
+	// true/false
+	enabled string,
 ) (
-	_200 Any,
+	_200 *Fyi_Deliveryoptions_Email_PUT_200,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/settings/")
-	_, _ = _u.WriteString(url.PathEscape(typecode))
+	_, _ = _u.WriteString("/fyi/deliveryoptions/email")
+	_, _ = _u.WriteString("?enabled=")
+	_, _ = _u.WriteString(url.PathEscape(enabled))
+	err = c.Do("PUT", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Fyi_Deliveryoptions_Email_PUT_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// If an user has multiple accounts, and user wants to get orders, trades, etc. of an
+// account other than currently selected account, then user can update the currently
+// selected account using this API and then can fetch required information for the newly
+// updated account.
+func (c *Client) Iserver_Account_POST() (
+	_200 *Iserver_Account_POST_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account")
 	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = Any{}
+			_200 = &Iserver_Account_POST_200{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -496,439 +1221,21 @@ func (c *Client) Fyi_Settings_Typecode_POST(
 	return
 }
 
-// Returns a list of positions for the given account. The endpoint supports paging,
-// page's default size is 30 positions. /portfolio/accounts or /portfolio/subaccounts
-// must be called prior to this endpoint.
-func (c *Client) Portfolio_AccountId_Positions_PageId_GET(
-	// account id
-	accountId string,
-	// page id
-	pageId string,
-	// in which order, a means ascending - d means descending
-	direction string,
-	// period for pnl column, can be 1D, 7D, 1M...
-	period string,
-	// optional
-	model string,
-	// declare the table to be sorted by which column
-	sort string,
-) (
-	_200 Position_List,
+// Returns an object contains four lists contain all parameters for scanners
+func (c *Client) Iserver_Scanner_Params_GET() (
+	_200 *Iserver_Scanner_Params_GET_200,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/positions/")
-	_, _ = _u.WriteString(url.PathEscape(pageId))
-	_, _ = _u.WriteString("?direction=")
-	_, _ = _u.WriteString(url.PathEscape(direction))
-	_, _ = _u.WriteString("&period=")
-	_, _ = _u.WriteString(url.PathEscape(period))
-	_, _ = _u.WriteString("&model=")
-	_, _ = _u.WriteString(url.PathEscape(model))
-	_, _ = _u.WriteString("&sort=")
-	_, _ = _u.WriteString(url.PathEscape(sort))
+	_, _ = _u.WriteString("/iserver/scanner/params")
 	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = Position_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Please be careful, if alertId is 0, it will delete all alerts
-func (c *Client) Iserver_Account_AccountId_Alert_AlertId_DELETE(
-	// account id
-	accountId string,
-	// alert id
-	alertId string,
-) (
-	_200 *Iserver_Account_AccountId_Alert_AlertId_DELETE_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/alert/")
-	_, _ = _u.WriteString(url.PathEscape(alertId))
-	err = c.Do("DELETE", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Account_AccountId_Alert_AlertId_DELETE_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Please note here, sometimes this endpoint alone can't make sure you submit the order
-// successfully,
-// you could receive some questions in the response, you have to to answer them in order
-// to submit the order
-// successfully. You can use "/iserver/reply/{replyid}" endpoint to answer questions
-func (c *Client) Iserver_Account_AccountId_Order_POST(
-	// account id
-	accountId string,
-) (
-	_200 Iserver_Account_AccountId_Order_POST_200_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/order")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Iserver_Account_AccountId_Order_POST_200_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// You can pass a list of orders here
-func (c *Client) Iserver_Account_AccountId_Orders_POST(
-	// account id
-	accountId string,
-) (
-	_200 Iserver_Account_AccountId_Orders_POST_200_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/orders")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Iserver_Account_AccountId_Orders_POST_200_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns information about margin, cash balances and other information related to
-// specified account. See also /portfolio/{accountId}/ledger. /portfolio/accounts or
-// /portfolio/subaccounts must be called prior to this endpoint.
-func (c *Client) Portfolio_AccountId_Summary_GET(
-	// account id
-	accountId string,
-) (
-	_200 *Summary,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/summary")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Summary{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-func (c *Client) Fyi_Deliveryoptions_Device_POST() (
-	_200 *Fyi_Deliveryoptions_Device_POST_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/deliveryoptions/device")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Fyi_Deliveryoptions_Device_POST_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Search by underlying or company name. Relays back what derivative contract(s) it
-// has. This endpoint must be called before using /secdef/info
-func (c *Client) Iserver_Secdef_Search_POST() (
-	_200 Iserver_Secdef_Search_POST_200_List,
-	_500 *Iserver_Secdef_Search_POST_500,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/secdef/search")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Iserver_Secdef_Search_POST_200_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		case 500:
-			_500 = &Iserver_Secdef_Search_POST_500{}
-			if body != nil {
-				return _500.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns a list of trades for the currently selected account for current day and six
-// previous days. It is advised to call this endpoint once per session.
-func (c *Client) Iserver_Account_Trades_GET() (
-	_200 Iserver_Account_Trades_GET_200_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/trades")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Iserver_Account_Trades_GET_200_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Provides Contract Details of Futures, Options, Warrants, Cash and CFDs based on conid.
-// To get the strike price for Options/Warrants use "/iserver/secdef/strikes" endpoint.
-// Must call /secdef/search for the underlying contract first.
-func (c *Client) Iserver_Secdef_Info_GET(
-	// FUT/OPT/WAR/CASH/CFD
-	sectype string,
-	// contract month, only required for FUT/OPT/WAR in the format MMMYY, example JAN00
-	month string,
-	// optional, default is SMART
-	exchange string,
-	// optional, only required for OPT/WAR
-	strike string,
-	// C for call, P for put
-	right string,
-	// underlying contract id
-	conid string,
-) (
-	_200 Iserver_Secdef_Info_GET_200_List,
-	_500 *Iserver_Secdef_Info_GET_500,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/secdef/info")
-	_, _ = _u.WriteString("?sectype=")
-	_, _ = _u.WriteString(url.PathEscape(sectype))
-	_, _ = _u.WriteString("&month=")
-	_, _ = _u.WriteString(url.PathEscape(month))
-	_, _ = _u.WriteString("&exchange=")
-	_, _ = _u.WriteString(url.PathEscape(exchange))
-	_, _ = _u.WriteString("&strike=")
-	_, _ = _u.WriteString(url.PathEscape(strike))
-	_, _ = _u.WriteString("&right=")
-	_, _ = _u.WriteString(url.PathEscape(right))
-	_, _ = _u.WriteString("&conid=")
-	_, _ = _u.WriteString(url.PathEscape(conid))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Iserver_Secdef_Info_GET_200_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		case 500:
-			_500 = &Iserver_Secdef_Info_GET_500{}
-			if body != nil {
-				return _500.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Information about the account's portfolio allocation by Asset Class, Industry and
-// Category.  /portfolio/accounts or /portfolio/subaccounts must be called prior to
-// this endpoint.
-func (c *Client) Portfolio_AccountId_Allocation_GET(
-	// account id
-	accountId string,
-) (
-	_200 Allocation_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/allocation")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Allocation_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Modifies an open order. Must call /iserver/accounts endpoint prior to modifying an
-// order. Use /iservers/account/orders endpoint to review open-order(s).
-func (c *Client) Iserver_Account_AccountId_Order_OrderId_POST(
-	// account id, or fa group if modifying a group order
-	accountId string,
-	// Customer order id, use /iservers/account/orders endpoint to query orderId.
-	orderId string,
-) (
-	_200 Iserver_Account_AccountId_Order_OrderId_POST_200_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/order/")
-	_, _ = _u.WriteString(url.PathEscape(orderId))
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Iserver_Account_AccountId_Order_OrderId_POST_200_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Each login user only has one mobile trading assistant (MTA) alert with it's own unique
-// tool id.
-// The tool id cannot be changed. When modified a new order Id is generated. MTA alerts
-// can not
-// be created or deleted. If you call delete /iserver/account/:accountId/alert/:alertId,
-// it will reset MTA to default. See [here](https://www.interactivebrokers.com/en/software/mobileiphonemobile/mobileiphone.htm#monitor/trading-assistant.htm)
-// for more information on MTA alerts.
-func (c *Client) Iserver_Account_Mta_GET() (
-	_200 *AlertResponse,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/mta")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &AlertResponse{}
+			_200 = &Iserver_Scanner_Params_GET_200{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -972,103 +1279,6 @@ func (c *Client) Portfolio_Accounts_GET() (
 	return
 }
 
-// Return the current choices of subscriptions, we can toggle the option
-func (c *Client) Fyi_Settings_GET() (
-	_200 Fyi_Settings_GET_200_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/settings")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Fyi_Settings_GET_200_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Cancels an open order. Must call /iserver/accounts endpoint prior to cancelling an
-// order. Use /iservers/account/orders endpoint to review open-order(s) and get latest
-// order status.
-func (c *Client) Iserver_Account_AccountId_Order_OrderId_DELETE(
-	// account id, or fa group if deleting a group order
-	accountId string,
-	// Customer order id, use /iservers/account/orders endpoint to query orderId.
-	orderId string,
-) (
-	_200 *Iserver_Account_AccountId_Order_OrderId_DELETE_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/order/")
-	_, _ = _u.WriteString(url.PathEscape(orderId))
-	err = c.Do("DELETE", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Account_AccountId_Order_OrderId_DELETE_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Account information related to account Id /portfolio/accounts or /portfolio/subaccounts
-// must be called prior to this endpoint.
-func (c *Client) Portfolio_AccountId_Meta_GET(
-	// account id
-	accountId string,
-) (
-	_200 Accounts_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/meta")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Accounts_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
 // If the gateway has not received any requests for several minutes an open session
 // will automatically timeout. The tickle endpoint pings the server to prevent the session
 // from ending.
@@ -1086,275 +1296,6 @@ func (c *Client) Tickle_POST() (
 		switch status {
 		case 200:
 			_200 = &Tickle_POST_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns a list of security definitions for the given conids
-func (c *Client) Trsrv_Secdef_POST() (
-	_200 Secdef_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/trsrv/secdef")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Secdef_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// The streaming API is documented under [Streaming WebSocket Data](https://interactivebrokers.github.io/cpwebapi/RealtimeSubscription.html)
-// for details.
-func (c *Client) Ws_POST() (
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/ws")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Use the endpoint /iserver/account/:accountId/alerts to receive the alert id.
-// The order_id in the response is the alert id.
-func (c *Client) Iserver_Account_Alert_Id_GET(
-	// alert id
-	id string,
-) (
-	_200 *AlertResponse,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/alert/")
-	_, _ = _u.WriteString(url.PathEscape(id))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &AlertResponse{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns the performance (MTM) for the given accounts, if more than one account is
-// passed, the result is consolidated.
-func (c *Client) Pa_Performance_POST() (
-	_200 *Performance,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/pa/performance")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Performance{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns a list of all positions matching the conid. For portfolio models the conid
-// could be in more than one model, returning an array with the name of the model it
-// belongs to.  /portfolio/accounts or /portfolio/subaccounts must be called prior to
-// this endpoint.
-func (c *Client) Portfolio_AccountId_Position_Conid_GET(
-	// account id
-	accountId string,
-	// contract id
-	conid int64,
-) (
-	_200 Position_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/position/")
-	_, _ = _u.WriteString(url.PathEscape(strconv.FormatInt(int64(conid), 10)))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Position_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-func (c *Client) Fyi_Disclaimer_Typecode_PUT(
-	// fyi code, for example --M8, EA
-	typecode string,
-) (
-	_200 *Fyi_Disclaimer_Typecode_PUT_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/disclaimer/")
-	_, _ = _u.WriteString(url.PathEscape(typecode))
-	err = c.Do("PUT", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Fyi_Disclaimer_Typecode_PUT_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns an object contains four lists contain all parameters for scanners
-func (c *Client) Iserver_Scanner_Params_GET() (
-	_200 *Iserver_Scanner_Params_GET_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/scanner/params")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Scanner_Params_GET_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns trading related rules and info for contract
-func (c *Client) Iserver_Contract_Conid_InfoAndRules_GET(
-	// IBKR contract identifier
-	conid string,
-	// Side of the market rules apply too. Set to true for Buy Orders, set to false for
-	// Sell Orders
-	isBuy bool,
-) (
-	_200 *Iserver_Contract_Conid_InfoAndRules_GET_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/contract/")
-	_, _ = _u.WriteString(url.PathEscape(conid))
-	_, _ = _u.WriteString("/info-and-rules")
-	_, _ = _u.WriteString("?isBuy=")
-	_, _ = _u.WriteString(url.PathEscape(strconv.FormatBool(isBuy)))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Contract_Conid_InfoAndRules_GET_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns an object containing PnL for the selected account and its models (if any).
-// To receive streaming PnL the endpoint /ws can be used. Refer to [Streaming WebSocket
-// Data](https://interactivebrokers.github.io/cpwebapi/RealtimeSubscription.html) for
-// details.
-func (c *Client) Iserver_Account_Pnl_Partitioned_GET() (
-	_200 *Iserver_Account_Pnl_Partitioned_GET_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/pnl/partitioned")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Account_Pnl_Partitioned_GET_200{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -1427,90 +1368,18 @@ func (c *Client) Iserver_Marketdata_Snapshot_GET(
 	return
 }
 
-// Please note here, DO NOT pass orderId when creating a new alert, toolId is only required
-// for MTA alert
-func (c *Client) Iserver_Account_AccountId_Alert_POST(
-	// account id
-	accountId string,
-) (
-	_200 *Iserver_Account_AccountId_Alert_POST_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/alert")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Account_AccountId_Alert_POST_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-func (c *Client) Fyi_Notifications_GET(
-	// if set, don't set include
-	exclude string,
-	// if set, don't set exclude
-	include string,
-	// max number of fyis in response
-	max string,
-) (
-	_200 Notifications_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/notifications")
-	_, _ = _u.WriteString("?exclude=")
-	_, _ = _u.WriteString(url.PathEscape(exclude))
-	_, _ = _u.WriteString("&include=")
-	_, _ = _u.WriteString(url.PathEscape(include))
-	_, _ = _u.WriteString("&max=")
-	_, _ = _u.WriteString(url.PathEscape(max))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Notifications_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
 // Returns the trading schedule up to a month for the requested contract
 func (c *Client) Trsrv_Secdef_Schedule_GET(
-	// Underlying Symbol for specified contract, for example 'AAPL' for US Stock - Apple
-	// Inc.
-	symbol string,
-	// Native exchange for contract, for example 'NASDAQ' for US Stock - Apple Inc.
-	exchange string,
 	// specify the asset class of the contract.
 	// Available values-- Stock: STK, Option: OPT, Future: FUT, Contract For Difference:
 	// CFD, Warrant: WAR, Forex: SWP, Mutual Fund: FND, Bond: BND, Inter-Commodity Spreads:
 	// ICS
 	assetClass string,
+	// Underlying Symbol for specified contract, for example 'AAPL' for US Stock - Apple
+	// Inc.
+	symbol string,
+	// Native exchange for contract, for example 'NASDAQ' for US Stock - Apple Inc.
+	exchange string,
 ) (
 	_200 *Trsrv_Secdef_Schedule_GET_200,
 	err error,
@@ -1518,12 +1387,12 @@ func (c *Client) Trsrv_Secdef_Schedule_GET(
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
 	_, _ = _u.WriteString("/trsrv/secdef/schedule")
-	_, _ = _u.WriteString("?symbol=")
+	_, _ = _u.WriteString("?assetClass=")
+	_, _ = _u.WriteString(url.PathEscape(assetClass))
+	_, _ = _u.WriteString("&symbol=")
 	_, _ = _u.WriteString(url.PathEscape(symbol))
 	_, _ = _u.WriteString("&exchange=")
 	_, _ = _u.WriteString(url.PathEscape(exchange))
-	_, _ = _u.WriteString("&assetClass=")
-	_, _ = _u.WriteString(url.PathEscape(assetClass))
 	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
@@ -1531,6 +1400,40 @@ func (c *Client) Trsrv_Secdef_Schedule_GET(
 		switch status {
 		case 200:
 			_200 = &Trsrv_Secdef_Schedule_GET_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns information about margin, cash balances and other information related to
+// specified account. See also /portfolio/{accountId}/ledger. /portfolio/accounts or
+// /portfolio/subaccounts must be called prior to this endpoint.
+func (c *Client) Portfolio_AccountId_Summary_GET(
+	// account id
+	accountId string,
+) (
+	_200 *Summary,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/portfolio/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/summary")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Summary{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -1576,25 +1479,649 @@ func (c *Client) Iserver_Account_Orders_FaGroup_POST(
 	return
 }
 
-func (c *Client) Fyi_Deliveryoptions_Email_PUT(
-	// true/false
-	enabled string,
-) (
-	_200 *Fyi_Deliveryoptions_Email_PUT_200,
+// Search by underlying or company name. Relays back what derivative contract(s) it
+// has. This endpoint must be called before using /secdef/info
+func (c *Client) Iserver_Secdef_Search_POST() (
+	_200 Iserver_Secdef_Search_POST_200_List,
+	_500 *Iserver_Secdef_Search_POST_500,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/deliveryoptions/email")
-	_, _ = _u.WriteString("?enabled=")
-	_, _ = _u.WriteString(url.PathEscape(enabled))
-	err = c.Do("PUT", _u, func(status int, body []byte, err error) error {
+	_, _ = _u.WriteString("/iserver/secdef/search")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = &Fyi_Deliveryoptions_Email_PUT_200{}
+			_200 = Iserver_Secdef_Search_POST_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		case 500:
+			_500 = &Iserver_Secdef_Search_POST_500{}
+			if body != nil {
+				return _500.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Please note here, sometimes this endpoint alone can't make sure you submit the order
+// successfully,
+// you could receive some questions in the response, you have to to answer them in order
+// to submit the order
+// successfully. You can use "/iserver/reply/{replyid}" endpoint to answer questions
+func (c *Client) Iserver_Account_AccountId_Order_POST(
+	// account id
+	accountId string,
+) (
+	_200 Iserver_Account_AccountId_Order_POST_200_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/order")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Iserver_Account_AccountId_Order_POST_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns a list of positions for the given account. The endpoint supports paging,
+// page's default size is 30 positions. /portfolio/accounts or /portfolio/subaccounts
+// must be called prior to this endpoint.
+func (c *Client) Portfolio_AccountId_Positions_PageId_GET(
+	// account id
+	accountId string,
+	// page id
+	pageId string,
+	// optional
+	model string,
+	// declare the table to be sorted by which column
+	sort string,
+	// in which order, a means ascending - d means descending
+	direction string,
+	// period for pnl column, can be 1D, 7D, 1M...
+	period string,
+) (
+	_200 Position_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/portfolio/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/positions/")
+	_, _ = _u.WriteString(url.PathEscape(pageId))
+	_, _ = _u.WriteString("?model=")
+	_, _ = _u.WriteString(url.PathEscape(model))
+	_, _ = _u.WriteString("&sort=")
+	_, _ = _u.WriteString(url.PathEscape(sort))
+	_, _ = _u.WriteString("&direction=")
+	_, _ = _u.WriteString(url.PathEscape(direction))
+	_, _ = _u.WriteString("&period=")
+	_, _ = _u.WriteString(url.PathEscape(period))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Position_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// options for sending fyis to email and other devices
+func (c *Client) Fyi_Deliveryoptions_GET() (
+	_200 *Fyi_Deliveryoptions_GET_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/fyi/deliveryoptions")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Fyi_Deliveryoptions_GET_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Account information related to account Id /portfolio/accounts or /portfolio/subaccounts
+// must be called prior to this endpoint.
+func (c *Client) Portfolio_AccountId_Meta_GET(
+	// account id
+	accountId string,
+) (
+	_200 Accounts_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/portfolio/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/meta")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Accounts_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+func (c *Client) Fyi_Deliveryoptions_DeviceId_DELETE(
+	// device ID
+	deviceId string,
+) (
+	_200 Any,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/fyi/deliveryoptions/")
+	_, _ = _u.WriteString(url.PathEscape(deviceId))
+	err = c.Do("DELETE", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Any{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// You can pass a list of orders here
+func (c *Client) Iserver_Account_AccountId_Orders_POST(
+	// account id
+	accountId string,
+) (
+	_200 Iserver_Account_AccountId_Orders_POST_200_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/orders")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Iserver_Account_AccountId_Orders_POST_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+func (c *Client) Fyi_Deliveryoptions_Device_POST() (
+	_200 *Fyi_Deliveryoptions_Device_POST_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/fyi/deliveryoptions/device")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Fyi_Deliveryoptions_Device_POST_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Please note, if alertId is 0, it will activate/deactivate all alerts
+func (c *Client) Iserver_Account_AccountId_Alert_Activate_POST(
+	// account id
+	accountId string,
+) (
+	_200 *Iserver_Account_AccountId_Alert_Activate_POST_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/alert/activate")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Account_AccountId_Alert_Activate_POST_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Configure which typecode you would like to enable/disable.
+func (c *Client) Fyi_Settings_Typecode_POST(
+	// fyi code
+	typecode string,
+) (
+	_200 Any,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/fyi/settings/")
+	_, _ = _u.WriteString(url.PathEscape(typecode))
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Any{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Modifies an open order. Must call /iserver/accounts endpoint prior to modifying an
+// order. Use /iservers/account/orders endpoint to review open-order(s).
+func (c *Client) Iserver_Account_AccountId_Order_OrderId_POST(
+	// account id, or fa group if modifying a group order
+	accountId string,
+	// Customer order id, use /iservers/account/orders endpoint to query orderId.
+	orderId string,
+) (
+	_200 Iserver_Account_AccountId_Order_OrderId_POST_200_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/order/")
+	_, _ = _u.WriteString(url.PathEscape(orderId))
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Iserver_Account_AccountId_Order_OrderId_POST_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Please note here, DO NOT pass orderId when creating a new alert, toolId is only required
+// for MTA alert
+func (c *Client) Iserver_Account_AccountId_Alert_POST(
+	// account id
+	accountId string,
+) (
+	_200 *Iserver_Account_AccountId_Alert_POST_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/alert")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Account_AccountId_Alert_POST_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Cancels an open order. Must call /iserver/accounts endpoint prior to cancelling an
+// order. Use /iservers/account/orders endpoint to review open-order(s) and get latest
+// order status.
+func (c *Client) Iserver_Account_AccountId_Order_OrderId_DELETE(
+	// account id, or fa group if deleting a group order
+	accountId string,
+	// Customer order id, use /iservers/account/orders endpoint to query orderId.
+	orderId string,
+) (
+	_200 *Iserver_Account_AccountId_Order_OrderId_DELETE_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/order/")
+	_, _ = _u.WriteString(url.PathEscape(orderId))
+	err = c.Do("DELETE", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Account_AccountId_Order_OrderId_DELETE_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns Applicant Id with all owner related entities
+func (c *Client) Ibcust_Entity_Info_GET() (
+	_200 Ibcust_Entity_Info_GET_200_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/ibcust/entity/info")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Ibcust_Entity_Info_GET_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Returns an object containing PnL for the selected account and its models (if any).
+// To receive streaming PnL the endpoint /ws can be used. Refer to [Streaming WebSocket
+// Data](https://interactivebrokers.github.io/cpwebapi/RealtimeSubscription.html) for
+// details.
+func (c *Client) Iserver_Account_Pnl_Partitioned_GET() (
+	_200 *Iserver_Account_Pnl_Partitioned_GET_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/pnl/partitioned")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Account_Pnl_Partitioned_GET_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// This endpoint allows you to preview order without actually submitting the order and
+// you can get
+// commission information in the response.
+func (c *Client) Iserver_Account_AccountId_Order_Whatif_POST(
+	// account id
+	accountId string,
+) (
+	_200 *Iserver_Account_AccountId_Order_Whatif_POST_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/order/whatif")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Account_AccountId_Order_Whatif_POST_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Current Authentication status to the Brokerage system. Market Data and Trading is
+// not possible if not authenticated, e.g. authenticated shows false
+func (c *Client) Iserver_Auth_Status_POST() (
+	_200 *AuthStatus,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/auth/status")
+	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &AuthStatus{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Return the current choices of subscriptions, we can toggle the option
+func (c *Client) Fyi_Settings_GET() (
+	_200 Fyi_Settings_GET_200_List,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/fyi/settings")
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = Fyi_Settings_GET_200_List{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Please be careful, if alertId is 0, it will delete all alerts
+func (c *Client) Iserver_Account_AccountId_Alert_AlertId_DELETE(
+	// account id
+	accountId string,
+	// alert id
+	alertId string,
+) (
+	_200 *Iserver_Account_AccountId_Alert_AlertId_DELETE_200,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/")
+	_, _ = _u.WriteString(url.PathEscape(accountId))
+	_, _ = _u.WriteString("/alert/")
+	_, _ = _u.WriteString(url.PathEscape(alertId))
+	err = c.Do("DELETE", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &Iserver_Account_AccountId_Alert_AlertId_DELETE_200{}
+			if body != nil {
+				return _200.UnmarshalJSON(body)
+			} else {
+				return err
+			}
+		default:
+			return StatusCodeError{Code: status}
+		}
+	})
+	return
+}
+
+// Use the endpoint /iserver/account/:accountId/alerts to receive the alert id.
+// The order_id in the response is the alert id.
+func (c *Client) Iserver_Account_Alert_Id_GET(
+	// alert id
+	id string,
+) (
+	_200 *AlertResponse,
+	err error,
+) {
+	_u := bytebufferpool.Get()
+	_, _ = _u.WriteString(c.host)
+	_, _ = _u.WriteString("/iserver/account/alert/")
+	_, _ = _u.WriteString(url.PathEscape(id))
+	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
+		if err != nil {
+			return err
+		}
+		switch status {
+		case 200:
+			_200 = &AlertResponse{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {
@@ -1646,75 +2173,6 @@ func (c *Client) Iserver_Reply_Replyid_POST(
 	return
 }
 
-// Information regarding settled cash, cash balances, etc. in the account's base currency
-// and any other cash balances hold in other currencies.  /portfolio/accounts or /portfolio/subaccounts
-// must be called prior to this endpoint. The list of supported currencies is available
-// at https://www.interactivebrokers.com/en/index.php?f=3185.
-func (c *Client) Portfolio_AccountId_Ledger_GET(
-	// account id
-	accountId string,
-) (
-	_200 *Ledger,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/ledger")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Ledger{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// This endpoint allows you to preview order without actually submitting the order and
-// you can get
-// commission information in the response.
-func (c *Client) Iserver_Account_AccountId_Order_Whatif_POST(
-	// account id
-	accountId string,
-) (
-	_200 *Iserver_Account_AccountId_Order_Whatif_POST_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/order/whatif")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Account_AccountId_Order_Whatif_POST_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
 // Cancel market data for given conid. To cancel all market data request(s), see /iserver/marketdata/unsubscribeall.
 func (c *Client) Iserver_Marketdata_Conid_Unsubscribe_GET(
 	// contract id
@@ -1747,479 +2205,21 @@ func (c *Client) Iserver_Marketdata_Conid_Unsubscribe_GET(
 	return
 }
 
-// Using the Contract Identifier get contract info. You can use this to prefill your
-// order before you submit an order
-func (c *Client) Iserver_Contract_Conid_Info_GET(
-	// contract id
-	conid string,
-) (
-	_200 *Contract,
+// Returns a list of security definitions for the given conids
+func (c *Client) Trsrv_Secdef_POST() (
+	_200 Secdef_List,
 	err error,
 ) {
 	_u := bytebufferpool.Get()
 	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/contract/")
-	_, _ = _u.WriteString(url.PathEscape(conid))
-	_, _ = _u.WriteString("/info")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Contract{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// When using the CP Gateway, this endpoint provides a way to reauthenticate to the
-// Brokerage system as long as there is a valid SSO session, see /sso/validate.
-func (c *Client) Iserver_Reauthenticate_POST() (
-	_200 *AuthStatus,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/reauthenticate")
+	_, _ = _u.WriteString("/trsrv/secdef")
 	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
 		if err != nil {
 			return err
 		}
 		switch status {
 		case 200:
-			_200 = &AuthStatus{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-func (c *Client) Fyi_Notifications_NotificationId_PUT(
-	// mark a notification read
-	notificationId string,
-) (
-	_200 Any,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/notifications/")
-	_, _ = _u.WriteString(url.PathEscape(notificationId))
-	err = c.Do("PUT", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Any{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns an object of all positions matching the conid for all the selected accounts.
-// For portfolio models the conid could be in more than one model, returning an array
-// with the name of the model it belongs to. /portfolio/accounts or /portfolio/subaccounts
-// must be called prior to this endpoint.
-func (c *Client) Portfolio_Positions_Conid_GET(
-	// contract id
-	conid int64,
-) (
-	_200 Position_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/positions/")
-	_, _ = _u.WriteString(url.PathEscape(strconv.FormatInt(int64(conid), 10)))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Position_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// options for sending fyis to email and other devices
-func (c *Client) Fyi_Deliveryoptions_GET() (
-	_200 *Fyi_Deliveryoptions_GET_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/deliveryoptions")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Fyi_Deliveryoptions_GET_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Query strikes for Options/Warrants. For available contract months and exchanges use
-// "/iserver/secdef/search"
-func (c *Client) Iserver_Secdef_Strikes_GET(
-	// contract month
-	month string,
-	// optional, default is SMART
-	exchange string,
-	// contract id
-	conid string,
-	// OPT/WAR
-	sectype string,
-) (
-	_200 *Iserver_Secdef_Strikes_GET_200,
-	_500 *Iserver_Secdef_Strikes_GET_500,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/secdef/strikes")
-	_, _ = _u.WriteString("?month=")
-	_, _ = _u.WriteString(url.PathEscape(month))
-	_, _ = _u.WriteString("&exchange=")
-	_, _ = _u.WriteString(url.PathEscape(exchange))
-	_, _ = _u.WriteString("&conid=")
-	_, _ = _u.WriteString(url.PathEscape(conid))
-	_, _ = _u.WriteString("&sectype=")
-	_, _ = _u.WriteString(url.PathEscape(sectype))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Secdef_Strikes_GET_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		case 500:
-			_500 = &Iserver_Secdef_Strikes_GET_500{}
-			if body != nil {
-				return _500.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns a list of non-expired future contracts for given symbol(s)
-func (c *Client) Trsrv_Futures_GET(
-	// list of case-sensitive symbols separated by comma
-	symbols string,
-) (
-	_200 Futures_List,
-	_500 *Trsrv_Futures_GET_500,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/trsrv/futures")
-	_, _ = _u.WriteString("?symbols=")
-	_, _ = _u.WriteString(url.PathEscape(symbols))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Futures_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		case 500:
-			_500 = &Trsrv_Futures_GET_500{}
-			if body != nil {
-				return _500.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Logs the user out of the gateway session. Any further activity requires re-authentication.
-func (c *Client) Logout_POST() (
-	_200 *Logout_POST_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/logout")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Logout_POST_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Returns Applicant Id with all owner related entities
-func (c *Client) Ibcust_Entity_Info_GET() (
-	_200 Ibcust_Entity_Info_GET_200_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/ibcust/entity/info")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Ibcust_Entity_Info_GET_200_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-func (c *Client) Fyi_Deliveryoptions_DeviceId_DELETE(
-	// device ID
-	deviceId string,
-) (
-	_200 Any,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/deliveryoptions/")
-	_, _ = _u.WriteString(url.PathEscape(deviceId))
-	err = c.Do("DELETE", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Any{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// The endpoint is meant to be used in polling mode, e.g. requesting every x seconds.
-// The response will contain two objects, one is notification, the other is orders.
-//
-// Orders is the list of live orders (cancelled, filled, submitted).
-// Notifications contains information about execute orders as they happen, see status
-// field.
-// To receive streaming live orders the endpoint /ws can be used. Refer to [Streaming
-// WebSocket Data](https://interactivebrokers.github.io/cpwebapi/RealtimeSubscription.html)
-// for details.
-func (c *Client) Iserver_Account_Orders_GET() (
-	_200 *Iserver_Account_Orders_GET_200,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/orders")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Iserver_Account_Orders_GET_200{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// Similar to /portfolio/{accountId}/allocation but returns a consolidated view of of
-// all the accounts returned by /portfolio/accounts. /portfolio/accounts or /portfolio/subaccounts
-// must be called prior to this endpoint.
-func (c *Client) Portfolio_Allocation_POST() (
-	_200 Allocation_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/portfolio/allocation")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Allocation_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-func (c *Client) Fyi_Notifications_More_GET(
-	// id of last notification in the list
-	id string,
-) (
-	_200 Notifications_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/fyi/notifications/more")
-	_, _ = _u.WriteString("?id=")
-	_, _ = _u.WriteString(url.PathEscape(id))
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Notifications_List{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// transaction history for a given number of conids and accounts.
-// Types of transactions include dividend payments, buy and sell transactions, transfers.
-func (c *Client) Pa_Transactions_POST() (
-	_200 *Transactions,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/pa/transactions")
-	err = c.Do("POST", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = &Transactions{}
-			if body != nil {
-				return _200.UnmarshalJSON(body)
-			} else {
-				return err
-			}
-		default:
-			return StatusCodeError{Code: status}
-		}
-	})
-	return
-}
-
-// The response will contain both active and inactive alerts, but it won't have MTA
-// alert
-func (c *Client) Iserver_Account_AccountId_Alerts_GET(
-	// account id
-	accountId string,
-) (
-	_200 Iserver_Account_AccountId_Alerts_GET_200_List,
-	err error,
-) {
-	_u := bytebufferpool.Get()
-	_, _ = _u.WriteString(c.host)
-	_, _ = _u.WriteString("/iserver/account/")
-	_, _ = _u.WriteString(url.PathEscape(accountId))
-	_, _ = _u.WriteString("/alerts")
-	err = c.Do("GET", _u, func(status int, body []byte, err error) error {
-		if err != nil {
-			return err
-		}
-		switch status {
-		case 200:
-			_200 = Iserver_Account_AccountId_Alerts_GET_200_List{}
+			_200 = Secdef_List{}
 			if body != nil {
 				return _200.UnmarshalJSON(body)
 			} else {

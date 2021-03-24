@@ -12967,6 +12967,8 @@ func easyjsonC80ae7adDecodeGithubComKamaiuIbCpGoClientV1RestModelIserverMarketda
 			out.Vega = string(in.String())
 		case "7633":
 			out.ImpliedVolatility = string(in.String())
+		case "87_raw":
+			out.VolumeRaw = float64(in.Float64())
 		case "_updated":
 			out.Updated = int64(in.Int64())
 		case "conid":
@@ -13256,6 +13258,11 @@ func easyjsonC80ae7adEncodeGithubComKamaiuIbCpGoClientV1RestModelIserverMarketda
 		const prefix string = ",\"7633\":"
 		out.RawString(prefix)
 		out.String(string(in.ImpliedVolatility))
+	}
+	{
+		const prefix string = ",\"87_raw\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.VolumeRaw))
 	}
 	{
 		const prefix string = ",\"_updated\":"
@@ -21771,26 +21778,46 @@ func easyjsonC80ae7adDecodeGithubComKamaiuIbCpGoClientV1RestModel17(in *jlexer.L
 			continue
 		}
 		switch key {
+		case "allow_sell_long":
+			out.Allow_sell_long = bool(in.Bool())
 		case "category":
 			out.Category = string(in.String())
+		case "cfi_code":
+			out.Cfi_code = string(in.String())
+		case "classifier":
+			out.Classifier = string(in.String())
 		case "companyName":
 			out.CompanyName = string(in.String())
 		case "company_name":
 			out.Company_name = string(in.String())
 		case "con_id":
-			out.Con_id = string(in.String())
+			out.Con_id = int64(in.Int64())
+		case "contract_month":
+			out.Contract_month = string(in.String())
 		case "currency":
 			out.Currency = string(in.String())
+		case "cusip":
+			out.Cusip = string(in.String())
 		case "exchange":
 			out.Exchange = string(in.String())
+		case "expiry_full":
+			out.Expiry_full = string(in.String())
 		case "industry":
 			out.Industry = string(in.String())
 		case "instrument_type":
 			out.Instrument_type = string(in.String())
+		case "is_zero_commission_security":
+			out.Is_zero_commission_security = bool(in.Bool())
 		case "local_symbol":
 			out.Local_symbol = string(in.String())
+		case "maturity_date":
+			out.Maturity_date = string(in.String())
+		case "multiplier":
+			out.Multiplier = string(in.String())
 		case "r_t_h":
 			out.R_t_h = bool(in.Bool())
+		case "right":
+			out.Right = string(in.String())
 		case "rules":
 			if in.IsNull() {
 				in.Skip()
@@ -21801,6 +21828,20 @@ func easyjsonC80ae7adDecodeGithubComKamaiuIbCpGoClientV1RestModel17(in *jlexer.L
 				}
 				(*out.Rules).UnmarshalEasyJSON(in)
 			}
+		case "strike":
+			out.Strike = string(in.String())
+		case "symbol":
+			out.Symbol = string(in.String())
+		case "text":
+			out.Text = string(in.String())
+		case "trading_class":
+			out.Trading_class = string(in.String())
+		case "underlying_con_id":
+			out.Underlying_con_id = int64(in.Int64())
+		case "underlying_issuer":
+			out.Underlying_issuer = string(in.String())
+		case "valid_exchanges":
+			out.Valid_exchanges = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -21816,9 +21857,24 @@ func easyjsonC80ae7adEncodeGithubComKamaiuIbCpGoClientV1RestModel17(out *jwriter
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"category\":"
+		const prefix string = ",\"allow_sell_long\":"
 		out.RawString(prefix[1:])
+		out.Bool(bool(in.Allow_sell_long))
+	}
+	{
+		const prefix string = ",\"category\":"
+		out.RawString(prefix)
 		out.String(string(in.Category))
+	}
+	{
+		const prefix string = ",\"cfi_code\":"
+		out.RawString(prefix)
+		out.String(string(in.Cfi_code))
+	}
+	{
+		const prefix string = ",\"classifier\":"
+		out.RawString(prefix)
+		out.String(string(in.Classifier))
 	}
 	{
 		const prefix string = ",\"companyName\":"
@@ -21833,7 +21889,12 @@ func easyjsonC80ae7adEncodeGithubComKamaiuIbCpGoClientV1RestModel17(out *jwriter
 	{
 		const prefix string = ",\"con_id\":"
 		out.RawString(prefix)
-		out.String(string(in.Con_id))
+		out.Int64(int64(in.Con_id))
+	}
+	{
+		const prefix string = ",\"contract_month\":"
+		out.RawString(prefix)
+		out.String(string(in.Contract_month))
 	}
 	{
 		const prefix string = ",\"currency\":"
@@ -21841,9 +21902,19 @@ func easyjsonC80ae7adEncodeGithubComKamaiuIbCpGoClientV1RestModel17(out *jwriter
 		out.String(string(in.Currency))
 	}
 	{
+		const prefix string = ",\"cusip\":"
+		out.RawString(prefix)
+		out.String(string(in.Cusip))
+	}
+	{
 		const prefix string = ",\"exchange\":"
 		out.RawString(prefix)
 		out.String(string(in.Exchange))
+	}
+	{
+		const prefix string = ",\"expiry_full\":"
+		out.RawString(prefix)
+		out.String(string(in.Expiry_full))
 	}
 	{
 		const prefix string = ",\"industry\":"
@@ -21856,14 +21927,34 @@ func easyjsonC80ae7adEncodeGithubComKamaiuIbCpGoClientV1RestModel17(out *jwriter
 		out.String(string(in.Instrument_type))
 	}
 	{
+		const prefix string = ",\"is_zero_commission_security\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.Is_zero_commission_security))
+	}
+	{
 		const prefix string = ",\"local_symbol\":"
 		out.RawString(prefix)
 		out.String(string(in.Local_symbol))
 	}
 	{
+		const prefix string = ",\"maturity_date\":"
+		out.RawString(prefix)
+		out.String(string(in.Maturity_date))
+	}
+	{
+		const prefix string = ",\"multiplier\":"
+		out.RawString(prefix)
+		out.String(string(in.Multiplier))
+	}
+	{
 		const prefix string = ",\"r_t_h\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.R_t_h))
+	}
+	{
+		const prefix string = ",\"right\":"
+		out.RawString(prefix)
+		out.String(string(in.Right))
 	}
 	{
 		const prefix string = ",\"rules\":"
@@ -21873,6 +21964,41 @@ func easyjsonC80ae7adEncodeGithubComKamaiuIbCpGoClientV1RestModel17(out *jwriter
 		} else {
 			(*in.Rules).MarshalEasyJSON(out)
 		}
+	}
+	{
+		const prefix string = ",\"strike\":"
+		out.RawString(prefix)
+		out.String(string(in.Strike))
+	}
+	{
+		const prefix string = ",\"symbol\":"
+		out.RawString(prefix)
+		out.String(string(in.Symbol))
+	}
+	{
+		const prefix string = ",\"text\":"
+		out.RawString(prefix)
+		out.String(string(in.Text))
+	}
+	{
+		const prefix string = ",\"trading_class\":"
+		out.RawString(prefix)
+		out.String(string(in.Trading_class))
+	}
+	{
+		const prefix string = ",\"underlying_con_id\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Underlying_con_id))
+	}
+	{
+		const prefix string = ",\"underlying_issuer\":"
+		out.RawString(prefix)
+		out.String(string(in.Underlying_issuer))
+	}
+	{
+		const prefix string = ",\"valid_exchanges\":"
+		out.RawString(prefix)
+		out.String(string(in.Valid_exchanges))
 	}
 	out.RawByte('}')
 }

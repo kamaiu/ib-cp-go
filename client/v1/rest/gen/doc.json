@@ -1636,6 +1636,10 @@
                     "type": "string",
                     "description": "Volume"
                   },
+                  "87_raw": {
+                    "type": "number",
+                    "description": "Volume"
+                  },
                   "88": {
                     "type": "string",
                     "description": "Bid Size"
@@ -4339,13 +4343,53 @@
       "description": "Contains all details of the contract, including rules you can use when placing orders",
       "type": "object",
       "properties": {
+        "cfi_code": {
+          "type": "string",
+          "description": ""
+        },
+        "cusip": {
+          "type": "string",
+          "description": ""
+        },
+        "symbol": {
+          "type": "string",
+          "description": ""
+        },
         "r_t_h": {
           "type": "boolean",
           "description": "true means you can trade outside RTH(regular trading hours)"
         },
+        "underlying_con_id": {
+          "type": "integer",
+          "description": ""
+        },
         "con_id": {
-          "type": "string",
+          "type": "integer",
           "description": "same as that in request"
+        },
+        "expiry_full": {
+          "type": "string",
+          "description": ""
+        },
+        "multiplier": {
+          "type": "string",
+          "description": ""
+        },
+        "strike": {
+          "type": "string",
+          "description": "strike price of Option"
+        },
+        "right": {
+          "type": "string",
+          "description": "CALL or PUT"
+        },
+        "maturity_date": {
+          "type": "string",
+          "description": ""
+        },
+        "underlying_issuer": {
+          "type": "string",
+          "description": ""
         },
         "company_name": {
           "type": "string"
@@ -4361,6 +4405,26 @@
           "type": "string",
           "description": "for example STK"
         },
+        "trading_class": {
+          "type": "string",
+          "description": ""
+        },
+        "valid_exchanges": {
+          "type": "string",
+          "description": ""
+        },
+        "contract_month": {
+          "type": "string",
+          "description": ""
+        },
+        "allow_sell_long": {
+          "type": "boolean",
+          "description": ""
+        },
+        "is_zero_commission_security": {
+          "type": "boolean",
+          "description": ""
+        },
         "currency": {
           "type": "string"
         },
@@ -4371,6 +4435,12 @@
           "type": "string"
         },
         "industry": {
+          "type": "string"
+        },
+        "classifier": {
+          "type": "string"
+        },
+        "text": {
           "type": "string"
         },
         "rules": {

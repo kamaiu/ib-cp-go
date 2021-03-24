@@ -12,7 +12,7 @@ type GoAction struct {
 	Action    *Action
 	Body      *GoType
 	Url       []*UrlPart
-	Query     map[string]*GoParam
+	Query     []*GoParam
 	Responses map[int]*GoActionResponse
 }
 
@@ -38,11 +38,7 @@ func (a *GoAction) Params() (path []*UrlPart, query []*GoParam) {
 			path = append(path, p)
 		}
 	}
-	if a.Query != nil {
-		for _, q := range a.Query {
-			query = append(query, q)
-		}
-	}
+	query = a.Query
 	return
 }
 

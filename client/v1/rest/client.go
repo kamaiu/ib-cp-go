@@ -40,7 +40,7 @@ func NewClient(url string, ssl bool) *Client {
 		NoDefaultUserAgentHeader:      true,
 		Dial:                          fasthttp.Dial,
 		DialDualStack:                 false,
-		IsTLS:                         ssl, // strings.Index(url, "https:") == 0,
+		IsTLS:                         ssl,
 		TLSConfig:                     &tls.Config{InsecureSkipVerify: true, ServerName: "*"},
 		MaxConns:                      120,
 		MaxConnDuration:               0,

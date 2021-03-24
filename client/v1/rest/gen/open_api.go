@@ -69,10 +69,3 @@ type Schema struct {
 	Properties  map[string]*Schema `json:"properties"`
 	Items       *Schema            `json:"items"`
 }
-
-//type Item struct {
-//	Type        Type             `json:"type"`
-//	Description string           `json:"description"`
-//	Properties  map[string]*Item `json:"properties"`
-//	Items       []*Item          `json:"items"`
-//}
