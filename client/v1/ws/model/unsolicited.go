@@ -1,4 +1,5 @@
-package ws
+//go:generate easyjson -all $GOFILE
+package model
 
 type SystemConnection struct {
 	Topic   TopicType `json:"topic"`
@@ -11,7 +12,7 @@ type AuthStatus struct {
 	Args  struct {
 		Authenticated bool `json:"authenticated"`
 		Competing     bool `json:"competing"`
-	}
+	} `json:"args"`
 }
 
 type Notifications struct {
@@ -21,7 +22,7 @@ type Notifications struct {
 		Text  string `json:"text"`
 		Title string `json:"title"`
 		Url   string `json:"url"`
-	}
+	} `json:"args"`
 }
 
 type Bulletins struct {
@@ -29,5 +30,5 @@ type Bulletins struct {
 	Args  struct {
 		Id      string `json:"id"`
 		Message string `json:"message"`
-	}
+	} `json:"args"`
 }

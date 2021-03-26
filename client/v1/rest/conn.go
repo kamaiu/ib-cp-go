@@ -27,12 +27,12 @@ func (s StatusCodeError) Error() string {
 	return strconv.Itoa(s.Code)
 }
 
-type Client struct {
+type Conn struct {
 	client *fasthttp.HostClient
 	host   string
 }
 
-func NewClient(url string, ssl bool) *Client {
+func NewConn(url string, ssl bool) *Conn {
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	c := &fasthttp.HostClient{
 		Addr:                          url,
@@ -58,11 +58,11 @@ func NewClient(url string, ssl bool) *Client {
 	}
 	host := ""
 	if ssl {
-		host = "https://" + url + "/v1/portal"
+		host = "https://" + url + "/v1/client"
 	} else {
-		host = "http://" + url + "/v1/portal"
+		host = "http://" + url + "/v1/client"
 	}
-	return &Client{
+	return &Conn{
 		client: c,
 		host:   host,
 	}
@@ -74,7 +74,7 @@ type call struct {
 }
 
 func newCall(
-	conn *Client,
+	conn *Conn,
 	method string,
 	url *bytebufferpool.ByteBuffer,
 ) *call {
@@ -102,7 +102,7 @@ func (c *call) release() {
 	fasthttp.ReleaseResponse(c.resp)
 }
 
-func (c *Client) Do(
+func (c *Conn) Do(
 	method string,
 	url *bytebufferpool.ByteBuffer, // owned
 	handle func(status int, body []byte, err error) error,
@@ -110,8 +110,35 @@ func (c *Client) Do(
 	ctx := newCall(c, method, url)
 	defer ctx.release()
 
-	scheme := ctx.req.URI().Scheme()
-	_ = scheme
+	_ = ctx.req.URI().Scheme()
+	err := c.client.Do(ctx.req, ctx.resp)
+	if err != nil {
+		if handle != nil {
+			return handle(0, nil, err)
+		}
+		return err
+	}
+	statusCode := ctx.resp.StatusCode()
+	body, err := readBody(ctx.resp)
+
+	if handle != nil {
+		return handle(statusCode, body, err)
+	}
+	return err
+}
+
+func (c *Conn) DoRequest(
+	method string,
+	url *bytebufferpool.ByteBuffer, // owned
+	doc []byte,
+	handle func(status int, body []byte, err error) error,
+) error {
+	ctx := newCall(c, method, url)
+	defer ctx.release()
+
+	_ = ctx.req.URI().Scheme()
+	ctx.req.Header.Set(fasthttp.HeaderContentType, "application/json")
+	ctx.req.SetBody(doc)
 	err := c.client.Do(ctx.req, ctx.resp)
 	if err != nil {
 		if handle != nil {

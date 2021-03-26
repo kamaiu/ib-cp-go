@@ -15,20 +15,29 @@ func toString(v json.Marshaler) string {
 	return string(b)
 }
 
-func TestClient_Sso_Validate_GET(t *testing.T) {
-	c := NewClient(DefaultUrl, true)
+var c *Conn
+
+func init() {
+	c = NewConn(DefaultUrl, true)
+}
+
+func TestConn_Sso_Validate_GET(t *testing.T) {
 	r, err := c.Sso_Validate_GET()
 	if err != nil {
 		t.Fatal(err)
 	}
+	fmt.Println(toString(r))
+}
 
+func TestConn_Tickle_POST(t *testing.T) {
 	tickle, err := c.Tickle_POST()
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(toString(r))
 	fmt.Println(toString(tickle))
+}
 
+func TestConn_Iserver_Contract_Conid_Info_GET(t *testing.T) {
 	contract, err := c.Iserver_Contract_Conid_Info_GET("12087792")
 	if err != nil {
 		t.Fatal(err)
@@ -40,8 +49,21 @@ func TestClient_Sso_Validate_GET(t *testing.T) {
 		t.Fatal(err)
 	}
 	fmt.Println(toString(contract))
+}
 
-	snapshot, snapshot400, err := c.Iserver_Marketdata_Snapshot_GET("470728476", time.Now().Add(-(time.Hour*0)).Unix()*1000, "31,55,70,71,84,85,86,87,88,6457,7285,7308,7309,7310,7311,7633")
+func TestConn_Trsrv_Futures_GET(t *testing.T) {
+	futures, futures500, err := c.Trsrv_Futures_GET("ES")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if futures500 != nil {
+		t.Fatal(futures500)
+	}
+	fmt.Println(toString(futures))
+}
+
+func TestConn_Iserver_Marketdata_Snapshot_GET(t *testing.T) {
+	snapshot, snapshot400, err := c.Iserver_Marketdata_Snapshot_GET("412889032", time.Now().Add(-(time.Hour*0)).Unix()*1000, "31,55,70,71,84,85,86,87,88,6457,7285,7308,7309,7310,7311,7633")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -49,14 +71,17 @@ func TestClient_Sso_Validate_GET(t *testing.T) {
 		t.Fatal(snapshot400)
 	}
 	fmt.Println(toString(snapshot))
+}
 
+func TestConn_Iserver_Scanner_Params_GET(t *testing.T) {
 	scannerParams, err := c.Iserver_Scanner_Params_GET()
 	if err != nil {
 		t.Fatal(err)
 	}
 	_ = scannerParams
-	//fmt.Println(toString(scannerParams))
+}
 
+func TestConn_Iserver_Secdef_Strikes_GET(t *testing.T) {
 	strikes, strikes500, err := c.Iserver_Secdef_Strikes_GET("107113386", "OPT", "APR21", "SMART")
 	if err != nil {
 		t.Fatal(err)

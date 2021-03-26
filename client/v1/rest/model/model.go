@@ -5,25 +5,198 @@ package model
 type Any map[string]interface{}
 
 //easyjson:json
-type Notifications_List []*Notifications_List_Item
-
-//easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_IbalgoTypes_List []int64
+type Iserver_Scanner_Params_GET_200_Instrument_list_List []*Iserver_Scanner_Params_GET_200_Instrument_list_List_Item
 
 //easyjson:json
 type Iserver_Scanner_Params_GET_200_Location_tree_List_Item_Locations_List []*Iserver_Scanner_Params_GET_200_Location_tree_List_Item_Locations_List_Item
 
 //easyjson:json
-type Iserver_Secdef_Search_POST_200_List_Item_Sections_List []*Iserver_Secdef_Search_POST_200_List_Item_Sections_List_Item
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_TifTypes_List []int64
 
 //easyjson:json
-type Iserver_Secdef_Search_POST_200_List []*Iserver_Secdef_Search_POST_200_List_Item
+type Iserver_Account_AccountId_Orders_POST_200_List []*Iserver_Account_AccountId_Orders_POST_200_List_Item
+
+//easyjson:json
+type Allocation_List []*Allocation_List_Item
+
+// Prompt messages that may affect trading or the account
+//easyjson:json
+type AuthStatus_Prompts_List []string
+
+//easyjson:json
+type Contract_Rules_OrderTypesOutside_List []string
+
+//easyjson:json
+type Futures_List []*Futures_List_Item
 
 //easyjson:json
 type Pa_Summary_POST_Request_AcctIds_List []string
 
 //easyjson:json
+type Iserver_Reply_Replyid_POST_200_List []*Iserver_Reply_Replyid_POST_200_List_Item
+
+//easyjson:json
+type Iserver_Scanner_Run_POST_200_List []*Iserver_Scanner_Run_POST_200_List_Item
+
+// Please note here, if the message is a question, you have to reply to question in
+// order to submit
+// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
+//easyjson:json
+type Iserver_Account_Orders_FaGroup_POST_200_List_Item_Message_List []string
+
+// events
+//easyjson:json
+type Events_List []*Events_List_Item
+
+//easyjson:json
+type Performance_Cps_Data_List []*Performance_Cps_Data_List_Item
+
+// each value stands for price change percent of corresponding date in dates array
+//easyjson:json
+type Performance_Nav_Data_List_Item_Returns_List []float64
+
+//easyjson:json
+type Iserver_Account_Trades_GET_200_List []*Trade
+
+//easyjson:json
+type Notifications_List []*Notifications_List_Item
+
+//easyjson:json
+type ScannerResult_Contracts_Contract_List []*ScannerResult_Contracts_Contract_List_Item
+
+// Unique account id
+//easyjson:json
+type Iserver_Accounts_GET_200_Accounts_List []string
+
+//easyjson:json
+type Iserver_Scanner_Params_GET_200_Location_tree_List []*Iserver_Scanner_Params_GET_200_Location_tree_List_Item
+
+//easyjson:json
+type Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_IdentDocs_List []map[string]interface{}
+
+//easyjson:json
+type Performance_Included_List []string
+
+//easyjson:json
+type ScannerParams_ScanTypeList_ScanType_List []*ScannerParams_ScanTypeList_ScanType_List_Item
+
+// Sorted by date descending
+//easyjson:json
+type Transactions_Transactions_List []*Transactions_Transactions_List_Item
+
+//easyjson:json
+type Iserver_Marketdata_Snapshot_GET_200_List []*Iserver_Marketdata_Snapshot_GET_200_List_Item
+
+//easyjson:json
+type Iserver_Secdef_Strikes_GET_200_Call_List []string
+
+//easyjson:json
+type Trsrv_Secdef_POST_Request_Conids_List []int64
+
+//easyjson:json
+type Iserver_Secdef_Info_GET_200_List []*SecdefInfo
+
+//easyjson:json
+type Ibcust_Entity_Info_GET_200_List []*Ibcust_Entity_Info_GET_200_List_Item
+
+//easyjson:json
+type Iserver_Secdef_Search_POST_200_List []*Iserver_Secdef_Search_POST_200_List_Item
+
+// array of dates, the length should be same as the length of returns inside data.
+//easyjson:json
+type Performance_Tpps_Dates_List []string
+
+//easyjson:json
+type Performance_Tpps_Data_List []*Performance_Tpps_Data_List_Item
+
+//easyjson:json
+type Summary_ExcludedAccounts_List []*Summary_ExcludedAccounts_List_Item
+
+//easyjson:json
+type Ibcust_Entity_Info_GET_200_List_Item_Entities_List []*Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item
+
+//easyjson:json
+type AlertRequest_Conditions_List []*AlertRequest_Conditions_List_Item
+
+//easyjson:json
+type Summary_BalanceByDate_Series_List []*Summary_BalanceByDate_Series_List_Item
+
+//easyjson:json
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderTypes_List []int64
+
+//easyjson:json
 type Position_List []*Position_List_Item
+
+//easyjson:json
+type Iserver_Scanner_Params_GET_200_Scan_type_list_List_Item_Instruments_List []string
+
+//easyjson:json
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_FraqTypes_List []int64
+
+//easyjson:json
+type Iserver_Account_Orders_GET_Request_Filters_List []string
+
+//easyjson:json
+type Wagers_List []*Wagers_List_Item
+
+//easyjson:json
+type AlertResponse_Conditions_List []*AlertResponse_Conditions_List_Item
+
+//easyjson:json
+type Accounts_List []*Account
+
+//easyjson:json
+type Secdef_List []*Secdef_List_Item
+
+//easyjson:json
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_IbalgoTypes_List []int64
+
+// array of contracts from different exchanges
+//easyjson:json
+type Stocks_List_Item_Contracts_List []*Stocks_List_Item_Contracts_List_Item
+
+//easyjson:json
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_CqtTypes_List []int64
+
+//easyjson:json
+type Iserver_Account_AccountId_Alerts_GET_200_List []*Iserver_Account_AccountId_Alerts_GET_200_List_Item
+
+//easyjson:json
+type Iserver_Secdef_Search_POST_200_List_Item_Sections_List []*Iserver_Secdef_Search_POST_200_List_Item_Sections_List_Item
+
+// each value stands for price change percent of corresponding date in dates array
+//easyjson:json
+type Performance_Cps_Data_List_Item_Returns_List []float64
+
+// each value stands for price change percent of corresponding date in dates array
+//easyjson:json
+type Performance_Tpps_Data_List_Item_Returns_List []float64
+
+// Contains information like name, supported filters, etc. for an instrument
+//easyjson:json
+type ScannerParams_InstrumentList_Instrument_List []*ScannerParams_InstrumentList_Instrument_List_Item
+
+//easyjson:json
+type Summary_BalanceByDate_Series_List_Item_Date_List_Item_List []float64
+
+//easyjson:json
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderTypesOutside_List []int64
+
+// orderType
+//easyjson:json
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List_Item_String_List []string
+
+//easyjson:json
+type Pa_Performance_POST_Request_AcctIds_List []string
+
+// Please note here, if the message is a question, you have to reply to question in
+// order to submit
+// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
+//easyjson:json
+type Iserver_Account_AccountId_Order_POST_200_List_Item_Message_List []string
+
+//easyjson:json
+type HistoryData_Data_List []*HistoryData_Data_List_Item
 
 // array of dates, the length should be same as the length of returns inside data.
 //easyjson:json
@@ -32,116 +205,8 @@ type Performance_Nav_Dates_List []string
 //easyjson:json
 type Inds_List []*Inds_List_Item
 
-// Always contains at least one 'tradingTime'  and zero or more 'sessionTime' tags
-//easyjson:json
-type Trsrv_Secdef_Schedule_GET_200_Schedules_List []*Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item
-
-//easyjson:json
-type Portfolio_Allocation_POST_Request_AcctIds_List []string
-
-//easyjson:json
-type Iserver_Account_AccountId_Orders_POST_200_List []*Iserver_Account_AccountId_Orders_POST_200_List_Item
-
-//easyjson:json
-type Iserver_Account_AccountId_Order_OrderId_POST_200_List []*Iserver_Account_AccountId_Order_OrderId_POST_200_List_Item
-
-// Sorted by date descending
-//easyjson:json
-type Transactions_Transactions_List []*Transactions_Transactions_List_Item
-
-//easyjson:json
-type Summary_ExcludedAccounts_List []*Summary_ExcludedAccounts_List_Item
-
-//easyjson:json
-type Iserver_Account_AccountId_Alerts_GET_200_List []*Iserver_Account_AccountId_Alerts_GET_200_List_Item
-
 //easyjson:json
 type Pa_Transactions_POST_Request_AcctIds_List []string
-
-//easyjson:json
-type AlertResponse_Conditions_List []*AlertResponse_Conditions_List_Item
-
-//easyjson:json
-type ScannerParams_ScanTypeList_ScanType_List []*ScannerParams_ScanTypeList_ScanType_List_Item
-
-//easyjson:json
-type Summary_AccountSummaries_List []*Summary_AccountSummaries_List_Item
-
-//easyjson:json
-type Ibcust_Entity_Info_GET_200_List []*Ibcust_Entity_Info_GET_200_List_Item
-
-//easyjson:json
-type Fyi_Settings_GET_200_List []*Fyi_Settings_GET_200_List_Item
-
-//easyjson:json
-type HistoryData_Data_List []*HistoryData_Data_List_Item
-
-//easyjson:json
-type Iserver_Marketdata_Snapshot_GET_200_List []*Iserver_Marketdata_Snapshot_GET_200_List_Item
-
-//easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_CqtTypes_List []int64
-
-// orderType
-//easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List_Item_String_List []string
-
-// Contains list of filters supported for the scanner
-//easyjson:json
-type ScannerParams_FilterList_List []map[string]interface{}
-
-//easyjson:json
-type Performance_Cps_Data_List []*Performance_Cps_Data_List_Item
-
-// Contains information like name, supported filters, etc. for an instrument. A location
-// can contain more locations forming a tree-like structure which allows user to control
-// the lcoation at more granular level. locationCode has to be used to specify lcoations
-// while querying a scanner.
-//easyjson:json
-type ScannerParams_LocationTree_Location_List []*ScannerParams_LocationTree_Location_List_Item
-
-//easyjson:json
-type Pa_Transactions_POST_Request_Conids_List []float64
-
-//easyjson:json
-type Iserver_Scanner_Params_GET_200_Instrument_list_List []*Iserver_Scanner_Params_GET_200_Instrument_list_List_Item
-
-//easyjson:json
-type Allocation_List []*Allocation_List_Item
-
-//easyjson:json
-type Iserver_Scanner_Params_GET_200_Filter_list_List []*Iserver_Scanner_Params_GET_200_Filter_list_List_Item
-
-//easyjson:json
-type Futures_List []*Futures_List_Item
-
-// Unique account id
-//easyjson:json
-type Iserver_Accounts_GET_200_Accounts_List []string
-
-//easyjson:json
-type Iserver_Reply_Replyid_POST_200_List []*Iserver_Reply_Replyid_POST_200_List_Item
-
-//easyjson:json
-type Iserver_Account_Orders_GET_200_Orders_List []*Iserver_Account_Orders_GET_200_Orders_List_Item
-
-// each value stands for price change percent of corresponding date in dates array
-//easyjson:json
-type Performance_Cps_Data_List_Item_Returns_List []float64
-
-// array of dates, the length should be same as the length of returns inside data.
-//easyjson:json
-type Performance_Cps_Dates_List []string
-
-// array of dates, the length should be same as the length of returns inside data.
-//easyjson:json
-type Performance_Tpps_Dates_List []string
-
-//easyjson:json
-type Summary_BalanceByDate_Series_List_Item_Date_List [][]float64
-
-//easyjson:json
-type Iserver_Account_AccountId_Order_POST_200_List []*Iserver_Account_AccountId_Order_POST_200_List_Item
 
 // Please note here, if the message is a question, you have to reply to question in
 // order to submit
@@ -150,19 +215,58 @@ type Iserver_Account_AccountId_Order_POST_200_List []*Iserver_Account_AccountId_
 type Iserver_Account_AccountId_Orders_POST_200_List_Item_Message_List []string
 
 //easyjson:json
-type Accounts_List []*Account
+type Iserver_Account_Orders_GET_200_Orders_List []*Iserver_Account_Orders_GET_200_Orders_List_Item
 
 //easyjson:json
-type Position_List_Item_ConExchMap_List []string
+type Iserver_Account_AccountId_Order_POST_200_List []*Iserver_Account_AccountId_Order_POST_200_List_Item
 
 //easyjson:json
-type Events_List_Item_Conids_List []string
+type Iserver_Account_Orders_FaGroup_POST_200_List []*Iserver_Account_Orders_FaGroup_POST_200_List_Item
+
+// Contains information like name, supported filters, etc. for an instrument. A location
+// can contain more locations forming a tree-like structure which allows user to control
+// the lcoation at more granular level. locationCode has to be used to specify lcoations
+// while querying a scanner.
+//easyjson:json
+type ScannerParams_LocationTree_Location_List []*ScannerParams_LocationTree_Location_List_Item
+
+// Contains list of filters supported for the scanner
+//easyjson:json
+type ScannerParams_FilterList_List []map[string]interface{}
 
 //easyjson:json
-type Iserver_Account_Trades_GET_200_List []*Trade
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List []*Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item
 
 //easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderTypes_List []int64
+type Iserver_Account_AccountId_Order_OrderId_POST_200_List []*Iserver_Account_AccountId_Order_OrderId_POST_200_List_Item
+
+// If object returned will provide the defaults based on user settings
+//easyjson:json
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List []*Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List_Item
+
+//easyjson:json
+type Iserver_Secdef_Strikes_GET_200_Put_List []string
+
+//easyjson:json
+type Portfolio_Allocation_POST_Request_AcctIds_List []string
+
+//easyjson:json
+type Pa_Transactions_POST_Request_Conids_List []float64
+
+//easyjson:json
+type Contract_Rules_TifTypes_List []string
+
+//easyjson:json
+type Summary_AccountSummaries_List []*Summary_AccountSummaries_List_Item
+
+//easyjson:json
+type Iserver_Scanner_Params_GET_200_Instrument_list_List_Item_Filters_List []string
+
+//easyjson:json
+type Summary_BalanceByDate_Series_List_Item_Date_List []Summary_BalanceByDate_Series_List_Item_Date_List_Item_List
+
+//easyjson:json
+type Iserver_Scanner_Params_GET_200_Filter_list_List []*Iserver_Scanner_Params_GET_200_Filter_list_List_Item
 
 // Notes for bracket orders: 1. Children orders will not have its own "cOID", so please
 // donot pass "cOID"
@@ -175,226 +279,92 @@ type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderTypes_List
 type Iserver_Account_AccountId_Orders_POST_Request_Orders_List []*OrderRequest
 
 //easyjson:json
-type Trsrv_Secdef_POST_Request_Conids_List []int64
-
-//easyjson:json
-type Secdef_List []*Secdef_List_Item
-
-//easyjson:json
-type Summary_BalanceByDate_Series_List []*Summary_BalanceByDate_Series_List_Item
-
-// events
-//easyjson:json
-type Events_List []*Events_List_Item
-
-//easyjson:json
-type Pa_Performance_POST_Request_AcctIds_List []string
-
-//easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderTypesOutside_List []int64
-
-//easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_TifTypes_List []int64
-
-// If object returned will provide the defaults based on user settings
-//easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List []*Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List_Item
-
-//easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List []*Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item
-
-//easyjson:json
-type Performance_Tpps_Data_List []*Performance_Tpps_Data_List_Item
-
-//easyjson:json
-type Iserver_Scanner_Params_GET_200_Location_tree_List []*Iserver_Scanner_Params_GET_200_Location_tree_List_Item
-
-// Prompt messages that may affect trading or the account
-//easyjson:json
-type AuthStatus_Prompts_List []string
-
-//easyjson:json
-type Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_IdentDocs_List []map[string]interface{}
-
-//easyjson:json
-type Fyi_Deliveryoptions_GET_200_E_List []*Fyi_Deliveryoptions_GET_200_E_List_Item
-
-//easyjson:json
-type Iserver_Scanner_Params_GET_200_Instrument_list_List_Item_Filters_List []string
-
-//easyjson:json
-type ScannerResult_Contracts_Contract_List []*ScannerResult_Contracts_Contract_List_Item
-
-//easyjson:json
-type Performance_Included_List []string
+type Events_List_Item_Conids_List []string
 
 //easyjson:json
 type Contract_Rules_OrderTypes_List []string
 
 //easyjson:json
+type Position_List_Item_ConExchMap_List []string
+
+// Always contains at least one 'tradingTime'  and zero or more 'sessionTime' tags
+//easyjson:json
+type Trsrv_Secdef_Schedule_GET_200_Schedules_List []*Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item
+
+//easyjson:json
+type Fyi_Settings_GET_200_List []*Fyi_Settings_GET_200_List_Item
+
+//easyjson:json
 type Performance_Nav_Data_List []*Performance_Nav_Data_List_Item
-
-// Contains information like name, supported filters, etc. for an instrument
-//easyjson:json
-type ScannerParams_InstrumentList_Instrument_List []*ScannerParams_InstrumentList_Instrument_List_Item
-
-// array of contracts from different exchanges
-//easyjson:json
-type Stocks_List_Item_Contracts_List []*Stocks_List_Item_Contracts_List_Item
-
-// Please note here, if the message is a question, you have to reply to question in
-// order to submit
-// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
-//easyjson:json
-type Iserver_Account_AccountId_Order_POST_200_List_Item_Message_List []string
-
-//easyjson:json
-type Iserver_Scanner_Run_POST_200_List []*Iserver_Scanner_Run_POST_200_List_Item
-
-//easyjson:json
-type Iserver_Account_Orders_FaGroup_POST_200_List []*Iserver_Account_Orders_FaGroup_POST_200_List_Item
-
-//easyjson:json
-type Iserver_Scanner_Params_GET_200_Scan_type_list_List []*Iserver_Scanner_Params_GET_200_Scan_type_list_List_Item
-
-//easyjson:json
-type Contract_Rules_TifTypes_List []string
-
-//easyjson:json
-type Iserver_Account_Orders_GET_Request_Filters_List []string
-
-//easyjson:json
-type Ibcust_Entity_Info_GET_200_List_Item_Entities_List []*Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item
-
-//easyjson:json
-type Iserver_Secdef_Strikes_GET_200_Call_List []string
-
-//easyjson:json
-type Iserver_Scanner_Params_GET_200_Scan_type_list_List_Item_Instruments_List []string
-
-//easyjson:json
-type Iserver_Secdef_Info_GET_200_List []*SecdefInfo
-
-//easyjson:json
-type Summary_BalanceByDate_Series_List_Item_Date_List_Item_List []float64
-
-//easyjson:json
-type Contract_Rules_OrderTypesOutside_List []string
-
-// each value stands for price change percent of corresponding date in dates array
-//easyjson:json
-type Performance_Tpps_Data_List_Item_Returns_List []float64
-
-// each value stands for price change percent of corresponding date in dates array
-//easyjson:json
-type Performance_Nav_Data_List_Item_Returns_List []float64
 
 // This is an array of object(s), there could be multiple results under same symbol
 //easyjson:json
 type Stocks_List []*Stocks_List_Item
 
 //easyjson:json
-type Wagers_List []*Wagers_List_Item
+type Fyi_Deliveryoptions_GET_200_E_List []*Fyi_Deliveryoptions_GET_200_E_List_Item
+
+// array of dates, the length should be same as the length of returns inside data.
+//easyjson:json
+type Performance_Cps_Dates_List []string
 
 //easyjson:json
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_FraqTypes_List []int64
+type Iserver_Scanner_Params_GET_200_Scan_type_list_List []*Iserver_Scanner_Params_GET_200_Scan_type_list_List_Item
 
-// Please note here, if the message is a question, you have to reply to question in
-// order to submit
-// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
-//easyjson:json
-type Iserver_Account_Orders_FaGroup_POST_200_List_Item_Message_List []string
-
-//easyjson:json
-type AlertRequest_Conditions_List []*AlertRequest_Conditions_List_Item
-
-//easyjson:json
-type Iserver_Secdef_Strikes_GET_200_Put_List []string
-
-// Contains all details of the contract, including rules you can use when placing orders
-type Contract struct {
-	Allow_sell_long bool   `json:"allow_sell_long"`
-	Category        string `json:"category"`
-	Cfi_code        string `json:"cfi_code"`
-	Classifier      string `json:"classifier"`
-	CompanyName     string `json:"companyName"`
-	Company_name    string `json:"company_name"`
-	// same as that in request
-	Con_id         int64  `json:"con_id"`
-	Contract_month string `json:"contract_month"`
-	Currency       string `json:"currency"`
-	Cusip          string `json:"cusip"`
-	Exchange       string `json:"exchange"`
-	Expiry_full    string `json:"expiry_full"`
-	Industry       string `json:"industry"`
-	// for example STK
-	Instrument_type             string `json:"instrument_type"`
-	Is_zero_commission_security bool   `json:"is_zero_commission_security"`
-	// for exmple FB
-	Local_symbol  string `json:"local_symbol"`
-	Maturity_date string `json:"maturity_date"`
-	Multiplier    string `json:"multiplier"`
-	// true means you can trade outside RTH(regular trading hours)
-	R_t_h bool `json:"r_t_h"`
-	// CALL or PUT
-	Right string          `json:"right"`
-	Rules *Contract_Rules `json:"rules"`
-	// strike price of Option
-	Strike            string `json:"strike"`
-	Symbol            string `json:"symbol"`
-	Text              string `json:"text"`
-	Trading_class     string `json:"trading_class"`
-	Underlying_con_id int64  `json:"underlying_con_id"`
-	Underlying_issuer string `json:"underlying_issuer"`
-	Valid_exchanges   string `json:"valid_exchanges"`
+// portfolio allocation by group
+type Allocation_List_Item_Group struct {
+	// long positions allocation
+	Long *Allocation_List_Item_Group_Long `json:"long"`
+	// short positions allocation
+	Short *Allocation_List_Item_Group_Short `json:"short"`
 }
 
-// allocation
-type Allocation_List_Item struct {
-	// portfolio allocation by asset class
-	AssetClass *Allocation_List_Item_AssetClass `json:"assetClass"`
-	// portfolio allocation by group
-	Group *Allocation_List_Item_Group `json:"group"`
-	// portfolio allocation by sector
-	Sector *Allocation_List_Item_Sector `json:"sector"`
+type ScannerResult struct {
+	// Contains list of contracts matching the scanner query
+	Contracts *ScannerResult_Contracts `json:"Contracts"`
+	Id        float64                  `json:"id"`
+	Offset    int64                    `json:"offset"`
+	Position  string                   `json:"position"`
+	ScanTime  string                   `json:"scanTime"`
+	Size      int64                    `json:"size"`
+	Total     int64                    `json:"total"`
 }
 
-// Contains list of instruments for which scanner can be ran
-type ScannerParams_InstrumentList struct {
-	// Contains information like name, supported filters, etc. for an instrument
-	Instrument []*ScannerParams_InstrumentList_Instrument_List_Item `json:"Instrument"`
-}
-
-type Tickle_POST_200_Iserver struct {
-	AuthStatus *Tickle_POST_200_Iserver_AuthStatus `json:"authStatus"`
-	Tickle     bool                                `json:"tickle"`
-}
-
-type Iserver_Marketdata_History_GET_429 struct {
+type Iserver_Secdef_Search_POST_500 struct {
 	Error string `json:"error"`
 }
 
-type Iserver_Secdef_Info_GET_500 struct {
-	Error string `json:"error"`
+type Iserver_Scanner_Params_GET_200_Filter_list_List_Item struct {
+	Code         string `json:"code"`
+	Display_name string `json:"display_name"`
+	Group        string `json:"group"`
+	Type         string `json:"type"`
 }
 
-type Logout_POST_200 struct {
-	// true means username is still logged in, false means it is not
-	Confirmed bool `json:"confirmed"`
+type Trsrv_Secdef_Schedule_GET_200 struct {
+	Id string `json:"id"`
+	// Always contains at least one 'tradingTime'  and zero or more 'sessionTime' tags
+	Schedules Trsrv_Secdef_Schedule_GET_200_Schedules_List `json:"schedules"`
+	// null is returned.
+	TradeVenueId string `json:"tradeVenueId"`
 }
 
-type Iserver_Account_AccountId_Order_OrderId_DELETE_200 struct {
-	Account  string `json:"account"`
-	Conid    int64  `json:"conid"`
-	Msg      string `json:"msg"`
-	Order_id string `json:"order_id"`
+// portfolio allocation by sector
+type Allocation_List_Item_Sector struct {
+	// long positions allocation
+	Long *Allocation_List_Item_Sector_Long `json:"long"`
+	// short positions allocation
+	Short *Allocation_List_Item_Sector_Short `json:"short"`
 }
 
-type Calendar_request_Date struct {
-	// end date of a period. for example 20180808-0400
-	End string `json:"end"`
-	// start date of a period. for example 20180808-0400
-	Start string `json:"start"`
+type StatsData struct {
+	Conid    float64 `json:"Conid"`
+	Exchange string  `json:"Exchange"`
+	// Object, payload depends on event type. See confluence page for IGEvntUpd.
+	P  string  `json:"P"`
+	T  float64 `json:"T"`
+	TT float64 `json:"TT"`
+	V  float64 `json:"V"`
 }
 
 type HistoryData_Data_List_Item struct {
@@ -410,725 +380,6 @@ type HistoryData_Data_List_Item struct {
 	T float64 `json:"t"`
 	// volume
 	V float64 `json:"v"`
-}
-
-type Stocks_List_Item_Contracts_List_Item struct {
-	// conid of the stock contract
-	Conid    int64  `json:"conid"`
-	Exchange string `json:"exchange"`
-}
-
-type Performance_Nav_Data_List_Item struct {
-	BaseCurrency string `json:"baseCurrency"`
-	// end date-- yyyyMMdd
-	End string `json:"end"`
-	Id  string `json:"id"`
-	// for example-- acctid
-	IdType string `json:"idType"`
-	// each value stands for price change percent of corresponding date in dates array
-	Returns []float64 `json:"returns"`
-	// start date-- yyyyMMdd
-	Start string `json:"start"`
-}
-
-type Summary_Total struct {
-	// total change amount
-	Chg    string `json:"chg"`
-	EndVal string `json:"endVal"`
-	// set to true if any external account data is not available for starting or ending
-	// date, resulting in potentially unusual total values.
-	IncompleteData bool `json:"incompleteData"`
-	// change percent
-	Rtn      string `json:"rtn"`
-	StartVal string `json:"startVal"`
-}
-
-type Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item struct {
-	Address   *Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_Address `json:"address"`
-	CanSign   bool                                                             `json:"canSign"`
-	CanTrade  bool                                                             `json:"canTrade"`
-	IdentDocs []map[string]interface{}                                         `json:"identDocs"`
-	Name      *Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_Name    `json:"name"`
-	Type      string                                                           `json:"type"`
-}
-
-type Iserver_Account_AccountId_Alerts_GET_200_List_Item struct {
-	// account id
-	Account string `json:"account"`
-	// Value can only be 0 or 1, 1 means active
-	Alert_active int64  `json:"alert_active"`
-	Alert_name   string `json:"alert_name"`
-	// whether the alert can be repeatable or not, value can be 1 or 0. 1 means true
-	Alert_repeatable int64 `json:"alert_repeatable"`
-	// whether the alert has been triggered or not
-	Alert_triggered bool  `json:"alert_triggered"`
-	Order_id        int64 `json:"order_id"`
-	// format, YYYYMMDD-HH:mm:ss, the time when you created the alert
-	Order_time string `json:"order_time"`
-}
-
-// Returns tradingTime in exchange time zone.
-type Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item_TradingTimes struct {
-	CancelDayOrders string `json:"cancelDayOrders"`
-	ClosingTime     int64  `json:"closingTime"`
-	OpeningTime     int64  `json:"openingTime"`
-}
-
-type Fyi_Settings_Typecode_POST_Request struct {
-	Enabled bool `json:"enabled"`
-}
-
-type Iserver_Secdef_Search_POST_200_List_Item struct {
-	// Company Name - Exchange
-	CompanyHeader string `json:"companyHeader"`
-	CompanyName   string `json:"companyName"`
-	// Contract Identifier
-	Conid int64 `json:"conid"`
-	// Exchange
-	Description string                                                         `json:"description"`
-	Fop         string                                                         `json:"fop"`
-	Opt         string                                                         `json:"opt"`
-	Restricted  string                                                         `json:"restricted"`
-	Sections    []*Iserver_Secdef_Search_POST_200_List_Item_Sections_List_Item `json:"sections"`
-	Symbol      string                                                         `json:"symbol"`
-	War         string                                                         `json:"war"`
-}
-
-type Iserver_Marketdata_Conid_Unsubscribe_GET_200 struct {
-	// success means market data was canceled.
-	Confirmed string `json:"confirmed"`
-}
-
-type Account_Master struct {
-	OfficialTitle string `json:"officialTitle"`
-	Title         string `json:"title"`
-}
-
-// account information
-type Summary struct {
-	AccountSummaries []*Summary_AccountSummaries_List_Item `json:"accountSummaries"`
-	BalanceByDate    *Summary_BalanceByDate                `json:"balanceByDate"`
-	Currency         string                                `json:"currency"`
-	EndDate          string                                `json:"endDate"`
-	ExcludedAccounts []*Summary_ExcludedAccounts_List_Item `json:"excludedAccounts"`
-	// indicator of user having configured any external accounts
-	HasExternalAccounts  bool   `json:"hasExternalAccounts"`
-	LastSuccessfulUpdate string `json:"lastSuccessfulUpdate"`
-	Pm                   string `json:"pm"`
-	Rc                   int64  `json:"rc"`
-	// date format-- yyyy-MM-dd
-	StartDate string         `json:"startDate"`
-	Total     *Summary_Total `json:"total"`
-	UserId    string         `json:"userId"`
-	View      string         `json:"view"`
-}
-
-type Pa_Performance_POST_Request struct {
-	AcctIds []string `json:"acctIds"`
-	// Frequency of cumulative performance data points: 'D'aily, 'M'onthly,'Q'uarterly.
-	Freq string `json:"freq"`
-}
-
-type Sso_Validate_GET_200 struct {
-	// Time of session validation
-	AUTH_TIME int64 `json:"AUTH_TIME"`
-	// Time in milliseconds until session expires. Caller needs to call the again to re-validate
-	// session
-	EXPIRES int64 `json:"EXPIRES"`
-	// IP Address
-	IP string `json:"IP"`
-	// 1 for Live, 2 for Paper
-	LOGIN_TYPE int64 `json:"LOGIN_TYPE"`
-	// Paper Username
-	PAPER_USER_NAME string `json:"PAPER_USER_NAME"`
-	// true if session was validated; false if not.
-	RESULT     bool `json:"RESULT"`
-	SF_ENABLED bool `json:"SF_ENABLED"`
-	// User ID
-	USER_ID int64 `json:"USER_ID"`
-	// Username
-	USER_NAME string `json:"USER_NAME"`
-	// Time in milliseconds until session expires. Caller needs to call the again to re-validate
-	// session
-	Expire float64 `json:"expire"`
-	// Time of session validation
-	Features map[string]interface{} `json:"features"`
-	// Time session was last accessed
-	LastAccessed int64 `json:"lastAccessed"`
-	// 1 for Live, 2 for Paper
-	LoginType int64 `json:"loginType"`
-}
-
-type ScannerResult struct {
-	// Contains list of contracts matching the scanner query
-	Contracts *ScannerResult_Contracts `json:"Contracts"`
-	Id        float64                  `json:"id"`
-	Offset    int64                    `json:"offset"`
-	Position  string                   `json:"position"`
-	ScanTime  string                   `json:"scanTime"`
-	Size      int64                    `json:"size"`
-	Total     int64                    `json:"total"`
-}
-
-type AlertResponse_Conditions_List_Item struct {
-	// "a" means "AND", "o" means "OR", "n" means "END",
-	// the last one condition in the condition array should "n"
-	Condition_logic_bind string `json:"condition_logic_bind"`
-	// optional, operator for the current condition, can be >= or <=
-	Condition_operator string `json:"condition_operator"`
-	// only needed for some MTA alert condition
-	Condition_time_zone string `json:"condition_time_zone"`
-	// optional, only some type of conditions have triggerMethod
-	Condition_trigger_method string `json:"condition_trigger_method"`
-	// Types: 1-Price, 3-Time, 4-Margin, 5-Trade, 6-Volume, 7: MTA market 8: MTA Position,
-	// 9: MTA Acc. Daily PN&
-	Condition_type int64 `json:"condition_type"`
-	// can not be empty, can pass default value "*"
-	Condition_value string `json:"condition_value"`
-	// format, conid@exchange
-	Conidex                string `json:"conidex"`
-	Contract_description_1 string `json:"contract_description_1"`
-}
-
-type Summary_ExcludedAccounts_List_Item struct {
-	AcctId               string `json:"acctId"`
-	AcctNumAtFI          string `json:"acctNumAtFI"`
-	AcctTitle            string `json:"acctTitle"`
-	FiName               string `json:"fiName"`
-	HarvestCode          int64  `json:"harvestCode"`
-	LastUpdate           string `json:"lastUpdate"`
-	LastUpdateAttempt    string `json:"lastUpdateAttempt"`
-	LastUpdateStatusCode string `json:"lastUpdateStatusCode"`
-	Rc                   int64  `json:"rc"`
-}
-
-type HistoryResult_Bars struct {
-	Close       float64 `json:"close"`
-	Count       float64 `json:"count"`
-	EndTime     string  `json:"endTime"`
-	High        float64 `json:"high"`
-	Low         float64 `json:"low"`
-	Open        float64 `json:"open"`
-	Time        string  `json:"time"`
-	Volume      float64 `json:"volume"`
-	WeightedAvg float64 `json:"weightedAvg"`
-}
-
-// long positions allocation
-type Allocation_List_Item_AssetClass_Long struct {
-	BOND float64 `json:"BOND"`
-	CASH float64 `json:"CASH"`
-	FUT  float64 `json:"FUT"`
-	OPT  float64 `json:"OPT"`
-	STK  float64 `json:"STK"`
-	WAR  float64 `json:"WAR"`
-}
-
-type Calendar_request struct {
-	Date    *Calendar_request_Date    `json:"date"`
-	Filters *Calendar_request_Filters `json:"filters"`
-}
-
-type HistoryData struct {
-	// The number of seconds in a bar
-	BarLength int64                         `json:"barLength"`
-	Data      []*HistoryData_Data_List_Item `json:"data"`
-	// High value during this time series with format %h/%v/%t. %h is the high price (scaled
-	// by priceFactor), %v is volume
-	// (volume factor will always be 100 (reported volume = actual volume/100)) and %t is
-	// minutes from start time of the chart
-	High string `json:"high"`
-	// Low value during this time series with format %l/%v/%t. %l is the low price (scaled
-	// by priceFactor), %v is volume
-	// (volume factor will always be 100 (reported volume = actual volume/100)) and %t is
-	// minutes from start time of the chart
-	Low string `json:"low"`
-	// Market Data Availability. The field may contain two chars. The first char is the
-	// primary code: S = Streaming, R = Realtime, D = Delayed,
-	// Z = Frozen, Y = Frozen Delayed. The second char is the secondary code: P = Snapshot
-	// Available, p = Consolidated.
-	MdAvailability string `json:"mdAvailability"`
-	MessageVersion int64  `json:"messageVersion"`
-	// The time it takes, in milliseconds, to process the historical data request
-	MktDataDelay    int64 `json:"mktDataDelay"`
-	NegativeCapable bool  `json:"negativeCapable"`
-	// The historical data returned includes outside of regular trading hours
-	OutsideRth bool `json:"outsideRth"`
-	// total number of points
-	Points            int64  `json:"points"`
-	PriceDisplayRule  int64  `json:"priceDisplayRule"`
-	PriceDisplayValue string `json:"priceDisplayValue"`
-	// priceFactor is price increment obtained from display rule
-	PriceFactor int64 `json:"priceFactor"`
-	// start date time in the format YYYYMMDD-HH:mm:ss
-	StartTime string `json:"startTime"`
-	// Underlying Symbol of the corresponding contract
-	Symbol string `json:"symbol"`
-	// companyName of the corresponding contract
-	Text string `json:"text"`
-	// The duration for the historical data request
-	TimePeriod string `json:"timePeriod"`
-	// The number of seconds in the trading day
-	TradingDayDuration int64 `json:"tradingDayDuration"`
-	TravelTime         int64 `json:"travelTime"`
-	VolumeFactor       int64 `json:"volumeFactor"`
-}
-
-// Contains list of scan types for which scanner can be ran
-type ScannerParams_ScanTypeList struct {
-	ScanType []*ScannerParams_ScanTypeList_ScanType_List_Item `json:"ScanType"`
-}
-
-type AlertResponse struct {
-	// account id
-	Account string `json:"account"`
-	// whether alert is active or not, so value can only be 0 or 1
-	Alert_active int64 `json:"alert_active"`
-	// MTA alert only
-	Alert_default_type string `json:"alert_default_type"`
-	// email address to receive alert
-	Alert_email string `json:"alert_email"`
-	// The message you want to receive via email or text message
-	Alert_message string `json:"alert_message"`
-	// MTA alert only
-	Alert_mta_currency string `json:"alert_mta_currency"`
-	// MTA alert only
-	Alert_mta_defaults string `json:"alert_mta_defaults"`
-	// name of alert
-	Alert_name string `json:"alert_name"`
-	// audio message to play when alert is triggered
-	Alert_play_audio string `json:"alert_play_audio"`
-	// whether alert is repeatable or not, so value can only be 0 or 1
-	Alert_repeatable int64 `json:"alert_repeatable"`
-	// whether allowing to send email or not, so value can only be 0 or 1,
-	Alert_send_message int64 `json:"alert_send_message"`
-	// value can only be 0 or 1, set to 1 to allow to show alert in pop-ups
-	Alert_show_popup int64 `json:"alert_show_popup"`
-	// whether the alert has been triggered
-	Alert_triggered bool `json:"alert_triggered"`
-	// whether allowing the condition can be triggered outside of regular trading hours,
-	// 1 means allow
-	Condition_outside_rth int64 `json:"condition_outside_rth"`
-	// size of conditions array
-	Condition_size int64                                 `json:"condition_size"`
-	Conditions     []*AlertResponse_Conditions_List_Item `json:"conditions"`
-	// format, YYYYMMDD-HH:mm:ss
-	Expire_time string `json:"expire_time"`
-	// value can only be 0 or 1, set to 1 to enable the alert only in IBKR mobile
-	Itws_orders_only int64 `json:"itws_orders_only"`
-	Order_id         int64 `json:"order_id"`
-	// whether the alert can be edited
-	Order_not_editable bool `json:"order_not_editable"`
-	// status of alert
-	Order_status string `json:"order_status"`
-	// value can only be 0 or 1, set to 1 if the alert can be triggered outside regular
-	// trading hours.
-	OutsideRth int64 `json:"outsideRth"`
-	// time in force, can only be GTC or GTD
-	Tif string `json:"tif"`
-	// MTA alert only
-	Time_zone string `json:"time_zone"`
-	// for MTA alert only, each user has a unique toolId and it will stay the same, do not
-	// send for normal alert
-	Tool_id int64 `json:"tool_id"`
-}
-
-type Iserver_Account_AccountId_Order_POST_200_List_Item struct {
-	Id string `json:"id"`
-	// Please note here, if the message is a question, you have to reply to question in
-	// order to submit
-	// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
-	Message []string `json:"message"`
-}
-
-type Iserver_Reply_Replyid_POST_200_List_Item struct {
-	Local_order_id string `json:"local_order_id"`
-	Order_id       string `json:"order_id"`
-	Order_status   string `json:"order_status"`
-}
-
-// short positions allocation
-type Allocation_List_Item_Group_Short struct {
-	Airlines float64 `json:"Airlines"`
-	Banks    float64 `json:"Banks"`
-	Internet float64 `json:"Internet"`
-}
-
-type StatsData struct {
-	Conid    float64 `json:"Conid"`
-	Exchange string  `json:"Exchange"`
-	// Object, payload depends on event type. See confluence page for IGEvntUpd.
-	P  string  `json:"P"`
-	T  float64 `json:"T"`
-	TT float64 `json:"TT"`
-	V  float64 `json:"V"`
-}
-
-type Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item struct {
-	ClearingCycleEndTime int64 `json:"clearingCycleEndTime"`
-	// If the LIQUID hours differs from the total trading day then a separate 'session'
-	// tag is returned.
-	Sessions *Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item_Sessions `json:"sessions"`
-	// 20000101 stands for any Sat, 20000102 stands for any Sun, ... 20000107 stands for
-	// any Fri. Any other date stands for itself.
-	TradingScheduleDate int64 `json:"tradingScheduleDate"`
-	// Returns tradingTime in exchange time zone.
-	TradingTimes *Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item_TradingTimes `json:"tradingTimes"`
-}
-
-type Pa_Transactions_POST_Request struct {
-	AcctIds []string  `json:"acctIds"`
-	Conids  []float64 `json:"conids"`
-	// optional defaults to USD.
-	Currency string `json:"currency"`
-	// optional, default value is 90
-	Days float64 `json:"days"`
-}
-
-type Fyi_Settings_GET_200_List_Item struct {
-	// optional, if A doesn't exist, it means user can't toggle this option. 0-off, 1-on.
-	A int64 `json:"A"`
-	// fyi code
-	FC string `json:"FC"`
-	// detailed description
-	FD string `json:"FD"`
-	// title
-	FN string `json:"FN"`
-	// disclaimer read, 1 = yes, = 0 no.
-	H int64 `json:"H"`
-}
-
-type Iserver_Scanner_Params_GET_200_Location_tree_List_Item struct {
-	Display_name string                                                                        `json:"display_name"`
-	Locations    []*Iserver_Scanner_Params_GET_200_Location_tree_List_Item_Locations_List_Item `json:"locations"`
-	Type         string                                                                        `json:"type"`
-}
-
-type Iserver_Secdef_Search_POST_200_List_Item_Sections_List_Item struct {
-	// Listing Exchange
-	Exchange string `json:"exchange"`
-	// For combo's defines the asset class for each leg
-	LegSecType string `json:"legSecType"`
-	// List of expiration month(s) and year(s) in MMMYY format separated by semicolon
-	Months string `json:"months"`
-	// Asset Class
-	SecType string `json:"secType"`
-	Symbol  string `json:"symbol"`
-}
-
-type Iserver_Account_AccountId_Order_OrderId_POST_200_List_Item struct {
-	Local_order_id string `json:"local_order_id"`
-	Order_id       string `json:"order_id"`
-	Order_status   string `json:"order_status"`
-}
-
-// portfolio allocation by sector
-type Allocation_List_Item_Sector struct {
-	// long positions allocation
-	Long *Allocation_List_Item_Sector_Long `json:"long"`
-	// short positions allocation
-	Short *Allocation_List_Item_Sector_Short `json:"short"`
-}
-
-type Tickle_POST_200_Iserver_AuthStatus struct {
-	MAC           string `json:"MAC"`
-	Authenticated bool   `json:"authenticated"`
-	Competing     bool   `json:"competing"`
-	Connected     bool   `json:"connected"`
-	Message       string `json:"message"`
-}
-
-type Fyi_Disclaimer_Typecode_GET_200 struct {
-	// disclaimer message
-	DT string `json:"DT"`
-	// fyi code
-	FC string `json:"FC"`
-}
-
-type AlertRequest_Conditions_List_Item struct {
-	// format, conid@exchange
-	Conidex string `json:"conidex"`
-	// "a" means "AND", "o" means "OR", "n" means "END",
-	// the last one condition in the condition array should "n"
-	LogicBind string `json:"logicBind"`
-	// optional, operator for the current condition, can be >= or <=
-	Operator string `json:"operator"`
-	// only needed for some MTA alert condition
-	TimeZone string `json:"timeZone"`
-	// optional, only some type of conditions have triggerMethod
-	TriggerMethod string `json:"triggerMethod"`
-	// Types: 1-Price, 3-Time, 4-Margin, 5-Trade, 6-Volume, 7: MTA market 8: MTA Position,
-	// 9: MTA Acc. Daily PN&
-	Type int64 `json:"type"`
-	// can not be empty, can pass default value "*"
-	Value string `json:"value"`
-}
-
-type Iserver_Scanner_Params_GET_200_Location_tree_List_Item_Locations_List_Item struct {
-	Display_name string `json:"display_name"`
-	Type         string `json:"type"`
-}
-
-type Ledger struct {
-	Acctcode                  string  `json:"acctcode"`
-	Cashbalance               float64 `json:"cashbalance"`
-	Commoditymarketvalue      float64 `json:"commoditymarketvalue"`
-	Corporatebondsmarketvalue float64 `json:"corporatebondsmarketvalue"`
-	Currency                  string  `json:"currency"`
-	Exchangerate              float64 `json:"exchangerate"`
-	Funds                     float64 `json:"funds"`
-	Futuremarketvalue         float64 `json:"futuremarketvalue"`
-	Interest                  float64 `json:"interest"`
-	Issueroptionsmarketvalue  float64 `json:"issueroptionsmarketvalue"`
-	Key                       string  `json:"key"`
-	Moneyfunds                float64 `json:"moneyfunds"`
-	Netliquidationvalue       float64 `json:"netliquidationvalue"`
-	Realizedpnl               float64 `json:"realizedpnl"`
-	Sessionid                 int64   `json:"sessionid"`
-	Settledcash               float64 `json:"settledcash"`
-	Severity                  int64   `json:"severity"`
-	Stockmarketvalue          float64 `json:"stockmarketvalue"`
-	Timestamp                 int64   `json:"timestamp"`
-	Unrealizedpnl             float64 `json:"unrealizedpnl"`
-	Warrantsmarketvalue       float64 `json:"warrantsmarketvalue"`
-}
-
-type Summary_AccountSummaries_List_Item struct {
-	AccountTypeCode string `json:"accountTypeCode"`
-	AccountTypeName string `json:"accountTypeName"`
-	Chg             string `json:"chg"`
-	EndVal          string `json:"endVal"`
-	HasAccounts     string `json:"hasAccounts"`
-	Rtn             string `json:"rtn"`
-	StartVal        string `json:"startVal"`
-}
-
-type Iserver_Account_AccountId_Order_Whatif_POST_200 struct {
-	Amount      *Iserver_Account_AccountId_Order_Whatif_POST_200_Amount      `json:"amount"`
-	Equity      *Iserver_Account_AccountId_Order_Whatif_POST_200_Equity      `json:"equity"`
-	Error       string                                                       `json:"error"`
-	Initial     *Iserver_Account_AccountId_Order_Whatif_POST_200_Initial     `json:"initial"`
-	Maintenance *Iserver_Account_AccountId_Order_Whatif_POST_200_Maintenance `json:"maintenance"`
-	Warn        string                                                       `json:"warn"`
-}
-
-type Iserver_Secdef_Search_POST_500 struct {
-	Error string `json:"error"`
-}
-
-type Trsrv_Secdef_POST_Request struct {
-	Conids []int64 `json:"conids"`
-}
-
-type Pa_Summary_POST_Request struct {
-	AcctIds []string `json:"acctIds"`
-}
-
-type Iserver_Account_AccountId_Orders_POST_200_List_Item struct {
-	Id string `json:"id"`
-	// Please note here, if the message is a question, you have to reply to question in
-	// order to submit
-	// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
-	Message []string `json:"message"`
-}
-
-type Fyi_Deliveryoptions_Email_PUT_200 struct {
-	T int64 `json:"T"`
-	V int64 `json:"V"`
-}
-
-// Contains some basic info of contract
-type SecdefInfo struct {
-	Conid float64 `json:"conid"`
-	// Annual interest rate paid on a bond
-	Coupon string `json:"coupon"`
-	// Currency the contract trades in
-	Currency string `json:"currency"`
-	// Committee on Uniform Securities Identification Procedures number
-	Cusip string `json:"cusip"`
-	// Formatted symbol
-	Desc1 string `json:"desc1"`
-	// Formatted expiration, strike and right
-	Desc2           string `json:"desc2"`
-	Exchange        string `json:"exchange"`
-	ListingExchange string `json:"listingExchange"`
-	// Format YYYYMMDD, the date on which the underlying transaction settles if the option
-	// is exercised
-	MaturityDate string `json:"maturityDate"`
-	// total premium paid or received for an option contract
-	Multiplier string `json:"multiplier"`
-	// C = Call Option, P = Put Option
-	Right   string `json:"right"`
-	SecType string `json:"secType"`
-	// The strike price also known as exercise price
-	Strike string `json:"strike"`
-	// For example IBKR
-	Symbol         string `json:"symbol"`
-	TradingClass   string `json:"tradingClass"`
-	ValidExchanges string `json:"validExchanges"`
-}
-
-// Net asset value data for the account or consolidated accounts. NAV data is not applicable
-// to benchmarks.
-type Performance_Nav struct {
-	Data []*Performance_Nav_Data_List_Item `json:"data"`
-	// array of dates, the length should be same as the length of returns inside data.
-	Dates []string `json:"dates"`
-	// D means Day
-	Freq string `json:"freq"`
-}
-
-// device
-type Fyi_Deliveryoptions_GET_200_E_List_Item struct {
-	// device is enabled or not 0-true, 1-false.
-	A string `json:"A"`
-	// device id
-	I string `json:"I"`
-	// device name
-	NM string `json:"NM"`
-	// unique device id
-	UI string `json:"UI"`
-}
-
-type Iserver_Scanner_Params_GET_200_Scan_type_list_List_Item struct {
-	Code         string   `json:"code"`
-	Display_name string   `json:"display_name"`
-	Instruments  []string `json:"instruments"`
-}
-
-type Iserver_Account_AccountId_Orders_POST_Request struct {
-	// Notes for bracket orders: 1. Children orders will not have its own "cOID", so please
-	// donot pass "cOID"
-	// parameter in child order.Instead, they will have a "parentId" which must be equal
-	// to "cOID" of parent.
-	// 2. When you cancel a parent order, it will cancel all bracket orders, when you cancel
-	// one child order,
-	// it will also cancel its sibling order.
-	Orders []*OrderRequest `json:"orders"`
-}
-
-type Trsrv_Stocks_GET_500 struct {
-	Error string `json:"error"`
-}
-
-// long positions allocation
-type Allocation_List_Item_Sector_Long struct {
-	Communications float64 `json:"Communications"`
-	Energy         float64 `json:"Energy"`
-	Financial      float64 `json:"Financial"`
-	Others         float64 `json:"Others"`
-	Technology     float64 `json:"Technology"`
-	Utilities      float64 `json:"Utilities"`
-}
-
-type Summary_BalanceByDate_Series_List_Item struct {
-	Date    [][]float64 `json:"date"`
-	GroupId string      `json:"groupId"`
-	Id      string      `json:"id"`
-	Name    string      `json:"name"`
-}
-
-type Iserver_Account_AccountId_Order_Whatif_POST_200_Initial struct {
-	After   string `json:"after"`
-	Change  string `json:"change"`
-	Current string `json:"current"`
-}
-
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item struct {
-	// Cash currency for the contract
-	CashCcy string `json:"cashCcy"`
-	// Increment value for cash quantity
-	CashQtyIncr float64 `json:"cashQtyIncr"`
-	// cash value
-	CashSize int64   `json:"cashSize"`
-	CqtTypes []int64 `json:"cqtTypes"`
-	// Default quantity
-	DefaultSize int64 `json:"defaultSize"`
-	// Default time in force value
-	DefaultTIF  string  `json:"defaultTIF"`
-	DisplaySize float64 `json:"displaySize"`
-	Error       string  `json:"error"`
-	// decimal places for fractional order size
-	FraqInt     float64 `json:"fraqInt"`
-	FraqTypes   []int64 `json:"fraqTypes"`
-	IbalgoTypes []int64 `json:"ibalgoTypes"`
-	// Price increment value
-	Increment float64 `json:"increment"`
-	// Number of digits for price increment
-	IncrementDigits int64 `json:"incrementDigits"`
-	// Limit price
-	LimitPrice float64 `json:"limitPrice"`
-	// trading negative price support
-	NegativeCapable bool `json:"negativeCapable"`
-	// If object returned will provide the defaults based on user settings
-	OrderDefaults []*Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List_Item `json:"orderDefaults"`
-	// Order origin designation for US securities options and Options Clearing Corporation
-	OrderOrigination  float64 `json:"orderOrigination"`
-	OrderTypes        []int64 `json:"orderTypes"`
-	OrderTypesOutside []int64 `json:"orderTypesOutside"`
-	// order preview required
-	Preview bool `json:"preview"`
-	// Price Magnifier
-	PriceMagnifier float64 `json:"priceMagnifier"`
-	// increment quantity value
-	SizeIncrement int64 `json:"sizeIncrement"`
-	// Stop price
-	Stopprice float64 `json:"stopprice"`
-	TifTypes  []int64 `json:"tifTypes"`
-}
-
-type Iserver_Contract_Conid_InfoAndRules_GET_200 struct {
-	// Allowed to sell shares that you own
-	Allow_sell_long bool `json:"allow_sell_long"`
-	// Classification of Financial Instrument codes
-	Cfi_code   string `json:"cfi_code"`
-	Classifier string `json:"classifier"`
-	// Contracts company name
-	Company_name string `json:"company_name"`
-	// IBKRs contract identifier
-	Con_id float64 `json:"con_id"`
-	// Month the contract must be satisfied by making or accepting delivery
-	Contract_month string `json:"contract_month"`
-	// Currency contract trades in
-	Currency string `json:"currency"`
-	Cusip    string `json:"cusip"`
-	// Primary Exchange, Routing or Trading Venue
-	Exchange string `json:"exchange"`
-	// Expiration Date in the format YYYYMMDD
-	Expiry_full float64 `json:"expiry_full"`
-	// Specific group of companies or businesses.
-	Industry string `json:"industry"`
-	// Asset Class of the contract
-	Instrument_type string `json:"instrument_type"`
-	// Supports zero commission trades
-	Is_zero_commission_security bool `json:"is_zero_commission_security"`
-	// Contracts symbol from primary exchange. For options it is the OCC symbol.
-	Local_symbol string `json:"local_symbol"`
-	// Date on which the underlying transaction settles if the option is exercised
-	Maturity_date float64 `json:"maturity_date"`
-	// numerical value of each point of price movement
-	Multiplier string `json:"multiplier"`
-	// Provides trading outside of Regular Trading Hours
-	R_t_h bool `json:"r_t_h"`
-	// Put or Call of the option
-	Right string                                                         `json:"right"`
-	Rules []*Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item `json:"rules"`
-	// Support IBKRs SMART routing
-	Smart_available bool `json:"smart_available"`
-	// fixed price at which the owner of the option buys or sells the underlying
-	Strike string `json:"strike"`
-	// Underlying Symbol for contract
-	Symbol string `json:"symbol"`
-	// Formatted contract parameters
-	Text string `json:"text"`
-	// Designation of the contract
-	Trading_class string `json:"trading_class"`
-	// IBKRs contract identifier for the underlying instrument
-	Underlying_con_id float64 `json:"underlying_con_id"`
-	// Legal entity for underlying contract
-	Underlying_issuer string `json:"underlying_issuer"`
-	// Comma separated list of exchanges or trading venues
-	Valid_exchanges string `json:"valid_exchanges"`
 }
 
 type Trade struct {
@@ -1157,60 +408,133 @@ type Trade struct {
 	Trade_time_r float64 `json:"trade_time_r"`
 }
 
-// account information
-type Account struct {
-	AccountAlias  string          `json:"accountAlias"`
-	AccountId     string          `json:"accountId"`
-	AccountStatus float64         `json:"accountStatus"`
-	AccountTitle  string          `json:"accountTitle"`
-	AccountVan    string          `json:"accountVan"`
-	Covestor      bool            `json:"covestor"`
-	Currency      string          `json:"currency"`
-	Desc          string          `json:"desc"`
-	DisplayName   string          `json:"displayName"`
-	Faclient      bool            `json:"faclient"`
-	Id            string          `json:"id"`
-	Master        *Account_Master `json:"master"`
-	Parent        string          `json:"parent"`
-	TradingType   string          `json:"tradingType"`
-	Type          string          `json:"type"`
+type Iserver_Marketdata_Snapshot_GET_400 struct {
+	Error      string `json:"error"`
+	StatusCode int64  `json:"statusCode"`
 }
 
-// portfolio allocation by group
-type Allocation_List_Item_Group struct {
-	// long positions allocation
-	Long *Allocation_List_Item_Group_Long `json:"long"`
-	// short positions allocation
-	Short *Allocation_List_Item_Group_Short `json:"short"`
+// account transactions
+type Transactions struct {
+	// same as request
+	Currency string `json:"currency"`
+	// Period start date. Epoch time, GMT
+	From float64 `json:"from"`
+	// will always be getTransactions
+	Id string `json:"id"`
+	// Indicates whether current day and realtime data is included in the result
+	IncludesRealTime bool `json:"includesRealTime"`
+	// Period end date. Epoch time, GMT
+	To float64 `json:"to"`
+	// Sorted by date descending
+	Transactions Transactions_Transactions_List `json:"transactions"`
 }
 
-type Performance_Tpps_Data_List_Item struct {
-	BaseCurrency string `json:"baseCurrency"`
-	// end date-- yyyyMMdd
-	End string `json:"end"`
-	Id  string `json:"id"`
-	// for example-- acctid
-	IdType string `json:"idType"`
-	// each value stands for price change percent of corresponding date in dates array
-	Returns []float64 `json:"returns"`
-	// start date-- yyyyMMdd
-	Start string `json:"start"`
+type Iserver_Account_Orders_GET_200_Orders_List_Item struct {
+	// Account number
+	Acct string `json:"acct"`
+	// background color in hex format
+	BgColor string `json:"bgColor"`
+	// Cash currency
+	CashCcy string `json:"cashCcy"`
+	// Company Name
+	CompanyName string `json:"companyName"`
+	// Contract identifier
+	Conid float64 `json:"conid"`
+	// Formatted ticker description
+	Description1 string `json:"description1"`
+	// Exchange or trading venue
+	Exchange string `json:"exchange"`
+	// foreground color in hex format
+	FgColor string `json:"fgColor"`
+	// Quantity filled
+	FilledQuantity float64 `json:"filledQuantity"`
+	// Last status update in format YYMMDDhhmms based in GMT
+	LastExecutionTime float64 `json:"lastExecutionTime"`
+	// Last status update unix time in ms
+	LastExecutionTime_r float64 `json:"lastExecutionTime_r"`
+	// Listing Exchange
+	ListingExchange string `json:"listingExchange"`
+	// Order description
+	OrderDesc string `json:"orderDesc"`
+	// Order identifier
+	OrderId string `json:"orderId"`
+	// Order type
+	OrderType string `json:"orderType"`
+	// Order reference
+	Order_ref string `json:"order_ref"`
+	// Original order type
+	OrigOrderType string `json:"origOrderType"`
+	// Price of order
+	Price float64 `json:"price"`
+	// Quantity remaining
+	RemainingQuantity float64 `json:"remainingQuantity"`
+	// Asset class
+	SecType string `json:"secType"`
+	// Side of order
+	Side string `json:"side"`
+	// Quantity outstanding and total quantity concatenated with forward slash separator
+	SizeAndFills float64 `json:"sizeAndFills"`
+	// Status of the order
+	Status string `json:"status"`
+	// Supports Tax Optimization with 0 for no and 1 for yes
+	SupportsTaxOpt float64 `json:"supportsTaxOpt"`
+	// Underlying symbol
+	Ticker string `json:"ticker"`
+	// Time in force
+	TimeInForce string `json:"timeInForce"`
 }
 
-type SetAccount struct {
-	// Account ID
-	AcctId string `json:"acctId"`
+// Contains list of instruments for which scanner can be ran
+type ScannerParams_LocationTree struct {
+	// Contains information like name, supported filters, etc. for an instrument. A location
+	// can contain more locations forming a tree-like structure which allows user to control
+	// the lcoation at more granular level. locationCode has to be used to specify lcoations
+	// while querying a scanner.
+	Location ScannerParams_LocationTree_Location_List `json:"Location"`
 }
 
-type Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_Address struct {
-	City        string `json:"city"`
-	Compact     string `json:"compact"`
-	Country     string `json:"country"`
-	CountryCode string `json:"countryCode"`
-	PostalCode  string `json:"postalCode"`
-	State       string `json:"state"`
-	Street      string `json:"street"`
-	Street2     string `json:"street2"`
+type ScannerParams struct {
+	// Contains list of filters supported for the scanner
+	FilterList ScannerParams_FilterList_List `json:"FilterList"`
+	// Contains list of instruments for which scanner can be ran
+	InstrumentList *ScannerParams_InstrumentList `json:"InstrumentList"`
+	// Contains list of instruments for which scanner can be ran
+	LocationTree *ScannerParams_LocationTree `json:"LocationTree"`
+	// Contains list of scan types for which scanner can be ran
+	ScanTypeList *ScannerParams_ScanTypeList `json:"ScanTypeList"`
+}
+
+type Calendar_request_Filters struct {
+	// value can be 'true' or 'false'.
+	DivExDates string `json:"DivExDates"`
+	// value can be 'true' or 'false'.
+	Corporate_earnings string `json:"corporate_earnings"`
+	// value can be 'true' or 'false'.
+	Corporate_events string `json:"corporate_events"`
+	// default is 'All'.
+	Country string `json:"country"`
+	// value can be 'true' or 'false'.
+	Economic_events string `json:"economic_events"`
+	// value can be 'true' or 'false'.
+	Ipo string `json:"ipo"`
+	// default is '250'.
+	Limit string `json:"limit"`
+	// default is '50'.
+	Limit_region string `json:"limit_region"`
+	// value can be 'true' or 'false'.
+	Option_show_monthly string `json:"option_show_monthly"`
+	// value can be 'true' or 'false'.
+	Option_show_weekly string `json:"option_show_weekly"`
+	// value can be 'true' or 'false'.
+	Recently_held string `json:"recently_held"`
+	// value can be 'true' or 'false'.
+	Splits string `json:"splits"`
+}
+
+type Fyi_Deliveryoptions_GET_200 struct {
+	E Fyi_Deliveryoptions_GET_200_E_List `json:"E"`
+	// Email option is enabled or not 0-off, 1-on.
+	M int64 `json:"M"`
 }
 
 type Iserver_Account_AccountId_Alert_Activate_POST_Request struct {
@@ -1220,121 +544,188 @@ type Iserver_Account_AccountId_Alert_Activate_POST_Request struct {
 	AlertId int64 `json:"alertId"`
 }
 
-type Iserver_Account_AccountId_Alert_POST_200 struct {
-	Order_id        int64  `json:"order_id"`
-	Order_status    string `json:"order_status"`
-	Request_id      int64  `json:"request_id"`
-	Success         bool   `json:"success"`
-	Text            string `json:"text"`
-	Warning_message string `json:"warning_message"`
+// Contains list of instruments for which scanner can be ran
+type ScannerParams_InstrumentList struct {
+	// Contains information like name, supported filters, etc. for an instrument
+	Instrument ScannerParams_InstrumentList_Instrument_List `json:"Instrument"`
+}
+
+//easyjson:json
+type Portfolio_AccountId_Ledger_GET_200 map[string]*Ledger
+
+type Iserver_Account_AccountId_Order_OrderId_DELETE_200 struct {
+	Account  string `json:"account"`
+	Conid    int64  `json:"conid"`
+	Msg      string `json:"msg"`
+	Order_id string `json:"order_id"`
+}
+
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item struct {
+	// Cash currency for the contract
+	CashCcy string `json:"cashCcy"`
+	// Increment value for cash quantity
+	CashQtyIncr float64 `json:"cashQtyIncr"`
+	// cash value
+	CashSize int64                                                                     `json:"cashSize"`
+	CqtTypes Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_CqtTypes_List `json:"cqtTypes"`
+	// Default quantity
+	DefaultSize int64 `json:"defaultSize"`
+	// Default time in force value
+	DefaultTIF  string  `json:"defaultTIF"`
+	DisplaySize float64 `json:"displaySize"`
+	Error       string  `json:"error"`
+	// decimal places for fractional order size
+	FraqInt     float64                                                                      `json:"fraqInt"`
+	FraqTypes   Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_FraqTypes_List   `json:"fraqTypes"`
+	IbalgoTypes Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_IbalgoTypes_List `json:"ibalgoTypes"`
+	// Price increment value
+	Increment float64 `json:"increment"`
+	// Number of digits for price increment
+	IncrementDigits int64 `json:"incrementDigits"`
+	// Limit price
+	LimitPrice float64 `json:"limitPrice"`
+	// trading negative price support
+	NegativeCapable bool `json:"negativeCapable"`
+	// If object returned will provide the defaults based on user settings
+	OrderDefaults Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List `json:"orderDefaults"`
+	// Order origin designation for US securities options and Options Clearing Corporation
+	OrderOrigination  float64                                                                            `json:"orderOrigination"`
+	OrderTypes        Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderTypes_List        `json:"orderTypes"`
+	OrderTypesOutside Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderTypesOutside_List `json:"orderTypesOutside"`
+	// order preview required
+	Preview bool `json:"preview"`
+	// Price Magnifier
+	PriceMagnifier float64 `json:"priceMagnifier"`
+	// increment quantity value
+	SizeIncrement int64 `json:"sizeIncrement"`
+	// Stop price
+	Stopprice float64                                                                   `json:"stopprice"`
+	TifTypes  Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_TifTypes_List `json:"tifTypes"`
+}
+
+type Performance struct {
+	// Cumulative performance data
+	Cps          *Performance_Cps          `json:"cps"`
+	CurrencyType string                    `json:"currencyType"`
+	Id           string                    `json:"id"`
+	Included     Performance_Included_List `json:"included"`
+	// Net asset value data for the account or consolidated accounts. NAV data is not applicable
+	// to benchmarks.
+	Nav *Performance_Nav `json:"nav"`
+	Pm  string           `json:"pm"`
+	Rc  int64            `json:"rc"`
+	// Time period performance data
+	Tpps *Performance_Tpps `json:"tpps"`
+}
+
+type Iserver_Account_AccountId_Order_Whatif_POST_200_Initial struct {
+	After   string `json:"after"`
+	Change  string `json:"change"`
+	Current string `json:"current"`
+}
+
+type Ledger struct {
+	Acctcode                  string  `json:"acctcode"`
+	Cashbalance               float64 `json:"cashbalance"`
+	Commoditymarketvalue      float64 `json:"commoditymarketvalue"`
+	Corporatebondsmarketvalue float64 `json:"corporatebondsmarketvalue"`
+	Currency                  string  `json:"currency"`
+	Exchangerate              float64 `json:"exchangerate"`
+	Funds                     float64 `json:"funds"`
+	Futuremarketvalue         float64 `json:"futuremarketvalue"`
+	Interest                  float64 `json:"interest"`
+	Issueroptionsmarketvalue  float64 `json:"issueroptionsmarketvalue"`
+	Key                       string  `json:"key"`
+	Moneyfunds                float64 `json:"moneyfunds"`
+	Netliquidationvalue       float64 `json:"netliquidationvalue"`
+	Realizedpnl               float64 `json:"realizedpnl"`
+	Sessionid                 int64   `json:"sessionid"`
+	Settledcash               float64 `json:"settledcash"`
+	Severity                  int64   `json:"severity"`
+	Stockmarketvalue          float64 `json:"stockmarketvalue"`
+	Timestamp                 int64   `json:"timestamp"`
+	Unrealizedpnl             float64 `json:"unrealizedpnl"`
+	Warrantsmarketvalue       float64 `json:"warrantsmarketvalue"`
+}
+
+type Iserver_Reply_Replyid_POST_Request struct {
+	// answer to question, true means yes, false means no
+	Confirmed bool `json:"confirmed"`
 }
 
 type Iserver_Secdef_Strikes_GET_500 struct {
 	Error string `json:"error"`
 }
 
-type Events_List_Item struct {
-	Conids []string `json:"conids"`
-	// will be different for different event types
-	Data map[string]interface{} `json:"data"`
-	// for example 11662135
-	Event_key  string `json:"event_key"`
-	Event_type string `json:"event_type"`
-	// for exmple 20180817T040000+0000
-	Index_date      string `json:"index_date"`
-	Index_date_type string `json:"index_date_type"`
-	// for example RSE
-	Source   string                 `json:"source"`
-	Status   string                 `json:"status"`
-	Tooltips map[string]interface{} `json:"tooltips"`
+type Contract_Rules struct {
+	// default quantity you can use to place an order
+	DefaultSize float64 `json:"defaultSize"`
+	DisplaySize string  `json:"displaySize"`
+	Increment   string  `json:"increment"`
+	// default limit price you can use to prefill your order
+	LimitPrice        float64                               `json:"limitPrice"`
+	OrderTypes        Contract_Rules_OrderTypes_List        `json:"orderTypes"`
+	OrderTypesOutside Contract_Rules_OrderTypesOutside_List `json:"orderTypesOutside"`
+	// if you can preview the order or not with the whatif endpoint
+	Preview       bool    `json:"preview"`
+	SizeIncrement float64 `json:"sizeIncrement"`
+	// default stop price you can use to prefill your order
+	Stopprice float64                      `json:"stopprice"`
+	TifTypes  Contract_Rules_TifTypes_List `json:"tifTypes"`
 }
 
-type ModifyOrder struct {
-	AcctId   string  `json:"acctId"`
-	AuxPrice float64 `json:"auxPrice"`
-	Conid    int64   `json:"conid"`
-	// optional, not required
+type OrderRequest struct {
+	// acctId is optional. It should be one of the accounts returned by
+	// /iserver/accounts. If not passed, the first one in the list is selected.
+	AcctId string `json:"acctId"`
+	// Set the allocation method when placing an order using an FA account for a group
+	// Possible allocation methods are "NetLiquidity", "AvailableEquity", "EqualQuantity"
+	// and "PctChange".
+	AllocationMethod string `json:"allocationMethod"`
+	// Customer Order ID. An arbitraty string that can be used to identify the order, e.g
+	// "my-fb-order". The
+	// value must be unique for a 24h span. Please do not set this value for child orders
+	// when placing a bracket order.
+	COID string `json:"cOID"`
+	// conid is the identifier of the security you want to trade, you can find the
+	// conid with /iserver/secdef/search.
+	Conid int64 `json:"conid"`
+	// double number, this is the cash quantity field which can only be used for FX conversion
+	// order.
+	FxQty float64 `json:"fxQty"`
+	// set to true if the order is a FX conversion order
+	IsCurrencyConversion bool `json:"isCurrencyConversion"`
+	// listingExchange is optional. By default we use "SMART" routing. Possible values are
+	// available via this end
+	// point: /v1/client/iserver/contract/{{conid}}/info, see valid_exchange: e.g: SMART,AMEX,NYSE,
+	// CBOE,ISE,CHX,ARCA,ISLAND,DRCTEDGE,BEX,BATS,EDGEA,CSFBALGO,JE FFALGO,BYX,IEX,FOXRIVER,TPLUS1,NYSENAT,PSX
 	ListingExchange string `json:"listingExchange"`
-	// for example LMT
-	OrderType  string  `json:"orderType"`
-	OutsideRTH bool    `json:"outsideRTH"`
-	Price      float64 `json:"price"`
+	// orderType can be one of MKT (Market), LMT (Limit), STP (Stop) or STP_LIMIT (stop
+	// limit)
+	OrderType string `json:"orderType"`
+	// set to true if the order can be executed outside regular trading hours.
+	OutsideRTH bool `json:"outsideRTH"`
+	// When placing bracket orders, the child parentId must be equal to the cOId (customer
+	// order id) of the parent.
+	ParentId string `json:"parentId"`
+	// optional if order is MKT, for LMT, this is the limit price. For STP this is the stop
+	// price.
+	Price float64 `json:"price"`
 	// usually integer, for some special cases can be float numbers
 	Quantity float64 `json:"quantity"`
+	// for example QuickTrade
+	Referrer string `json:"referrer"`
+	// conid:type for example 265598:STK
+	SecType string `json:"secType"`
 	// SELL or BUY
 	Side   string `json:"side"`
 	Ticker string `json:"ticker"`
-	// for example DAY
+	// GTC (Good Till Cancel) or DAY. DAY orders are automatically cancelled at the end
+	// of the Day or Trading hours.
 	Tif string `json:"tif"`
-}
-
-type Iserver_Scanner_Params_GET_200_Instrument_list_List_Item struct {
-	Display_name string   `json:"display_name"`
-	Filters      []string `json:"filters"`
-	Type         string   `json:"type"`
-}
-
-type ScannerParams struct {
-	// Contains list of filters supported for the scanner
-	FilterList []map[string]interface{} `json:"FilterList"`
-	// Contains list of instruments for which scanner can be ran
-	InstrumentList *ScannerParams_InstrumentList `json:"InstrumentList"`
-	// Contains list of instruments for which scanner can be ran
-	LocationTree *ScannerParams_LocationTree `json:"LocationTree"`
-	// Contains list of scan types for which scanner can be ran
-	ScanTypeList *ScannerParams_ScanTypeList `json:"ScanTypeList"`
-}
-
-type Iserver_Account_AccountId_Order_Whatif_POST_200_Maintenance struct {
-	After   string `json:"after"`
-	Change  string `json:"change"`
-	Current string `json:"current"`
-}
-
-type Portfolio_Allocation_POST_Request struct {
-	AcctIds []string `json:"acctIds"`
-}
-
-// portfolio allocation by asset class
-type Allocation_List_Item_AssetClass struct {
-	// long positions allocation
-	Long *Allocation_List_Item_AssetClass_Long `json:"long"`
-	// short positions allocation
-	Short *Allocation_List_Item_AssetClass_Short `json:"short"`
-}
-
-// security definition information
-type Secdef_List_Item struct {
-	AssetClass     string  `json:"assetClass"`
-	Conid          int64   `json:"conid"`
-	Expiry         string  `json:"expiry"`
-	FullName       string  `json:"fullName"`
-	Group          string  `json:"group"`
-	LastTradingDay string  `json:"lastTradingDay"`
-	Name           string  `json:"name"`
-	PageSize       int64   `json:"pageSize"`
-	PutOrCall      string  `json:"putOrCall"`
-	Sector         string  `json:"sector"`
-	SectorGroup    string  `json:"sectorGroup"`
-	Strike         float64 `json:"strike"`
-	Ticker         string  `json:"ticker"`
-	UndConid       int64   `json:"undConid"`
-}
-
-// notification
-type Notifications_List_Item struct {
-	// notification date
-	D string `json:"D"`
-	// FYI code, we can use it to find whether the disclaimer is accepted or not in settings
-	FC string `json:"FC"`
-	// unique way to reference this notification
-	ID string `json:"ID"`
-	// content of notification
-	MD string `json:"MD"`
-	// title of notification
-	MS string `json:"MS"`
-	// 0-unread, 1-read
-	R string `json:"R"`
+	// If true, the system will use the Adaptive Algo to submit the order
+	// https://www.interactivebrokers.com/en/index.php?f=19091
+	UseAdaptive bool `json:"useAdaptive"`
 }
 
 type Iserver_Marketdata_Snapshot_GET_200_List_Item struct {
@@ -1456,35 +847,13 @@ type Iserver_Marketdata_Snapshot_GET_200_List_Item struct {
 	Server_id string  `json:"server_id"`
 }
 
-type Iserver_Marketdata_Snapshot_GET_400 struct {
-	Error      string `json:"error"`
-	StatusCode int64  `json:"statusCode"`
+type Trsrv_Futures_GET_500 struct {
+	Error string `json:"error"`
 }
 
-type Iserver_Secdef_Strikes_GET_200 struct {
-	Call []string `json:"call"`
-	Put  []string `json:"put"`
-}
-
-type Iserver_Account_Pnl_Partitioned_GET_200 struct {
-	AcctId map[string]interface{} `json:"acctId"`
-}
-
-type Iserver_Scanner_Run_POST_200_List_Item struct {
-	Available_chart_periods string  `json:"available_chart_periods"`
-	Column_name             string  `json:"column_name"`
-	Company_name            string  `json:"company_name"`
-	Con_id                  float64 `json:"con_id"`
-	Conidex                 string  `json:"conidex"`
-	Contract_description_1  string  `json:"contract_description_1"`
-	Listing_exchange        string  `json:"listing_exchange"`
-	Sec_type                string  `json:"sec_type"`
-	Server_id               string  `json:"server_id"`
-	Symbol                  string  `json:"symbol"`
-}
-
-type Iserver_Account_Orders_GET_Request struct {
-	Filters []string `json:"filters"`
+type Tickle_POST_200_Iserver struct {
+	AuthStatus *Tickle_POST_200_Iserver_AuthStatus `json:"authStatus"`
+	Tickle     bool                                `json:"tickle"`
 }
 
 type ScannerParams_ScanTypeList_ScanType_List_Item struct {
@@ -1495,153 +864,239 @@ type ScannerParams_ScanTypeList_ScanType_List_Item struct {
 	ScanCode string `json:"scanCode"`
 }
 
-type Fyi_Deliveryoptions_Device_POST_Request struct {
-	DeviceId   string `json:"deviceId"`
-	Devicename string `json:"devicename"`
-	Enabled    bool   `json:"enabled"`
-	UiName     string `json:"uiName"`
+type HistoryResult_Bars struct {
+	Close       float64 `json:"close"`
+	Count       float64 `json:"count"`
+	EndTime     string  `json:"endTime"`
+	High        float64 `json:"high"`
+	Low         float64 `json:"low"`
+	Open        float64 `json:"open"`
+	Time        string  `json:"time"`
+	Volume      float64 `json:"volume"`
+	WeightedAvg float64 `json:"weightedAvg"`
 }
 
-type Trsrv_Futures_GET_500 struct {
-	Error string `json:"error"`
-}
+//easyjson:json
+type Portfolio_Positions_Conid_GET_200 map[string]Position_List
 
-type Iserver_Reply_Replyid_POST_400 struct {
-	// for example-order not confirmed
-	Error      string `json:"error"`
-	StatusCode int64  `json:"statusCode"`
-}
-
-type Iserver_Account_AccountId_Alert_Activate_POST_200 struct {
-	Failure_list string `json:"failure_list"`
-	Order_id     int64  `json:"order_id"`
-	Order_status string `json:"order_status"`
-	Request_id   int64  `json:"request_id"`
-	Success      bool   `json:"success"`
-	Text         string `json:"text"`
-}
-
-type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List_Item struct {
-	// orderType
-	String []string `json:"string"`
-}
-
-type Iserver_Scanner_Params_GET_200_Filter_list_List_Item struct {
-	Code         string `json:"code"`
+type Iserver_Scanner_Params_GET_200_Location_tree_List_Item_Locations_List_Item struct {
 	Display_name string `json:"display_name"`
-	Group        string `json:"group"`
 	Type         string `json:"type"`
 }
 
-// Contains list of contracts matching the scanner query
-type ScannerResult_Contracts struct {
-	Contract []*ScannerResult_Contracts_Contract_List_Item `json:"Contract"`
+type Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item struct {
+	ClearingCycleEndTime int64 `json:"clearingCycleEndTime"`
+	// If the LIQUID hours differs from the total trading day then a separate 'session'
+	// tag is returned.
+	Sessions *Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item_Sessions `json:"sessions"`
+	// 20000101 stands for any Sat, 20000102 stands for any Sun, ... 20000107 stands for
+	// any Fri. Any other date stands for itself.
+	TradingScheduleDate int64 `json:"tradingScheduleDate"`
+	// Returns tradingTime in exchange time zone.
+	TradingTimes *Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item_TradingTimes `json:"tradingTimes"`
 }
 
-type AuthStatus struct {
-	// Brokerage session is authenticated
-	Authenticated bool `json:"authenticated"`
-	// Brokerage session is competing, e.g. user is logged in to IBKR Mobile, WebTrader,
-	// TWS or other trading platforms.
-	Competing bool `json:"competing"`
-	// Connected to backend
-	Connected bool `json:"connected"`
-	// Authentication failed, why.
-	Fail string `json:"fail"`
-	// System messages that may affect trading
-	Message string `json:"message"`
-	// Prompt messages that may affect trading or the account
-	Prompts []string `json:"prompts"`
+type Logout_POST_200 struct {
+	// true means username is still logged in, false means it is not
+	Confirmed bool `json:"confirmed"`
 }
 
-type ScannerParams_InstrumentList_Instrument_List_Item struct {
-	// Supported filters for the instrument separated by a comma
-	Filters string `json:"filters"`
-	// Display name for the instrument
-	Name string `json:"name"`
-	// Sec Type of the instrument. This field is not provided if its value is same as 'type'
-	SecType   string `json:"secType"`
-	ShortName string `json:"shortName"`
-	// Type of the asset
-	Type string `json:"type"`
+// short positions allocation
+type Allocation_List_Item_AssetClass_Short struct {
+	BOND float64 `json:"BOND"`
+	CASH float64 `json:"CASH"`
+	FUT  float64 `json:"FUT"`
+	OPT  float64 `json:"OPT"`
+	STK  float64 `json:"STK"`
+	WAR  float64 `json:"WAR"`
 }
 
-type Fyi_Unreadnumber_GET_200 struct {
-	// unread number
-	BN int64 `json:"BN"`
+// allocation
+type Allocation_List_Item struct {
+	// portfolio allocation by asset class
+	AssetClass *Allocation_List_Item_AssetClass `json:"assetClass"`
+	// portfolio allocation by group
+	Group *Allocation_List_Item_Group `json:"group"`
+	// portfolio allocation by sector
+	Sector *Allocation_List_Item_Sector `json:"sector"`
 }
 
-type Iserver_Secdef_Search_POST_Request struct {
-	// should be true if the search is to be performed by name. false by default.
-	Name bool `json:"name"`
-	// If search is done by name, only the assets provided in this field will be returned.
-	// Currently, only STK is supported.
-	SecType string `json:"secType"`
-	// symbol or name to be searched
-	Symbol string `json:"symbol"`
+// Contains all details of the contract, including rules you can use when placing orders
+type Contract struct {
+	Allow_sell_long bool   `json:"allow_sell_long"`
+	Category        string `json:"category"`
+	Cfi_code        string `json:"cfi_code"`
+	Classifier      string `json:"classifier"`
+	CompanyName     string `json:"companyName"`
+	Company_name    string `json:"company_name"`
+	// same as that in request
+	Con_id         int64  `json:"con_id"`
+	Contract_month string `json:"contract_month"`
+	Currency       string `json:"currency"`
+	Cusip          string `json:"cusip"`
+	Exchange       string `json:"exchange"`
+	Expiry_full    string `json:"expiry_full"`
+	Industry       string `json:"industry"`
+	// for example STK
+	Instrument_type             string `json:"instrument_type"`
+	Is_zero_commission_security bool   `json:"is_zero_commission_security"`
+	// for exmple FB
+	Local_symbol  string `json:"local_symbol"`
+	Maturity_date string `json:"maturity_date"`
+	Multiplier    string `json:"multiplier"`
+	// true means you can trade outside RTH(regular trading hours)
+	R_t_h bool `json:"r_t_h"`
+	// CALL or PUT
+	Right string          `json:"right"`
+	Rules *Contract_Rules `json:"rules"`
+	// strike price of Option
+	Strike            string `json:"strike"`
+	Symbol            string `json:"symbol"`
+	Text              string `json:"text"`
+	Trading_class     string `json:"trading_class"`
+	Underlying_con_id int64  `json:"underlying_con_id"`
+	Underlying_issuer string `json:"underlying_issuer"`
+	Valid_exchanges   string `json:"valid_exchanges"`
 }
 
-type Iserver_Account_Orders_GET_200_Orders_List_Item struct {
-	// Account number
-	Acct string `json:"acct"`
-	// background color in hex format
-	BgColor string `json:"bgColor"`
-	// Cash currency
-	CashCcy string `json:"cashCcy"`
-	// Company Name
-	CompanyName string `json:"companyName"`
-	// Contract identifier
-	Conid float64 `json:"conid"`
-	// Formatted ticker description
-	Description1 string `json:"description1"`
-	// Exchange or trading venue
-	Exchange string `json:"exchange"`
-	// foreground color in hex format
-	FgColor string `json:"fgColor"`
-	// Quantity filled
-	FilledQuantity float64 `json:"filledQuantity"`
-	// Last status update in format YYMMDDhhmms based in GMT
-	LastExecutionTime float64 `json:"lastExecutionTime"`
-	// Last status update unix time in ms
-	LastExecutionTime_r float64 `json:"lastExecutionTime_r"`
-	// Listing Exchange
-	ListingExchange string `json:"listingExchange"`
-	// Order description
-	OrderDesc string `json:"orderDesc"`
-	// Order identifier
-	OrderId string `json:"orderId"`
-	// Order type
-	OrderType string `json:"orderType"`
-	// Order reference
-	Order_ref string `json:"order_ref"`
-	// Original order type
-	OrigOrderType string `json:"origOrderType"`
-	// Price of order
-	Price float64 `json:"price"`
-	// Quantity remaining
-	RemainingQuantity float64 `json:"remainingQuantity"`
-	// Asset class
-	SecType string `json:"secType"`
-	// Side of order
-	Side string `json:"side"`
-	// Quantity outstanding and total quantity concatenated with forward slash separator
-	SizeAndFills float64 `json:"sizeAndFills"`
-	// Status of the order
-	Status string `json:"status"`
-	// Supports Tax Optimization with 0 for no and 1 for yes
-	SupportsTaxOpt float64 `json:"supportsTaxOpt"`
-	// Underlying symbol
-	Ticker string `json:"ticker"`
-	// Time in force
-	TimeInForce string `json:"timeInForce"`
+type AlertResponse struct {
+	// account id
+	Account string `json:"account"`
+	// whether alert is active or not, so value can only be 0 or 1
+	Alert_active int64 `json:"alert_active"`
+	// MTA alert only
+	Alert_default_type string `json:"alert_default_type"`
+	// email address to receive alert
+	Alert_email string `json:"alert_email"`
+	// The message you want to receive via email or text message
+	Alert_message string `json:"alert_message"`
+	// MTA alert only
+	Alert_mta_currency string `json:"alert_mta_currency"`
+	// MTA alert only
+	Alert_mta_defaults string `json:"alert_mta_defaults"`
+	// name of alert
+	Alert_name string `json:"alert_name"`
+	// audio message to play when alert is triggered
+	Alert_play_audio string `json:"alert_play_audio"`
+	// whether alert is repeatable or not, so value can only be 0 or 1
+	Alert_repeatable int64 `json:"alert_repeatable"`
+	// whether allowing to send email or not, so value can only be 0 or 1,
+	Alert_send_message int64 `json:"alert_send_message"`
+	// value can only be 0 or 1, set to 1 to allow to show alert in pop-ups
+	Alert_show_popup int64 `json:"alert_show_popup"`
+	// whether the alert has been triggered
+	Alert_triggered bool `json:"alert_triggered"`
+	// whether allowing the condition can be triggered outside of regular trading hours,
+	// 1 means allow
+	Condition_outside_rth int64 `json:"condition_outside_rth"`
+	// size of conditions array
+	Condition_size int64                         `json:"condition_size"`
+	Conditions     AlertResponse_Conditions_List `json:"conditions"`
+	// format, YYYYMMDD-HH:mm:ss
+	Expire_time string `json:"expire_time"`
+	// value can only be 0 or 1, set to 1 to enable the alert only in IBKR mobile
+	Itws_orders_only int64 `json:"itws_orders_only"`
+	Order_id         int64 `json:"order_id"`
+	// whether the alert can be edited
+	Order_not_editable bool `json:"order_not_editable"`
+	// status of alert
+	Order_status string `json:"order_status"`
+	// value can only be 0 or 1, set to 1 if the alert can be triggered outside regular
+	// trading hours.
+	OutsideRth int64 `json:"outsideRth"`
+	// time in force, can only be GTC or GTD
+	Tif string `json:"tif"`
+	// MTA alert only
+	Time_zone string `json:"time_zone"`
+	// for MTA alert only, each user has a unique toolId and it will stay the same, do not
+	// send for normal alert
+	Tool_id int64 `json:"tool_id"`
 }
 
-type SystemError struct {
-	Error string `json:"error"`
+// future contract information
+type Futures_List_Item struct {
+	// conid of the future contract
+	Conid          int64 `json:"conid"`
+	ExpirationDate int64 `json:"expirationDate"`
+	// last trading day
+	Ltd             int64  `json:"ltd"`
+	Symbol          string `json:"symbol"`
+	UnderlyingConid int64  `json:"underlyingConid"`
 }
 
-type HistoryResult struct {
-	Bars *HistoryResult_Bars `json:"bars"`
+type Iserver_Account_AccountId_Alert_POST_200 struct {
+	Order_id        int64  `json:"order_id"`
+	Order_status    string `json:"order_status"`
+	Request_id      int64  `json:"request_id"`
+	Success         bool   `json:"success"`
+	Text            string `json:"text"`
+	Warning_message string `json:"warning_message"`
+}
+
+type Iserver_Account_AccountId_Order_POST_200_List_Item struct {
+	Id string `json:"id"`
+	// Please note here, if the message is a question, you have to reply to question in
+	// order to submit
+	// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
+	Message Iserver_Account_AccountId_Order_POST_200_List_Item_Message_List `json:"message"`
+}
+
+// short positions allocation
+type Allocation_List_Item_Sector_Short struct {
+	Consumer    float64 `json:"Consumer"`
+	Diversified float64 `json:"Diversified"`
+	Industrial  float64 `json:"Industrial"`
+}
+
+type Summary_BalanceByDate_Series_List_Item struct {
+	Date    Summary_BalanceByDate_Series_List_Item_Date_List `json:"date"`
+	GroupId string                                           `json:"groupId"`
+	Id      string                                           `json:"id"`
+	Name    string                                           `json:"name"`
+}
+
+type Iserver_Scanner_Params_GET_200_Instrument_list_List_Item struct {
+	Display_name string                                                                `json:"display_name"`
+	Filters      Iserver_Scanner_Params_GET_200_Instrument_list_List_Item_Filters_List `json:"filters"`
+	Type         string                                                                `json:"type"`
+}
+
+type Fyi_Disclaimer_Typecode_PUT_200 struct {
+	T int64 `json:"T"`
+	V int64 `json:"V"`
+}
+
+type Iserver_Account_AccountId_Order_OrderId_POST_200_List_Item struct {
+	Local_order_id string `json:"local_order_id"`
+	Order_id       string `json:"order_id"`
+	Order_status   string `json:"order_status"`
+}
+
+type SetAccount struct {
+	// Account ID
+	AcctId string `json:"acctId"`
+}
+
+// device
+type Fyi_Deliveryoptions_GET_200_E_List_Item struct {
+	// device is enabled or not 0-true, 1-false.
+	A string `json:"A"`
+	// device id
+	I string `json:"I"`
+	// device name
+	NM string `json:"NM"`
+	// unique device id
+	UI string `json:"UI"`
+}
+
+// confirms session is open
+type Tickle_POST_200 struct {
+	Collission bool                     `json:"collission"`
+	Iserver    *Tickle_POST_200_Iserver `json:"iserver"`
+	// SessionID
+	Session    string `json:"session"`
+	SsoExpires int64  `json:"ssoExpires"`
+	UserId     int64  `json:"userId"`
 }
 
 type Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_Name struct {
@@ -1650,49 +1105,194 @@ type Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_Name struct {
 	Salutation string `json:"salutation"`
 }
 
-type Ibcust_Entity_Info_GET_200_List_Item struct {
-	ApplicantId float64                                                    `json:"applicantId"`
-	Entities    []*Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item `json:"entities"`
+type ScannerResult_Contracts_Contract_List_Item struct {
+	ContractID int64  `json:"contractID"`
+	Distance   int64  `json:"distance"`
+	InScanTime string `json:"inScanTime"`
 }
 
-type Fyi_Deliveryoptions_GET_200 struct {
-	E []*Fyi_Deliveryoptions_GET_200_E_List_Item `json:"E"`
-	// Email option is enabled or not 0-off, 1-on.
-	M int64 `json:"M"`
+type Fyi_Deliveryoptions_Email_PUT_200 struct {
+	T int64 `json:"T"`
+	V int64 `json:"V"`
 }
 
-// If the LIQUID hours differs from the total trading day then a separate 'session'
-// tag is returned.
-type Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item_Sessions struct {
-	ClosingTime int64 `json:"closingTime"`
-	OpeningTime int64 `json:"openingTime"`
-	// If the whole trading day is considered LIQUID then the value 'LIQUID' is returned.
-	Prop string `json:"prop"`
+type Iserver_Marketdata_History_GET_429 struct {
+	Error string `json:"error"`
 }
 
-type Trsrv_Secdef_Schedule_GET_200 struct {
-	Id string `json:"id"`
-	// Always contains at least one 'tradingTime'  and zero or more 'sessionTime' tags
-	Schedules []*Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item `json:"schedules"`
-	// null is returned.
-	TradeVenueId string `json:"tradeVenueId"`
+//easyjson:json
+type Trsrv_Stocks_GET_200 map[string]Stocks_List
+
+type Iserver_Account_Orders_GET_200 struct {
+	Orders Iserver_Account_Orders_GET_200_Orders_List `json:"orders"`
+	// If live order update is a snapshot
+	Snapshot bool `json:"snapshot"`
 }
 
-type Iserver_Scanner_Params_GET_200 struct {
-	Filter_list     []*Iserver_Scanner_Params_GET_200_Filter_list_List_Item     `json:"filter_list"`
-	Instrument_list []*Iserver_Scanner_Params_GET_200_Instrument_list_List_Item `json:"instrument_list"`
-	Location_tree   []*Iserver_Scanner_Params_GET_200_Location_tree_List_Item   `json:"location_tree"`
-	Scan_type_list  []*Iserver_Scanner_Params_GET_200_Scan_type_list_List_Item  `json:"scan_type_list"`
+type Iserver_Marketdata_Conid_Unsubscribe_GET_200 struct {
+	// success means market data was canceled.
+	Confirmed string `json:"confirmed"`
 }
 
-// long positions allocation
-type Allocation_List_Item_Group_Long struct {
-	Apparel        float64 `json:"Apparel"`
-	Chemicals      float64 `json:"Chemicals"`
-	Communications float64 `json:"Communications"`
-	Computers      float64 `json:"Computers"`
-	Others         float64 `json:"Others"`
-	Semiconductors float64 `json:"Semiconductors"`
+type Iserver_Account_Orders_GET_Request struct {
+	Filters Iserver_Account_Orders_GET_Request_Filters_List `json:"filters"`
+}
+
+// portfolio allocation by asset class
+type Allocation_List_Item_AssetClass struct {
+	// long positions allocation
+	Long *Allocation_List_Item_AssetClass_Long `json:"long"`
+	// short positions allocation
+	Short *Allocation_List_Item_AssetClass_Short `json:"short"`
+}
+
+type SystemError struct {
+	Error string `json:"error"`
+}
+
+// Time period performance data
+type Performance_Tpps struct {
+	Data Performance_Tpps_Data_List `json:"data"`
+	// array of dates, the length should be same as the length of returns inside data.
+	Dates Performance_Tpps_Dates_List `json:"dates"`
+	// M means Month
+	Freq string `json:"freq"`
+}
+
+type AlertRequest_Conditions_List_Item struct {
+	// format, conid@exchange
+	Conidex string `json:"conidex"`
+	// "a" means "AND", "o" means "OR", "n" means "END",
+	// the last one condition in the condition array should "n"
+	LogicBind string `json:"logicBind"`
+	// optional, operator for the current condition, can be >= or <=
+	Operator string `json:"operator"`
+	// only needed for some MTA alert condition
+	TimeZone string `json:"timeZone"`
+	// optional, only some type of conditions have triggerMethod
+	TriggerMethod string `json:"triggerMethod"`
+	// Types: 1-Price, 3-Time, 4-Margin, 5-Trade, 6-Volume, 7: MTA market 8: MTA Position,
+	// 9: MTA Acc. Daily PN&
+	Type int64 `json:"type"`
+	// can not be empty, can pass default value "*"
+	Value string `json:"value"`
+}
+
+type Iserver_Account_POST_200 struct {
+	AcctId string `json:"acctId"`
+	Set    bool   `json:"set"`
+}
+
+type Iserver_Account_AccountId_Alert_AlertId_DELETE_200 struct {
+	Failure_list string `json:"failure_list"`
+	Order_id     int64  `json:"order_id"`
+	Order_status string `json:"order_status"`
+	Request_id   int64  `json:"request_id"`
+	Success      bool   `json:"success"`
+	Text         string `json:"text"`
+}
+
+type Trsrv_Secdef_POST_Request struct {
+	Conids Trsrv_Secdef_POST_Request_Conids_List `json:"conids"`
+}
+
+type Stocks_List_Item_Contracts_List_Item struct {
+	// conid of the stock contract
+	Conid    int64  `json:"conid"`
+	Exchange string `json:"exchange"`
+}
+
+type Calendar_request_Date struct {
+	// end date of a period. for example 20180808-0400
+	End string `json:"end"`
+	// start date of a period. for example 20180808-0400
+	Start string `json:"start"`
+}
+
+type Iserver_Accounts_GET_200 struct {
+	// Unique account id
+	Accounts Iserver_Accounts_GET_200_Accounts_List `json:"accounts"`
+	// Account Id and its alias
+	Aliases         map[string]interface{} `json:"aliases"`
+	SelectedAccount string                 `json:"selectedAccount"`
+}
+
+type Trsrv_Stocks_GET_500 struct {
+	Error string `json:"error"`
+}
+
+type Portfolio_Allocation_POST_Request struct {
+	AcctIds Portfolio_Allocation_POST_Request_AcctIds_List `json:"acctIds"`
+}
+
+// Cumulative performance data
+type Performance_Cps struct {
+	Data Performance_Cps_Data_List `json:"data"`
+	// array of dates, the length should be same as the length of returns inside data.
+	Dates Performance_Cps_Dates_List `json:"dates"`
+	// D means Day
+	Freq string `json:"freq"`
+}
+
+// account information
+type Account struct {
+	AccountAlias  string          `json:"accountAlias"`
+	AccountId     string          `json:"accountId"`
+	AccountStatus float64         `json:"accountStatus"`
+	AccountTitle  string          `json:"accountTitle"`
+	AccountVan    string          `json:"accountVan"`
+	Covestor      bool            `json:"covestor"`
+	Currency      string          `json:"currency"`
+	Desc          string          `json:"desc"`
+	DisplayName   string          `json:"displayName"`
+	Faclient      bool            `json:"faclient"`
+	Id            string          `json:"id"`
+	Master        *Account_Master `json:"master"`
+	Parent        string          `json:"parent"`
+	TradingType   string          `json:"tradingType"`
+	Type          string          `json:"type"`
+}
+
+//easyjson:json
+type Trsrv_Futures_GET_200 map[string]Futures_List
+
+type Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item struct {
+	Address   *Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_Address       `json:"address"`
+	CanSign   bool                                                                   `json:"canSign"`
+	CanTrade  bool                                                                   `json:"canTrade"`
+	IdentDocs Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_IdentDocs_List `json:"identDocs"`
+	Name      *Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_Name          `json:"name"`
+	Type      string                                                                 `json:"type"`
+}
+
+type Iserver_Account_AccountId_Orders_POST_Request struct {
+	// Notes for bracket orders: 1. Children orders will not have its own "cOID", so please
+	// donot pass "cOID"
+	// parameter in child order.Instead, they will have a "parentId" which must be equal
+	// to "cOID" of parent.
+	// 2. When you cancel a parent order, it will cancel all bracket orders, when you cancel
+	// one child order,
+	// it will also cancel its sibling order.
+	Orders Iserver_Account_AccountId_Orders_POST_Request_Orders_List `json:"orders"`
+}
+
+type ModifyOrder struct {
+	AcctId   string  `json:"acctId"`
+	AuxPrice float64 `json:"auxPrice"`
+	Conid    int64   `json:"conid"`
+	// optional, not required
+	ListingExchange string `json:"listingExchange"`
+	// for example LMT
+	OrderType  string  `json:"orderType"`
+	OutsideRTH bool    `json:"outsideRTH"`
+	Price      float64 `json:"price"`
+	// usually integer, for some special cases can be float numbers
+	Quantity float64 `json:"quantity"`
+	// SELL or BUY
+	Side   string `json:"side"`
+	Ticker string `json:"ticker"`
+	// for example DAY
+	Tif string `json:"tif"`
 }
 
 type AlertRequest struct {
@@ -1702,8 +1302,8 @@ type AlertRequest struct {
 	AlertName string `json:"alertName"`
 	// whether alert is repeatable or not, so value can only be 0 or 1, this has to be 1
 	// for MTA alert
-	AlertRepeatable int64                                `json:"alertRepeatable"`
-	Conditions      []*AlertRequest_Conditions_List_Item `json:"conditions"`
+	AlertRepeatable int64                        `json:"alertRepeatable"`
+	Conditions      AlertRequest_Conditions_List `json:"conditions"`
 	// email address to receive alert
 	Email string `json:"email"`
 	// format, YYYYMMDD-HH:mm:ss, please NOTE this will only work when tif is GTD
@@ -1728,29 +1328,37 @@ type AlertRequest struct {
 	ToolId int64 `json:"toolId"`
 }
 
-type MarketData struct {
-	Ask     float64 `json:"Ask"`
-	AskSize float64 `json:"AskSize"`
-	Bid     float64 `json:"Bid"`
-	BidSize float64 `json:"BidSize"`
-	// IBKR Contract ID
-	Conid float64 `json:"Conid"`
-	// Exchange
-	Exchange string  `json:"Exchange"`
-	Last     float64 `json:"Last"`
-	LastSize float64 `json:"LastSize"`
-	MinTick  float64 `json:"minTick"`
+type Iserver_Account_Orders_FaGroup_POST_200_List_Item struct {
+	Id string `json:"id"`
+	// Please note here, if the message is a question, you have to reply to question in
+	// order to submit
+	// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
+	Message Iserver_Account_Orders_FaGroup_POST_200_List_Item_Message_List `json:"message"`
 }
 
-// future contract information
-type Futures_List_Item struct {
-	// conid of the future contract
-	Conid          int64  `json:"conid"`
-	ExpirationDate string `json:"expirationDate"`
-	// last trading day
-	Ltd             string `json:"ltd"`
-	Symbol          string `json:"symbol"`
-	UnderlyingConid int64  `json:"underlyingConid"`
+type Iserver_Secdef_Search_POST_200_List_Item struct {
+	// Company Name - Exchange
+	CompanyHeader string `json:"companyHeader"`
+	CompanyName   string `json:"companyName"`
+	// Contract Identifier
+	Conid int64 `json:"conid"`
+	// Exchange
+	Description string                                                 `json:"description"`
+	Fop         string                                                 `json:"fop"`
+	Opt         string                                                 `json:"opt"`
+	Restricted  string                                                 `json:"restricted"`
+	Sections    Iserver_Secdef_Search_POST_200_List_Item_Sections_List `json:"sections"`
+	Symbol      string                                                 `json:"symbol"`
+	War         string                                                 `json:"war"`
+}
+
+type Pa_Transactions_POST_Request struct {
+	AcctIds Pa_Transactions_POST_Request_AcctIds_List `json:"acctIds"`
+	Conids  Pa_Transactions_POST_Request_Conids_List  `json:"conids"`
+	// optional defaults to USD.
+	Currency string `json:"currency"`
+	// optional, default value is 90
+	Days float64 `json:"days"`
 }
 
 type Iserver_Marketdata_Unsubscribeall_GET_200 struct {
@@ -1758,14 +1366,32 @@ type Iserver_Marketdata_Unsubscribeall_GET_200 struct {
 	Confirmed bool `json:"confirmed"`
 }
 
-// confirms session is open
-type Tickle_POST_200 struct {
-	Collission bool                     `json:"collission"`
-	Iserver    *Tickle_POST_200_Iserver `json:"iserver"`
-	// SessionID
-	Session    string `json:"session"`
-	SsoExpires int64  `json:"ssoExpires"`
-	UserId     int64  `json:"userId"`
+type AlertResponse_Conditions_List_Item struct {
+	// "a" means "AND", "o" means "OR", "n" means "END",
+	// the last one condition in the condition array should "n"
+	Condition_logic_bind string `json:"condition_logic_bind"`
+	// optional, operator for the current condition, can be >= or <=
+	Condition_operator string `json:"condition_operator"`
+	// only needed for some MTA alert condition
+	Condition_time_zone string `json:"condition_time_zone"`
+	// optional, only some type of conditions have triggerMethod
+	Condition_trigger_method string `json:"condition_trigger_method"`
+	// Types: 1-Price, 3-Time, 4-Margin, 5-Trade, 6-Volume, 7: MTA market 8: MTA Position,
+	// 9: MTA Acc. Daily PN&
+	Condition_type int64 `json:"condition_type"`
+	// can not be empty, can pass default value "*"
+	Condition_value string `json:"condition_value"`
+	// format, conid@exchange
+	Conidex                string `json:"conidex"`
+	Contract_description_1 string `json:"contract_description_1"`
+}
+
+type Iserver_Secdef_Info_GET_500 struct {
+	Error string `json:"error"`
+}
+
+type Fyi_Settings_Typecode_POST_Request struct {
+	Enabled bool `json:"enabled"`
 }
 
 type Iserver_Account_AccountId_Order_Whatif_POST_200_Equity struct {
@@ -1774,66 +1400,69 @@ type Iserver_Account_AccountId_Order_Whatif_POST_200_Equity struct {
 	Current string `json:"current"`
 }
 
-type Contract_Rules struct {
-	// default quantity you can use to place an order
-	DefaultSize float64 `json:"defaultSize"`
-	DisplaySize string  `json:"displaySize"`
-	Increment   string  `json:"increment"`
-	// default limit price you can use to prefill your order
-	LimitPrice        float64  `json:"limitPrice"`
-	OrderTypes        []string `json:"orderTypes"`
-	OrderTypesOutside []string `json:"orderTypesOutside"`
-	// if you can preview the order or not with the whatif endpoint
-	Preview       bool    `json:"preview"`
-	SizeIncrement float64 `json:"sizeIncrement"`
-	// default stop price you can use to prefill your order
-	Stopprice float64  `json:"stopprice"`
-	TifTypes  []string `json:"tifTypes"`
+type Iserver_Scanner_Run_POST_200_List_Item struct {
+	Available_chart_periods string  `json:"available_chart_periods"`
+	Column_name             string  `json:"column_name"`
+	Company_name            string  `json:"company_name"`
+	Con_id                  float64 `json:"con_id"`
+	Conidex                 string  `json:"conidex"`
+	Contract_description_1  string  `json:"contract_description_1"`
+	Listing_exchange        string  `json:"listing_exchange"`
+	Sec_type                string  `json:"sec_type"`
+	Server_id               string  `json:"server_id"`
+	Symbol                  string  `json:"symbol"`
 }
 
-type Summary_BalanceByDate struct {
-	Series []*Summary_BalanceByDate_Series_List_Item `json:"series"`
+type Fyi_Settings_GET_200_List_Item struct {
+	// optional, if A doesn't exist, it means user can't toggle this option. 0-off, 1-on.
+	A int64 `json:"A"`
+	// fyi code
+	FC string `json:"FC"`
+	// detailed description
+	FD string `json:"FD"`
+	// title
+	FN string `json:"FN"`
+	// disclaimer read, 1 = yes, = 0 no.
+	H int64 `json:"H"`
 }
 
-type Iserver_Account_AccountId_Order_Whatif_POST_200_Amount struct {
-	// for example 23,000 USD
-	Amount string `json:"amount"`
-	// for example 1.1 ... 1.2 USD
-	Commission string `json:"commission"`
-	Total      string `json:"total"`
+type Iserver_Account_AccountId_Alert_Activate_POST_200 struct {
+	Failure_list string `json:"failure_list"`
+	Order_id     int64  `json:"order_id"`
+	Order_status string `json:"order_status"`
+	Request_id   int64  `json:"request_id"`
+	Success      bool   `json:"success"`
+	Text         string `json:"text"`
 }
 
-type Iserver_Reply_Replyid_POST_Request struct {
-	// answer to question, true means yes, false means no
-	Confirmed bool `json:"confirmed"`
-}
-
-type Iserver_Account_Orders_GET_200 struct {
-	Orders []*Iserver_Account_Orders_GET_200_Orders_List_Item `json:"orders"`
-	// If live order update is a snapshot
-	Snapshot bool `json:"snapshot"`
-}
-
-type ScannerResult_Contracts_Contract_List_Item struct {
-	ContractID int64  `json:"contractID"`
-	Distance   int64  `json:"distance"`
-	InScanTime string `json:"inScanTime"`
-}
-
-// Time period performance data
-type Performance_Tpps struct {
-	Data []*Performance_Tpps_Data_List_Item `json:"data"`
-	// array of dates, the length should be same as the length of returns inside data.
-	Dates []string `json:"dates"`
-	// M means Month
-	Freq string `json:"freq"`
-}
-
-type ScannerParams_LocationTree_Location_List_Item struct {
-	DisplayName   string `json:"displayName"`
-	Instruments   string `json:"instruments"`
-	LocationCode  string `json:"locationCode"`
-	RouteExchange string `json:"routeExchange"`
+type Sso_Validate_GET_200 struct {
+	// Time of session validation
+	AUTH_TIME int64 `json:"AUTH_TIME"`
+	// Time in milliseconds until session expires. Caller needs to call the again to re-validate
+	// session
+	EXPIRES int64 `json:"EXPIRES"`
+	// IP Address
+	IP string `json:"IP"`
+	// 1 for Live, 2 for Paper
+	LOGIN_TYPE int64 `json:"LOGIN_TYPE"`
+	// Paper Username
+	PAPER_USER_NAME string `json:"PAPER_USER_NAME"`
+	// true if session was validated; false if not.
+	RESULT     bool `json:"RESULT"`
+	SF_ENABLED bool `json:"SF_ENABLED"`
+	// User ID
+	USER_ID int64 `json:"USER_ID"`
+	// Username
+	USER_NAME string `json:"USER_NAME"`
+	// Time in milliseconds until session expires. Caller needs to call the again to re-validate
+	// session
+	Expire float64 `json:"expire"`
+	// Time of session validation
+	Features map[string]interface{} `json:"features"`
+	// Time session was last accessed
+	LastAccessed int64 `json:"lastAccessed"`
+	// 1 for Live, 2 for Paper
+	LoginType int64 `json:"loginType"`
 }
 
 // contains all the order related info
@@ -1889,53 +1518,44 @@ type Order struct {
 	Ticker string `json:"ticker"`
 }
 
-type Iserver_Account_POST_200 struct {
-	AcctId string `json:"acctId"`
-	Set    bool   `json:"set"`
+type Iserver_Scanner_Params_GET_200 struct {
+	Filter_list     Iserver_Scanner_Params_GET_200_Filter_list_List     `json:"filter_list"`
+	Instrument_list Iserver_Scanner_Params_GET_200_Instrument_list_List `json:"instrument_list"`
+	Location_tree   Iserver_Scanner_Params_GET_200_Location_tree_List   `json:"location_tree"`
+	Scan_type_list  Iserver_Scanner_Params_GET_200_Scan_type_list_List  `json:"scan_type_list"`
 }
 
-// account transactions
-type Transactions struct {
-	// same as request
-	Currency string `json:"currency"`
-	// Period start date. Epoch time, GMT
-	From float64 `json:"from"`
-	// will always be getTransactions
-	Id string `json:"id"`
-	// Indicates whether current day and realtime data is included in the result
-	IncludesRealTime bool `json:"includesRealTime"`
-	// Period end date. Epoch time, GMT
-	To float64 `json:"to"`
-	// Sorted by date descending
-	Transactions []*Transactions_Transactions_List_Item `json:"transactions"`
+type Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List_Item struct {
+	// orderType
+	String Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List_Item_OrderDefaults_List_Item_String_List `json:"string"`
 }
 
-// Contains list of instruments for which scanner can be ran
-type ScannerParams_LocationTree struct {
-	// Contains information like name, supported filters, etc. for an instrument. A location
-	// can contain more locations forming a tree-like structure which allows user to control
-	// the lcoation at more granular level. locationCode has to be used to specify lcoations
-	// while querying a scanner.
-	Location []*ScannerParams_LocationTree_Location_List_Item `json:"Location"`
+type Fyi_Deliveryoptions_Device_POST_200 struct {
+	T int64 `json:"T"`
+	V int64 `json:"V"`
 }
 
-// future contract information
-type Stocks_List_Item struct {
-	AssetClass string `json:"assetClass"`
-	// company name in Chinese
-	ChineseName string `json:"chineseName"`
-	// array of contracts from different exchanges
-	Contracts []*Stocks_List_Item_Contracts_List_Item `json:"contracts"`
-	// company name
-	Name string `json:"name"`
+type Iserver_Reply_Replyid_POST_400 struct {
+	// for example-order not confirmed
+	Error      string `json:"error"`
+	StatusCode int64  `json:"statusCode"`
 }
 
-type Inds_List_Item struct {
-	Conid float64 `json:"conid"`
+type Iserver_Account_AccountId_Order_Whatif_POST_200_Maintenance struct {
+	After   string `json:"after"`
+	Change  string `json:"change"`
+	Current string `json:"current"`
 }
 
-// short positions allocation
-type Allocation_List_Item_AssetClass_Short struct {
+type Fyi_Deliveryoptions_Device_POST_Request struct {
+	DeviceId   string `json:"deviceId"`
+	Devicename string `json:"devicename"`
+	Enabled    bool   `json:"enabled"`
+	UiName     string `json:"uiName"`
+}
+
+// long positions allocation
+type Allocation_List_Item_AssetClass_Long struct {
 	BOND float64 `json:"BOND"`
 	CASH float64 `json:"CASH"`
 	FUT  float64 `json:"FUT"`
@@ -1944,174 +1564,104 @@ type Allocation_List_Item_AssetClass_Short struct {
 	WAR  float64 `json:"WAR"`
 }
 
-// Cumulative performance data
-type Performance_Cps struct {
-	Data []*Performance_Cps_Data_List_Item `json:"data"`
+// Net asset value data for the account or consolidated accounts. NAV data is not applicable
+// to benchmarks.
+type Performance_Nav struct {
+	Data Performance_Nav_Data_List `json:"data"`
 	// array of dates, the length should be same as the length of returns inside data.
-	Dates []string `json:"dates"`
+	Dates Performance_Nav_Dates_List `json:"dates"`
 	// D means Day
 	Freq string `json:"freq"`
 }
 
-type Fyi_Deliveryoptions_Device_POST_200 struct {
-	T int64 `json:"T"`
-	V int64 `json:"V"`
+type Account_Master struct {
+	OfficialTitle string `json:"officialTitle"`
+	Title         string `json:"title"`
 }
 
-type Iserver_Account_AccountId_Alert_AlertId_DELETE_200 struct {
-	Failure_list string `json:"failure_list"`
-	Order_id     int64  `json:"order_id"`
-	Order_status string `json:"order_status"`
-	Request_id   int64  `json:"request_id"`
-	Success      bool   `json:"success"`
-	Text         string `json:"text"`
-}
-
-type Calendar_request_Filters struct {
-	// value can be 'true' or 'false'.
-	DivExDates string `json:"DivExDates"`
-	// value can be 'true' or 'false'.
-	Corporate_earnings string `json:"corporate_earnings"`
-	// value can be 'true' or 'false'.
-	Corporate_events string `json:"corporate_events"`
-	// default is 'All'.
-	Country string `json:"country"`
-	// value can be 'true' or 'false'.
-	Economic_events string `json:"economic_events"`
-	// value can be 'true' or 'false'.
-	Ipo string `json:"ipo"`
-	// default is '250'.
-	Limit string `json:"limit"`
-	// default is '50'.
-	Limit_region string `json:"limit_region"`
-	// value can be 'true' or 'false'.
-	Option_show_monthly string `json:"option_show_monthly"`
-	// value can be 'true' or 'false'.
-	Option_show_weekly string `json:"option_show_weekly"`
-	// value can be 'true' or 'false'.
-	Recently_held string `json:"recently_held"`
-	// value can be 'true' or 'false'.
-	Splits string `json:"splits"`
-}
-
-type Performance_Cps_Data_List_Item struct {
-	BaseCurrency string `json:"baseCurrency"`
-	// end date-- yyyyMMdd
-	End string `json:"end"`
-	Id  string `json:"id"`
-	// for example-- acctid
-	IdType string `json:"idType"`
-	// each value stands for price change percent of corresponding date in dates array
-	Returns []float64 `json:"returns"`
-	// start date-- yyyyMMdd
-	Start string `json:"start"`
-}
-
-type OrderRequest struct {
-	// acctId is optional. It should be one of the accounts returned by
-	// /iserver/accounts. If not passed, the first one in the list is selected.
-	AcctId string `json:"acctId"`
-	// Set the allocation method when placing an order using an FA account for a group
-	// Possible allocation methods are "NetLiquidity", "AvailableEquity", "EqualQuantity"
-	// and "PctChange".
-	AllocationMethod string `json:"allocationMethod"`
-	// Customer Order ID. An arbitraty string that can be used to identify the order, e.g
-	// "my-fb-order". The
-	// value must be unique for a 24h span. Please do not set this value for child orders
-	// when placing a bracket order.
-	COID string `json:"cOID"`
-	// conid is the identifier of the security you want to trade, you can find the
-	// conid with /iserver/secdef/search.
-	Conid int64 `json:"conid"`
-	// double number, this is the cash quantity field which can only be used for FX conversion
-	// order.
-	FxQty float64 `json:"fxQty"`
-	// set to true if the order is a FX conversion order
-	IsCurrencyConversion bool `json:"isCurrencyConversion"`
-	// listingExchange is optional. By default we use "SMART" routing. Possible values are
-	// available via this end
-	// point: /v1/portal/iserver/contract/{{conid}}/info, see valid_exchange: e.g: SMART,AMEX,NYSE,
-	// CBOE,ISE,CHX,ARCA,ISLAND,DRCTEDGE,BEX,BATS,EDGEA,CSFBALGO,JE FFALGO,BYX,IEX,FOXRIVER,TPLUS1,NYSENAT,PSX
-	ListingExchange string `json:"listingExchange"`
-	// orderType can be one of MKT (Market), LMT (Limit), STP (Stop) or STP_LIMIT (stop
-	// limit)
-	OrderType string `json:"orderType"`
-	// set to true if the order can be executed outside regular trading hours.
-	OutsideRTH bool `json:"outsideRTH"`
-	// When placing bracket orders, the child parentId must be equal to the cOId (customer
-	// order id) of the parent.
-	ParentId string `json:"parentId"`
-	// optional if order is MKT, for LMT, this is the limit price. For STP this is the stop
-	// price.
-	Price float64 `json:"price"`
-	// usually integer, for some special cases can be float numbers
-	Quantity float64 `json:"quantity"`
-	// for example QuickTrade
-	Referrer string `json:"referrer"`
-	// conid:type for example 265598:STK
-	SecType string `json:"secType"`
-	// SELL or BUY
-	Side   string `json:"side"`
-	Ticker string `json:"ticker"`
-	// GTC (Good Till Cancel) or DAY. DAY orders are automatically cancelled at the end
-	// of the Day or Trading hours.
-	Tif string `json:"tif"`
-	// If true, the system will use the Adaptive Algo to submit the order
-	// https://www.interactivebrokers.com/en/index.php?f=19091
-	UseAdaptive bool `json:"useAdaptive"`
-}
-
-// short positions allocation
-type Allocation_List_Item_Sector_Short struct {
-	Consumer    float64 `json:"Consumer"`
-	Diversified float64 `json:"Diversified"`
-	Industrial  float64 `json:"Industrial"`
+type MarketData struct {
+	Ask     float64 `json:"Ask"`
+	AskSize float64 `json:"AskSize"`
+	Bid     float64 `json:"Bid"`
+	BidSize float64 `json:"BidSize"`
+	// IBKR Contract ID
+	Conid float64 `json:"Conid"`
+	// Exchange
+	Exchange string  `json:"Exchange"`
+	Last     float64 `json:"Last"`
+	LastSize float64 `json:"LastSize"`
+	MinTick  float64 `json:"minTick"`
 }
 
 // Account Information
 type Position_List_Item struct {
-	AcctId            string   `json:"acctId"`
-	AssetClass        string   `json:"assetClass"`
-	AvgCost           float64  `json:"avgCost"`
-	AvgPrice          float64  `json:"avgPrice"`
-	BaseAvgCost       float64  `json:"baseAvgCost"`
-	BaseAvgPrice      float64  `json:"baseAvgPrice"`
-	BaseMktPrice      float64  `json:"baseMktPrice"`
-	BaseMktValue      float64  `json:"baseMktValue"`
-	BaseRealizedPnl   float64  `json:"baseRealizedPnl"`
-	BaseUnrealizedPnl float64  `json:"baseUnrealizedPnl"`
-	ConExchMap        []string `json:"conExchMap"`
-	Conid             int64    `json:"conid"`
-	ContractDesc      string   `json:"contractDesc"`
-	Currency          string   `json:"currency"`
-	Exchs             string   `json:"exchs"`
-	ExerciseStyle     string   `json:"exerciseStyle"`
-	Expiry            string   `json:"expiry"`
-	FullName          string   `json:"fullName"`
-	Group             string   `json:"group"`
-	LastTradingDay    string   `json:"lastTradingDay"`
-	MktPrice          float64  `json:"mktPrice"`
-	MktValue          float64  `json:"mktValue"`
-	Model             string   `json:"model"`
-	Multiplier        float64  `json:"multiplier"`
-	Name              string   `json:"name"`
-	PageSize          int64    `json:"pageSize"`
-	Position          float64  `json:"position"`
-	PutOrCall         string   `json:"putOrCall"`
-	RealizedPnl       float64  `json:"realizedPnl"`
-	Sector            string   `json:"sector"`
-	SectorGroup       string   `json:"sectorGroup"`
-	Strike            float64  `json:"strike"`
-	Ticker            string   `json:"ticker"`
-	UndComp           string   `json:"undComp"`
-	UndConid          int64    `json:"undConid"`
-	UndSym            string   `json:"undSym"`
-	UnrealizedPnl     float64  `json:"unrealizedPnl"`
+	AcctId            string                             `json:"acctId"`
+	AssetClass        string                             `json:"assetClass"`
+	AvgCost           float64                            `json:"avgCost"`
+	AvgPrice          float64                            `json:"avgPrice"`
+	BaseAvgCost       float64                            `json:"baseAvgCost"`
+	BaseAvgPrice      float64                            `json:"baseAvgPrice"`
+	BaseMktPrice      float64                            `json:"baseMktPrice"`
+	BaseMktValue      float64                            `json:"baseMktValue"`
+	BaseRealizedPnl   float64                            `json:"baseRealizedPnl"`
+	BaseUnrealizedPnl float64                            `json:"baseUnrealizedPnl"`
+	ConExchMap        Position_List_Item_ConExchMap_List `json:"conExchMap"`
+	Conid             int64                              `json:"conid"`
+	ContractDesc      string                             `json:"contractDesc"`
+	Currency          string                             `json:"currency"`
+	Exchs             string                             `json:"exchs"`
+	ExerciseStyle     string                             `json:"exerciseStyle"`
+	Expiry            string                             `json:"expiry"`
+	FullName          string                             `json:"fullName"`
+	Group             string                             `json:"group"`
+	LastTradingDay    string                             `json:"lastTradingDay"`
+	MktPrice          float64                            `json:"mktPrice"`
+	MktValue          float64                            `json:"mktValue"`
+	Model             string                             `json:"model"`
+	Multiplier        float64                            `json:"multiplier"`
+	Name              string                             `json:"name"`
+	PageSize          int64                              `json:"pageSize"`
+	Position          float64                            `json:"position"`
+	PutOrCall         string                             `json:"putOrCall"`
+	RealizedPnl       float64                            `json:"realizedPnl"`
+	Sector            string                             `json:"sector"`
+	SectorGroup       string                             `json:"sectorGroup"`
+	Strike            float64                            `json:"strike"`
+	Ticker            string                             `json:"ticker"`
+	UndComp           string                             `json:"undComp"`
+	UndConid          int64                              `json:"undConid"`
+	UndSym            string                             `json:"undSym"`
+	UnrealizedPnl     float64                            `json:"unrealizedPnl"`
 }
 
-type Fyi_Disclaimer_Typecode_PUT_200 struct {
-	T int64 `json:"T"`
-	V int64 `json:"V"`
+type Iserver_Account_AccountId_Orders_POST_200_List_Item struct {
+	Id string `json:"id"`
+	// Please note here, if the message is a question, you have to reply to question in
+	// order to submit
+	// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
+	Message Iserver_Account_AccountId_Orders_POST_200_List_Item_Message_List `json:"message"`
+}
+
+// long positions allocation
+type Allocation_List_Item_Group_Long struct {
+	Apparel        float64 `json:"Apparel"`
+	Chemicals      float64 `json:"Chemicals"`
+	Communications float64 `json:"Communications"`
+	Computers      float64 `json:"Computers"`
+	Others         float64 `json:"Others"`
+	Semiconductors float64 `json:"Semiconductors"`
+}
+
+type ScannerParams_InstrumentList_Instrument_List_Item struct {
+	// Supported filters for the instrument separated by a comma
+	Filters string `json:"filters"`
+	// Display name for the instrument
+	Name string `json:"name"`
+	// Sec Type of the instrument. This field is not provided if its value is same as 'type'
+	SecType   string `json:"secType"`
+	ShortName string `json:"shortName"`
+	// Type of the asset
+	Type string `json:"type"`
 }
 
 type Transactions_Transactions_List_Item struct {
@@ -2138,19 +1688,19 @@ type Transactions_Transactions_List_Item struct {
 	Type string `json:"type"`
 }
 
-type Performance struct {
-	// Cumulative performance data
-	Cps          *Performance_Cps `json:"cps"`
-	CurrencyType string           `json:"currencyType"`
-	Id           string           `json:"id"`
-	Included     []string         `json:"included"`
-	// Net asset value data for the account or consolidated accounts. NAV data is not applicable
-	// to benchmarks.
-	Nav *Performance_Nav `json:"nav"`
-	Pm  string           `json:"pm"`
-	Rc  int64            `json:"rc"`
-	// Time period performance data
-	Tpps *Performance_Tpps `json:"tpps"`
+type Iserver_Account_AccountId_Order_Whatif_POST_200 struct {
+	Amount      *Iserver_Account_AccountId_Order_Whatif_POST_200_Amount      `json:"amount"`
+	Equity      *Iserver_Account_AccountId_Order_Whatif_POST_200_Equity      `json:"equity"`
+	Error       string                                                       `json:"error"`
+	Initial     *Iserver_Account_AccountId_Order_Whatif_POST_200_Initial     `json:"initial"`
+	Maintenance *Iserver_Account_AccountId_Order_Whatif_POST_200_Maintenance `json:"maintenance"`
+	Warn        string                                                       `json:"warn"`
+}
+
+type Iserver_Scanner_Params_GET_200_Location_tree_List_Item struct {
+	Display_name string                                                                `json:"display_name"`
+	Locations    Iserver_Scanner_Params_GET_200_Location_tree_List_Item_Locations_List `json:"locations"`
+	Type         string                                                                `json:"type"`
 }
 
 // List of wagers
@@ -2161,18 +1711,741 @@ type Wagers_List_Item struct {
 	Part  string  `json:"part"`
 }
 
-type Iserver_Accounts_GET_200 struct {
-	// Unique account id
-	Accounts []string `json:"accounts"`
-	// Account Id and its alias
-	Aliases         map[string]interface{} `json:"aliases"`
-	SelectedAccount string                 `json:"selectedAccount"`
+type Iserver_Scanner_Params_GET_200_Scan_type_list_List_Item struct {
+	Code         string                                                                   `json:"code"`
+	Display_name string                                                                   `json:"display_name"`
+	Instruments  Iserver_Scanner_Params_GET_200_Scan_type_list_List_Item_Instruments_List `json:"instruments"`
 }
 
-type Iserver_Account_Orders_FaGroup_POST_200_List_Item struct {
-	Id string `json:"id"`
-	// Please note here, if the message is a question, you have to reply to question in
-	// order to submit
-	// the order successfully. See more in the "/iserver/reply/{replyid}" endpoint.
-	Message []string `json:"message"`
+// Returns tradingTime in exchange time zone.
+type Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item_TradingTimes struct {
+	CancelDayOrders string `json:"cancelDayOrders"`
+	ClosingTime     int64  `json:"closingTime"`
+	OpeningTime     int64  `json:"openingTime"`
+}
+
+type Iserver_Secdef_Strikes_GET_200 struct {
+	Call Iserver_Secdef_Strikes_GET_200_Call_List `json:"call"`
+	Put  Iserver_Secdef_Strikes_GET_200_Put_List  `json:"put"`
+}
+
+type Iserver_Secdef_Search_POST_Request struct {
+	// should be true if the search is to be performed by name. false by default.
+	Name bool `json:"name"`
+	// If search is done by name, only the assets provided in this field will be returned.
+	// Currently, only STK is supported.
+	SecType string `json:"secType"`
+	// symbol or name to be searched
+	Symbol string `json:"symbol"`
+}
+
+// Contains some basic info of contract
+type SecdefInfo struct {
+	Conid float64 `json:"conid"`
+	// Annual interest rate paid on a bond
+	Coupon string `json:"coupon"`
+	// Currency the contract trades in
+	Currency string `json:"currency"`
+	// Committee on Uniform Securities Identification Procedures number
+	Cusip string `json:"cusip"`
+	// Formatted symbol
+	Desc1 string `json:"desc1"`
+	// Formatted expiration, strike and right
+	Desc2           string `json:"desc2"`
+	Exchange        string `json:"exchange"`
+	ListingExchange string `json:"listingExchange"`
+	// Format YYYYMMDD, the date on which the underlying transaction settles if the option
+	// is exercised
+	MaturityDate string `json:"maturityDate"`
+	// total premium paid or received for an option contract
+	Multiplier string `json:"multiplier"`
+	// C = Call Option, P = Put Option
+	Right   string `json:"right"`
+	SecType string `json:"secType"`
+	// The strike price also known as exercise price
+	Strike string `json:"strike"`
+	// For example IBKR
+	Symbol         string `json:"symbol"`
+	TradingClass   string `json:"tradingClass"`
+	ValidExchanges string `json:"validExchanges"`
+}
+
+type ScannerParams_LocationTree_Location_List_Item struct {
+	DisplayName   string `json:"displayName"`
+	Instruments   string `json:"instruments"`
+	LocationCode  string `json:"locationCode"`
+	RouteExchange string `json:"routeExchange"`
+}
+
+type Ibcust_Entity_Info_GET_200_List_Item_Entities_List_Item_Address struct {
+	City        string `json:"city"`
+	Compact     string `json:"compact"`
+	Country     string `json:"country"`
+	CountryCode string `json:"countryCode"`
+	PostalCode  string `json:"postalCode"`
+	State       string `json:"state"`
+	Street      string `json:"street"`
+	Street2     string `json:"street2"`
+}
+
+type Iserver_Account_Pnl_Partitioned_GET_200 struct {
+	AcctId map[string]interface{} `json:"acctId"`
+}
+
+type Performance_Cps_Data_List_Item struct {
+	BaseCurrency string `json:"baseCurrency"`
+	// end date-- yyyyMMdd
+	End string `json:"end"`
+	Id  string `json:"id"`
+	// for example-- acctid
+	IdType string `json:"idType"`
+	// each value stands for price change percent of corresponding date in dates array
+	Returns Performance_Cps_Data_List_Item_Returns_List `json:"returns"`
+	// start date-- yyyyMMdd
+	Start string `json:"start"`
+}
+
+type HistoryResult struct {
+	Bars *HistoryResult_Bars `json:"bars"`
+}
+
+// Contains list of contracts matching the scanner query
+type ScannerResult_Contracts struct {
+	Contract ScannerResult_Contracts_Contract_List `json:"Contract"`
+}
+
+type Iserver_Account_AccountId_Order_Whatif_POST_200_Amount struct {
+	// for example 23,000 USD
+	Amount string `json:"amount"`
+	// for example 1.1 ... 1.2 USD
+	Commission string `json:"commission"`
+	Total      string `json:"total"`
+}
+
+type Fyi_Unreadnumber_GET_200 struct {
+	// unread number
+	BN int64 `json:"BN"`
+}
+
+type Performance_Nav_Data_List_Item struct {
+	BaseCurrency string `json:"baseCurrency"`
+	// end date-- yyyyMMdd
+	End string `json:"end"`
+	Id  string `json:"id"`
+	// for example-- acctid
+	IdType string `json:"idType"`
+	// each value stands for price change percent of corresponding date in dates array
+	Returns Performance_Nav_Data_List_Item_Returns_List `json:"returns"`
+	// start date-- yyyyMMdd
+	Start string `json:"start"`
+}
+
+type Summary_AccountSummaries_List_Item struct {
+	AccountTypeCode string `json:"accountTypeCode"`
+	AccountTypeName string `json:"accountTypeName"`
+	Chg             string `json:"chg"`
+	EndVal          string `json:"endVal"`
+	HasAccounts     string `json:"hasAccounts"`
+	Rtn             string `json:"rtn"`
+	StartVal        string `json:"startVal"`
+}
+
+type Inds_List_Item struct {
+	Conid float64 `json:"conid"`
+}
+
+// future contract information
+type Stocks_List_Item struct {
+	AssetClass string `json:"assetClass"`
+	// company name in Chinese
+	ChineseName string `json:"chineseName"`
+	// array of contracts from different exchanges
+	Contracts Stocks_List_Item_Contracts_List `json:"contracts"`
+	// company name
+	Name string `json:"name"`
+}
+
+type Pa_Summary_POST_Request struct {
+	AcctIds Pa_Summary_POST_Request_AcctIds_List `json:"acctIds"`
+}
+
+type Pa_Performance_POST_Request struct {
+	AcctIds Pa_Performance_POST_Request_AcctIds_List `json:"acctIds"`
+	// Frequency of cumulative performance data points: 'D'aily, 'M'onthly,'Q'uarterly.
+	Freq string `json:"freq"`
+}
+
+type Iserver_Account_AccountId_Alerts_GET_200_List_Item struct {
+	// account id
+	Account string `json:"account"`
+	// Value can only be 0 or 1, 1 means active
+	Alert_active int64  `json:"alert_active"`
+	Alert_name   string `json:"alert_name"`
+	// whether the alert can be repeatable or not, value can be 1 or 0. 1 means true
+	Alert_repeatable int64 `json:"alert_repeatable"`
+	// whether the alert has been triggered or not
+	Alert_triggered bool  `json:"alert_triggered"`
+	Order_id        int64 `json:"order_id"`
+	// format, YYYYMMDD-HH:mm:ss, the time when you created the alert
+	Order_time string `json:"order_time"`
+}
+
+// short positions allocation
+type Allocation_List_Item_Group_Short struct {
+	Airlines float64 `json:"Airlines"`
+	Banks    float64 `json:"Banks"`
+	Internet float64 `json:"Internet"`
+}
+
+type AuthStatus struct {
+	// Brokerage session is authenticated
+	Authenticated bool `json:"authenticated"`
+	// Brokerage session is competing, e.g. user is logged in to IBKR Mobile, WebTrader,
+	// TWS or other trading platforms.
+	Competing bool `json:"competing"`
+	// Connected to backend
+	Connected bool `json:"connected"`
+	// Authentication failed, why.
+	Fail string `json:"fail"`
+	// System messages that may affect trading
+	Message string `json:"message"`
+	// Prompt messages that may affect trading or the account
+	Prompts AuthStatus_Prompts_List `json:"prompts"`
+}
+
+// security definition information
+type Secdef_List_Item struct {
+	AssetClass     string  `json:"assetClass"`
+	Conid          int64   `json:"conid"`
+	Expiry         string  `json:"expiry"`
+	FullName       string  `json:"fullName"`
+	Group          string  `json:"group"`
+	LastTradingDay string  `json:"lastTradingDay"`
+	Name           string  `json:"name"`
+	PageSize       int64   `json:"pageSize"`
+	PutOrCall      string  `json:"putOrCall"`
+	Sector         string  `json:"sector"`
+	SectorGroup    string  `json:"sectorGroup"`
+	Strike         float64 `json:"strike"`
+	Ticker         string  `json:"ticker"`
+	UndConid       int64   `json:"undConid"`
+}
+
+type Summary_ExcludedAccounts_List_Item struct {
+	AcctId               string `json:"acctId"`
+	AcctNumAtFI          string `json:"acctNumAtFI"`
+	AcctTitle            string `json:"acctTitle"`
+	FiName               string `json:"fiName"`
+	HarvestCode          int64  `json:"harvestCode"`
+	LastUpdate           string `json:"lastUpdate"`
+	LastUpdateAttempt    string `json:"lastUpdateAttempt"`
+	LastUpdateStatusCode string `json:"lastUpdateStatusCode"`
+	Rc                   int64  `json:"rc"`
+}
+
+// If the LIQUID hours differs from the total trading day then a separate 'session'
+// tag is returned.
+type Trsrv_Secdef_Schedule_GET_200_Schedules_List_Item_Sessions struct {
+	ClosingTime int64 `json:"closingTime"`
+	OpeningTime int64 `json:"openingTime"`
+	// If the whole trading day is considered LIQUID then the value 'LIQUID' is returned.
+	Prop string `json:"prop"`
+}
+
+// long positions allocation
+type Allocation_List_Item_Sector_Long struct {
+	Communications float64 `json:"Communications"`
+	Energy         float64 `json:"Energy"`
+	Financial      float64 `json:"Financial"`
+	Others         float64 `json:"Others"`
+	Technology     float64 `json:"Technology"`
+	Utilities      float64 `json:"Utilities"`
+}
+
+type Performance_Tpps_Data_List_Item struct {
+	BaseCurrency string `json:"baseCurrency"`
+	// end date-- yyyyMMdd
+	End string `json:"end"`
+	Id  string `json:"id"`
+	// for example-- acctid
+	IdType string `json:"idType"`
+	// each value stands for price change percent of corresponding date in dates array
+	Returns Performance_Tpps_Data_List_Item_Returns_List `json:"returns"`
+	// start date-- yyyyMMdd
+	Start string `json:"start"`
+}
+
+type Calendar_request struct {
+	Date    *Calendar_request_Date    `json:"date"`
+	Filters *Calendar_request_Filters `json:"filters"`
+}
+
+type Iserver_Secdef_Search_POST_200_List_Item_Sections_List_Item struct {
+	// Listing Exchange
+	Exchange string `json:"exchange"`
+	// For combo's defines the asset class for each leg
+	LegSecType string `json:"legSecType"`
+	// List of expiration month(s) and year(s) in MMMYY format separated by semicolon
+	Months string `json:"months"`
+	// Asset Class
+	SecType string `json:"secType"`
+	Symbol  string `json:"symbol"`
+}
+
+type Iserver_Reply_Replyid_POST_200_List_Item struct {
+	Local_order_id string `json:"local_order_id"`
+	Order_id       string `json:"order_id"`
+	Order_status   string `json:"order_status"`
+}
+
+// notification
+type Notifications_List_Item struct {
+	// notification date
+	D string `json:"D"`
+	// FYI code, we can use it to find whether the disclaimer is accepted or not in settings
+	FC string `json:"FC"`
+	// unique way to reference this notification
+	ID string `json:"ID"`
+	// content of notification
+	MD string `json:"MD"`
+	// title of notification
+	MS string `json:"MS"`
+	// 0-unread, 1-read
+	R string `json:"R"`
+}
+
+type Summary_BalanceByDate struct {
+	Series Summary_BalanceByDate_Series_List `json:"series"`
+}
+
+type Portfolio_AccountId_Summary_GET_200 struct {
+	// account information
+	Accountready *Summary `json:"accountready"`
+	// account information
+	Accounttype *Summary `json:"accounttype"`
+	// account information
+	Accruedcash *Summary `json:"accruedcash"`
+	// account information
+	Accruedcash_c *Summary `json:"accruedcash-c"`
+	// account information
+	Accruedcash_f *Summary `json:"accruedcash-f"`
+	// account information
+	Accruedcash_s *Summary `json:"accruedcash-s"`
+	// account information
+	Accrueddividend *Summary `json:"accrueddividend"`
+	// account information
+	Accrueddividend_c *Summary `json:"accrueddividend-c"`
+	// account information
+	Accrueddividend_f *Summary `json:"accrueddividend-f"`
+	// account information
+	Accrueddividend_s *Summary `json:"accrueddividend-s"`
+	// account information
+	Availablefunds *Summary `json:"availablefunds"`
+	// account information
+	Availablefunds_c *Summary `json:"availablefunds-c"`
+	// account information
+	Availablefunds_f *Summary `json:"availablefunds-f"`
+	// account information
+	Availablefunds_s *Summary `json:"availablefunds-s"`
+	// account information
+	Billable *Summary `json:"billable"`
+	// account information
+	Billable_c *Summary `json:"billable-c"`
+	// account information
+	Billable_f *Summary `json:"billable-f"`
+	// account information
+	Billable_s *Summary `json:"billable-s"`
+	// account information
+	Buyingpower *Summary `json:"buyingpower"`
+	// account information
+	Cushion *Summary `json:"cushion"`
+	// account information
+	Daytradesremaining *Summary `json:"daytradesremaining"`
+	// account information
+	Daytradesremainingt_plus_1 *Summary `json:"daytradesremainingt+1"`
+	// account information
+	Daytradesremainingt_plus_2 *Summary `json:"daytradesremainingt+2"`
+	// account information
+	Daytradesremainingt_plus_3 *Summary `json:"daytradesremainingt+3"`
+	// account information
+	Daytradesremainingt_plus_4 *Summary `json:"daytradesremainingt+4"`
+	// account information
+	Equitywithloanvalue *Summary `json:"equitywithloanvalue"`
+	// account information
+	Equitywithloanvalue_c *Summary `json:"equitywithloanvalue-c"`
+	// account information
+	Equitywithloanvalue_f *Summary `json:"equitywithloanvalue-f"`
+	// account information
+	Equitywithloanvalue_s *Summary `json:"equitywithloanvalue-s"`
+	// account information
+	Excessliquidity *Summary `json:"excessliquidity"`
+	// account information
+	Excessliquidity_c *Summary `json:"excessliquidity-c"`
+	// account information
+	Excessliquidity_f *Summary `json:"excessliquidity-f"`
+	// account information
+	Excessliquidity_s *Summary `json:"excessliquidity-s"`
+	// account information
+	Fullavailablefunds *Summary `json:"fullavailablefunds"`
+	// account information
+	Fullavailablefunds_c *Summary `json:"fullavailablefunds-c"`
+	// account information
+	Fullavailablefunds_f *Summary `json:"fullavailablefunds-f"`
+	// account information
+	Fullavailablefunds_s *Summary `json:"fullavailablefunds-s"`
+	// account information
+	Fullexcessliquidity *Summary `json:"fullexcessliquidity"`
+	// account information
+	Fullexcessliquidity_c *Summary `json:"fullexcessliquidity-c"`
+	// account information
+	Fullexcessliquidity_f *Summary `json:"fullexcessliquidity-f"`
+	// account information
+	Fullexcessliquidity_s *Summary `json:"fullexcessliquidity-s"`
+	// account information
+	Fullinitmarginreq *Summary `json:"fullinitmarginreq"`
+	// account information
+	Fullinitmarginreq_c *Summary `json:"fullinitmarginreq-c"`
+	// account information
+	Fullinitmarginreq_f *Summary `json:"fullinitmarginreq-f"`
+	// account information
+	Fullinitmarginreq_s *Summary `json:"fullinitmarginreq-s"`
+	// account information
+	Fullmaintmarginreq *Summary `json:"fullmaintmarginreq"`
+	// account information
+	Fullmaintmarginreq_c *Summary `json:"fullmaintmarginreq-c"`
+	// account information
+	Fullmaintmarginreq_f *Summary `json:"fullmaintmarginreq-f"`
+	// account information
+	Fullmaintmarginreq_s *Summary `json:"fullmaintmarginreq-s"`
+	// account information
+	Grosspositionvalue *Summary `json:"grosspositionvalue"`
+	// account information
+	Grosspositionvalue_c *Summary `json:"grosspositionvalue-c"`
+	// account information
+	Grosspositionvalue_f *Summary `json:"grosspositionvalue-f"`
+	// account information
+	Grosspositionvalue_s *Summary `json:"grosspositionvalue-s"`
+	// account information
+	Guarantee *Summary `json:"guarantee"`
+	// account information
+	Guarantee_c *Summary `json:"guarantee-c"`
+	// account information
+	Guarantee_f *Summary `json:"guarantee-f"`
+	// account information
+	Guarantee_s *Summary `json:"guarantee-s"`
+	// account information
+	Highestseverity *Summary `json:"highestseverity"`
+	// account information
+	Highestseverity_c *Summary `json:"highestseverity-c"`
+	// account information
+	Highestseverity_f *Summary `json:"highestseverity-f"`
+	// account information
+	Highestseverity_s *Summary `json:"highestseverity-s"`
+	// account information
+	Indianstockhaircut *Summary `json:"indianstockhaircut"`
+	// account information
+	Indianstockhaircut_c *Summary `json:"indianstockhaircut-c"`
+	// account information
+	Indianstockhaircut_f *Summary `json:"indianstockhaircut-f"`
+	// account information
+	Indianstockhaircut_s *Summary `json:"indianstockhaircut-s"`
+	// account information
+	Initmarginreq *Summary `json:"initmarginreq"`
+	// account information
+	Initmarginreq_c *Summary `json:"initmarginreq-c"`
+	// account information
+	Initmarginreq_f *Summary `json:"initmarginreq-f"`
+	// account information
+	Initmarginreq_s *Summary `json:"initmarginreq-s"`
+	// account information
+	Leverage *Summary `json:"leverage"`
+	// account information
+	Leverage_c *Summary `json:"leverage-c"`
+	// account information
+	Leverage_f *Summary `json:"leverage-f"`
+	// account information
+	Leverage_s *Summary `json:"leverage-s"`
+	// account information
+	Lookaheadavailablefunds *Summary `json:"lookaheadavailablefunds"`
+	// account information
+	Lookaheadavailablefunds_c *Summary `json:"lookaheadavailablefunds-c"`
+	// account information
+	Lookaheadavailablefunds_f *Summary `json:"lookaheadavailablefunds-f"`
+	// account information
+	Lookaheadavailablefunds_s *Summary `json:"lookaheadavailablefunds-s"`
+	// account information
+	Lookaheadexcessliquidity *Summary `json:"lookaheadexcessliquidity"`
+	// account information
+	Lookaheadexcessliquidity_c *Summary `json:"lookaheadexcessliquidity-c"`
+	// account information
+	Lookaheadexcessliquidity_f *Summary `json:"lookaheadexcessliquidity-f"`
+	// account information
+	Lookaheadexcessliquidity_s *Summary `json:"lookaheadexcessliquidity-s"`
+	// account information
+	Lookaheadinitmarginreq *Summary `json:"lookaheadinitmarginreq"`
+	// account information
+	Lookaheadinitmarginreq_c *Summary `json:"lookaheadinitmarginreq-c"`
+	// account information
+	Lookaheadinitmarginreq_f *Summary `json:"lookaheadinitmarginreq-f"`
+	// account information
+	Lookaheadinitmarginreq_s *Summary `json:"lookaheadinitmarginreq-s"`
+	// account information
+	Lookaheadmaintmarginreq *Summary `json:"lookaheadmaintmarginreq"`
+	// account information
+	Lookaheadmaintmarginreq_c *Summary `json:"lookaheadmaintmarginreq-c"`
+	// account information
+	Lookaheadmaintmarginreq_f *Summary `json:"lookaheadmaintmarginreq-f"`
+	// account information
+	Lookaheadmaintmarginreq_s *Summary `json:"lookaheadmaintmarginreq-s"`
+	// account information
+	Lookaheadnextchange *Summary `json:"lookaheadnextchange"`
+	// account information
+	Maintmarginreq *Summary `json:"maintmarginreq"`
+	// account information
+	Maintmarginreq_c *Summary `json:"maintmarginreq-c"`
+	// account information
+	Maintmarginreq_f *Summary `json:"maintmarginreq-f"`
+	// account information
+	Maintmarginreq_s *Summary `json:"maintmarginreq-s"`
+	// account information
+	Netliquidation *Summary `json:"netliquidation"`
+	// account information
+	Netliquidation_c *Summary `json:"netliquidation-c"`
+	// account information
+	Netliquidation_f *Summary `json:"netliquidation-f"`
+	// account information
+	Netliquidation_s *Summary `json:"netliquidation-s"`
+	// account information
+	Netliquidationuncertainty *Summary `json:"netliquidationuncertainty"`
+	// account information
+	Nlvandmargininreview *Summary `json:"nlvandmargininreview"`
+	// account information
+	Pasharesvalue *Summary `json:"pasharesvalue"`
+	// account information
+	Pasharesvalue_c *Summary `json:"pasharesvalue-c"`
+	// account information
+	Pasharesvalue_f *Summary `json:"pasharesvalue-f"`
+	// account information
+	Pasharesvalue_s *Summary `json:"pasharesvalue-s"`
+	// account information
+	Postexpirationexcess *Summary `json:"postexpirationexcess"`
+	// account information
+	Postexpirationexcess_c *Summary `json:"postexpirationexcess-c"`
+	// account information
+	Postexpirationexcess_f *Summary `json:"postexpirationexcess-f"`
+	// account information
+	Postexpirationexcess_s *Summary `json:"postexpirationexcess-s"`
+	// account information
+	Postexpirationmargin *Summary `json:"postexpirationmargin"`
+	// account information
+	Postexpirationmargin_c *Summary `json:"postexpirationmargin-c"`
+	// account information
+	Postexpirationmargin_f *Summary `json:"postexpirationmargin-f"`
+	// account information
+	Postexpirationmargin_s *Summary `json:"postexpirationmargin-s"`
+	// account information
+	Previousdayequitywithloanvalue *Summary `json:"previousdayequitywithloanvalue"`
+	// account information
+	Previousdayequitywithloanvalue_c *Summary `json:"previousdayequitywithloanvalue-c"`
+	// account information
+	Previousdayequitywithloanvalue_f *Summary `json:"previousdayequitywithloanvalue-f"`
+	// account information
+	Previousdayequitywithloanvalue_s *Summary `json:"previousdayequitywithloanvalue-s"`
+	// account information
+	Segmenttitle_c *Summary `json:"segmenttitle-c"`
+	// account information
+	Segmenttitle_f *Summary `json:"segmenttitle-f"`
+	// account information
+	Segmenttitle_s *Summary `json:"segmenttitle-s"`
+	// account information
+	Totalcashvalue *Summary `json:"totalcashvalue"`
+	// account information
+	Totalcashvalue_c *Summary `json:"totalcashvalue-c"`
+	// account information
+	Totalcashvalue_f *Summary `json:"totalcashvalue-f"`
+	// account information
+	Totalcashvalue_s *Summary `json:"totalcashvalue-s"`
+	// account information
+	Totaldebitcardpendingcharges *Summary `json:"totaldebitcardpendingcharges"`
+	// account information
+	Totaldebitcardpendingcharges_c *Summary `json:"totaldebitcardpendingcharges-c"`
+	// account information
+	Totaldebitcardpendingcharges_f *Summary `json:"totaldebitcardpendingcharges-f"`
+	// account information
+	Totaldebitcardpendingcharges_s *Summary `json:"totaldebitcardpendingcharges-s"`
+	// account information
+	Tradingtype_f *Summary `json:"tradingtype-f"`
+	// account information
+	Tradingtype_s *Summary `json:"tradingtype-s"`
+}
+
+type HistoryData struct {
+	// The number of seconds in a bar
+	BarLength int64                 `json:"barLength"`
+	Data      HistoryData_Data_List `json:"data"`
+	// High value during this time series with format %h/%v/%t. %h is the high price (scaled
+	// by priceFactor), %v is volume
+	// (volume factor will always be 100 (reported volume = actual volume/100)) and %t is
+	// minutes from start time of the chart
+	High string `json:"high"`
+	// Low value during this time series with format %l/%v/%t. %l is the low price (scaled
+	// by priceFactor), %v is volume
+	// (volume factor will always be 100 (reported volume = actual volume/100)) and %t is
+	// minutes from start time of the chart
+	Low string `json:"low"`
+	// Market Data Availability. The field may contain two chars. The first char is the
+	// primary code: S = Streaming, R = Realtime, D = Delayed,
+	// Z = Frozen, Y = Frozen Delayed. The second char is the secondary code: P = Snapshot
+	// Available, p = Consolidated.
+	MdAvailability string `json:"mdAvailability"`
+	MessageVersion int64  `json:"messageVersion"`
+	// The time it takes, in milliseconds, to process the historical data request
+	MktDataDelay    int64 `json:"mktDataDelay"`
+	NegativeCapable bool  `json:"negativeCapable"`
+	// The historical data returned includes outside of regular trading hours
+	OutsideRth bool `json:"outsideRth"`
+	// total number of points
+	Points            int64  `json:"points"`
+	PriceDisplayRule  int64  `json:"priceDisplayRule"`
+	PriceDisplayValue string `json:"priceDisplayValue"`
+	// priceFactor is price increment obtained from display rule
+	PriceFactor int64 `json:"priceFactor"`
+	// start date time in the format YYYYMMDD-HH:mm:ss
+	StartTime string `json:"startTime"`
+	// Underlying Symbol of the corresponding contract
+	Symbol string `json:"symbol"`
+	// companyName of the corresponding contract
+	Text string `json:"text"`
+	// The duration for the historical data request
+	TimePeriod string `json:"timePeriod"`
+	// The number of seconds in the trading day
+	TradingDayDuration int64 `json:"tradingDayDuration"`
+	TravelTime         int64 `json:"travelTime"`
+	VolumeFactor       int64 `json:"volumeFactor"`
+}
+
+type Events_List_Item struct {
+	Conids Events_List_Item_Conids_List `json:"conids"`
+	// will be different for different event types
+	Data map[string]interface{} `json:"data"`
+	// for example 11662135
+	Event_key  string `json:"event_key"`
+	Event_type string `json:"event_type"`
+	// for exmple 20180817T040000+0000
+	Index_date      string `json:"index_date"`
+	Index_date_type string `json:"index_date_type"`
+	// for example RSE
+	Source   string                 `json:"source"`
+	Status   string                 `json:"status"`
+	Tooltips map[string]interface{} `json:"tooltips"`
+}
+
+// account information
+type Summary struct {
+	AccountSummaries Summary_AccountSummaries_List `json:"accountSummaries"`
+	BalanceByDate    *Summary_BalanceByDate        `json:"balanceByDate"`
+	Currency         string                        `json:"currency"`
+	EndDate          string                        `json:"endDate"`
+	ExcludedAccounts Summary_ExcludedAccounts_List `json:"excludedAccounts"`
+	// indicator of user having configured any external accounts
+	HasExternalAccounts  bool   `json:"hasExternalAccounts"`
+	LastSuccessfulUpdate string `json:"lastSuccessfulUpdate"`
+	Pm                   string `json:"pm"`
+	Rc                   int64  `json:"rc"`
+	// date format-- yyyy-MM-dd
+	StartDate string         `json:"startDate"`
+	Total     *Summary_Total `json:"total"`
+	UserId    string         `json:"userId"`
+	View      string         `json:"view"`
+}
+
+type Iserver_Contract_Conid_InfoAndRules_GET_200 struct {
+	// Allowed to sell shares that you own
+	Allow_sell_long bool `json:"allow_sell_long"`
+	// Classification of Financial Instrument codes
+	Cfi_code   string `json:"cfi_code"`
+	Classifier string `json:"classifier"`
+	// Contracts company name
+	Company_name string `json:"company_name"`
+	// IBKRs contract identifier
+	Con_id float64 `json:"con_id"`
+	// Month the contract must be satisfied by making or accepting delivery
+	Contract_month string `json:"contract_month"`
+	// Currency contract trades in
+	Currency string `json:"currency"`
+	Cusip    string `json:"cusip"`
+	// Primary Exchange, Routing or Trading Venue
+	Exchange string `json:"exchange"`
+	// Expiration Date in the format YYYYMMDD
+	Expiry_full float64 `json:"expiry_full"`
+	// Specific group of companies or businesses.
+	Industry string `json:"industry"`
+	// Asset Class of the contract
+	Instrument_type string `json:"instrument_type"`
+	// Supports zero commission trades
+	Is_zero_commission_security bool `json:"is_zero_commission_security"`
+	// Contracts symbol from primary exchange. For options it is the OCC symbol.
+	Local_symbol string `json:"local_symbol"`
+	// Date on which the underlying transaction settles if the option is exercised
+	Maturity_date float64 `json:"maturity_date"`
+	// numerical value of each point of price movement
+	Multiplier string `json:"multiplier"`
+	// Provides trading outside of Regular Trading Hours
+	R_t_h bool `json:"r_t_h"`
+	// Put or Call of the option
+	Right string                                                 `json:"right"`
+	Rules Iserver_Contract_Conid_InfoAndRules_GET_200_Rules_List `json:"rules"`
+	// Support IBKRs SMART routing
+	Smart_available bool `json:"smart_available"`
+	// fixed price at which the owner of the option buys or sells the underlying
+	Strike string `json:"strike"`
+	// Underlying Symbol for contract
+	Symbol string `json:"symbol"`
+	// Formatted contract parameters
+	Text string `json:"text"`
+	// Designation of the contract
+	Trading_class string `json:"trading_class"`
+	// IBKRs contract identifier for the underlying instrument
+	Underlying_con_id float64 `json:"underlying_con_id"`
+	// Legal entity for underlying contract
+	Underlying_issuer string `json:"underlying_issuer"`
+	// Comma separated list of exchanges or trading venues
+	Valid_exchanges string `json:"valid_exchanges"`
+}
+
+type Tickle_POST_200_Iserver_AuthStatus struct {
+	MAC           string `json:"MAC"`
+	Authenticated bool   `json:"authenticated"`
+	Competing     bool   `json:"competing"`
+	Connected     bool   `json:"connected"`
+	Message       string `json:"message"`
+}
+
+// Contains list of scan types for which scanner can be ran
+type ScannerParams_ScanTypeList struct {
+	ScanType ScannerParams_ScanTypeList_ScanType_List `json:"ScanType"`
+}
+
+type Summary_Total struct {
+	// total change amount
+	Chg    string `json:"chg"`
+	EndVal string `json:"endVal"`
+	// set to true if any external account data is not available for starting or ending
+	// date, resulting in potentially unusual total values.
+	IncompleteData bool `json:"incompleteData"`
+	// change percent
+	Rtn      string `json:"rtn"`
+	StartVal string `json:"startVal"`
+}
+
+type Fyi_Disclaimer_Typecode_GET_200 struct {
+	// disclaimer message
+	DT string `json:"DT"`
+	// fyi code
+	FC string `json:"FC"`
+}
+
+type Ibcust_Entity_Info_GET_200_List_Item struct {
+	ApplicantId float64                                            `json:"applicantId"`
+	Entities    Ibcust_Entity_Info_GET_200_List_Item_Entities_List `json:"entities"`
 }

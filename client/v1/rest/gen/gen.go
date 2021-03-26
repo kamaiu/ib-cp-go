@@ -131,8 +131,8 @@ func (g *Generator) generateActions() error {
 			return sb.String()
 		})()
 
-		if len(path) > 0 || len(query) > 0 {
-			W("func (c *Client) %s(", a.Name)
+		if len(path) > 0 || len(query) > 0 || a.Body != nil {
+			W("func (c *Conn) %s(", a.Name)
 			if len(path) > 0 {
 				for _, p := range path {
 					writeComments(p.Param.Parameter.Description, func(line string) {
@@ -149,7 +149,29 @@ func (g *Generator) generateActions() error {
 					W("    %s %s,", q.Name, goTypeName(q.Type))
 				}
 			}
+			if a.Body != nil {
+				if a.Body.Schema != nil {
+					writeComments(a.Body.Schema.Description, func(line string) {
+						W("    // %s", line)
+					})
+				}
+				requestName := a.Body.GoType
+				if !a.Body.IsAny() && a.Body.IsObject() {
+					requestName = "*" + requestName
+				}
+				W("    %s %s,", "request", requestName)
+			}
 			W(") %s {", responsePart)
+
+			if a.Body != nil {
+				W("    var _r []byte")
+				W("    if request != nil {")
+				W("        _r, err = request.MarshalJSON()")
+				W("    }")
+				W("    if err != nil {")
+				W("        return")
+				W("    }")
+			}
 
 			W("    _u := bytebufferpool.Get()")
 			W("    _, _ = _u.WriteString(c.host)")
@@ -172,7 +194,7 @@ func (g *Generator) generateActions() error {
 				}
 			}
 		} else {
-			W("func (c *Client) %s() %s {", a.Name, responsePart)
+			W("func (c *Conn) %s() %s {", a.Name, responsePart)
 
 			W("    _u := bytebufferpool.Get()")
 			W("    _, _ = _u.WriteString(c.host)")
@@ -183,7 +205,11 @@ func (g *Generator) generateActions() error {
 			}
 		}
 
-		W("    err = c.Do(\"%s\", _u, func(status int, body []byte, err error) error {", strings.ToUpper(a.Verb))
+		if a.Body != nil {
+			W("    err = c.DoRequest(\"%s\", _u, _r, func(status int, body []byte, err error) error {", strings.ToUpper(a.Verb))
+		} else {
+			W("    err = c.Do(\"%s\", _u, func(status int, body []byte, err error) error {", strings.ToUpper(a.Verb))
+		}
 		W("        if err != nil {")
 		W("            return err")
 		W("        }")
@@ -284,21 +310,27 @@ func (g *Generator) generateModel() error {
 				W("// %s", line)
 			})
 		}
-		W("type %s struct {", o.GoName)
-		for _, p := range o.Props {
-			if p.Type.GoType == "" {
-				p.Type.GoType = "map[string]interface{}"
+
+		if o.IsAny() || strings.Index(o.GoType, "map[string]") == 0 {
+			W("//easyjson:json")
+			W("type %s %s", o.GoName, o.GoType)
+		} else {
+			W("type %s struct {", o.GoName)
+			for _, p := range o.Props {
+				if p.Type.GoType == "" {
+					p.Type.GoType = "map[string]interface{}"
+				}
+				typeName := p.Type.GoType
+				if p.Type.IsObject() && strings.Index(typeName, "map[") == -1 {
+					typeName = "*" + typeName
+				}
+				writeComments(p.Type.Schema.Description, func(line string) {
+					W("    // %s", line)
+				})
+				W("    %s     %s `json:\"%s\"`", p.FieldName, typeName, p.Name)
 			}
-			typeName := p.Type.GoType
-			if p.Type.IsObject() && strings.Index(typeName, "map[") == -1 {
-				typeName = "*" + typeName
-			}
-			writeComments(p.Type.Schema.Description, func(line string) {
-				W("    // %s", line)
-			})
-			W("    %s     %s `json:\"%s\"`", p.FieldName, typeName, p.Name)
+			W("}")
 		}
-		W("}")
 		W("")
 	}
 

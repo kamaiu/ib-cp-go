@@ -11,7 +11,7 @@ type GoAction struct {
 	Name      string
 	Action    *Action
 	Body      *GoType
-	Url       []*UrlPart
+	Url       []*PathPart
 	Query     []*GoParam
 	Responses map[int]*GoActionResponse
 }
@@ -32,7 +32,7 @@ func (a *GoAction) ResponseList() []*GoActionResponse {
 	return responses
 }
 
-func (a *GoAction) Params() (path []*UrlPart, query []*GoParam) {
+func (a *GoAction) Params() (path []*PathPart, query []*GoParam) {
 	for _, p := range a.Url {
 		if p.Param != nil {
 			path = append(path, p)
@@ -64,13 +64,15 @@ func (g *GoType) IsObject() bool {
 }
 
 func (g *GoType) IsAny() bool {
-	return strings.Index(g.GoType, "map[") == 0 || strings.Index(g.GoName, "map[") == 0 || len(g.GoType) == 0
+	return strings.Index(g.GoType, "map[string]interface{}") == 0 || len(g.GoType) == 0
+	//return strings.Index(g.GoType, "map[") == 0 || strings.Index(g.GoName, "map[") == 0 || len(g.GoType) == 0
 }
 
 type Prop struct {
 	Name      string
 	FieldName string
 	Type      *GoType
+	Schema    *Schema
 }
 
 type GoParam struct {
@@ -80,7 +82,7 @@ type GoParam struct {
 	Parameter *Parameter
 }
 
-type UrlPart struct {
+type PathPart struct {
 	Literal string
 	Param   *GoParam
 }

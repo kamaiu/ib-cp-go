@@ -1,0 +1,39 @@
+{
+  "ES": [
+    {
+      "symbol": "ES",
+      "conid": 412889032,
+      "underlyingConid": 11004968,
+      "expirationDate": 20210618,
+      "ltd": 20210617
+    },
+    {
+      "symbol": "ES",
+      "conid": 428520022,
+      "underlyingConid": 11004968,
+      "expirationDate": 20210917,
+      "ltd": 20210916
+    },
+    {
+      "symbol": "ES",
+      "conid": 446091461,
+      "underlyingConid": 11004968,
+      "expirationDate": 20211217,
+      "ltd": 20211216
+    },
+    {
+      "symbol": "ES",
+      "conid": 461318816,
+      "underlyingConid": 11004968,
+      "expirationDate": 20220318,
+      "ltd": 20220317
+    },
+    {
+      "symbol": "ES",
+      "conid": 477836957,
+      "underlyingConid": 11004968,
+      "expirationDate": 20220617,
+      "ltd": 20220616
+    }
+  ]
+}

@@ -5146,10 +5146,10 @@
             "type": "integer"
           },
           "expirationDate": {
-            "type": "string"
+            "type": "integer"
           },
           "ltd": {
-            "type": "string",
+            "type": "integer",
             "description": "last trading day"
           }
         }

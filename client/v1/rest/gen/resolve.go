@@ -83,7 +83,7 @@ func NewResolver(spec *Spec) (*Resolver, error) {
 			}
 		}
 
-		action.Url, err = urlParts(path, pathParams)
+		action.Url, err = parsePath(path, pathParams)
 		if err != nil {
 			return err
 		}
@@ -192,6 +192,7 @@ func (resolver *Resolver) typeOf(name string, schema *Schema) (*GoType, error) {
 				goType = "[]*" + itemType.GoType
 			}
 		}
+		goType = n
 		t := &GoType{
 			Name:   name,
 			GoName: n,
@@ -219,14 +220,18 @@ func (resolver *Resolver) typeOf(name string, schema *Schema) (*GoType, error) {
 		propNames := make([]string, 0, len(schema.Properties))
 		for key, p := range schema.Properties {
 			p.Name = key
-			if len(p.Ref) > 0 {
-				return resolver.typeOfRef(p.Ref)
-			}
+			var propType *GoType
+			var err error
+
 			fieldName := numToFieldName[key]
 			if len(fieldName) == 0 {
-				fieldName = capitalize(key)
+				fieldName = toGoFieldName(key)
 			}
-			propType, err := resolver.typeOf(n+"_"+capitalize(key), p)
+			if len(p.Ref) > 0 {
+				propType, err = resolver.typeOfRef(p.Ref)
+			} else {
+				propType, err = resolver.typeOf(n+"_"+fieldName, p)
+			}
 			if err != nil {
 				return nil, err
 			}
@@ -250,6 +255,7 @@ func (resolver *Resolver) typeOf(name string, schema *Schema) (*GoType, error) {
 				Name:      key,
 				FieldName: fieldName,
 				Type:      propType,
+				Schema:    p,
 			}
 		}
 
@@ -261,6 +267,8 @@ func (resolver *Resolver) typeOf(name string, schema *Schema) (*GoType, error) {
 		if len(name) == 0 {
 			name = "map[string]interface{}"
 		}
+
+		goType := n
 		if len(n) == 0 {
 			n = name
 		}
@@ -270,11 +278,20 @@ func (resolver *Resolver) typeOf(name string, schema *Schema) (*GoType, error) {
 		if len(props) == 0 {
 			n = "map[string]interface{}"
 		}
+		if len(propList) == 1 && len(propList[0].Schema.Ref) > 0 {
+			if propList[0].Type.Array || propList[0].Type.Primitive || propList[0].Type.IsAny() {
+				goType = "map[string]" + propList[0].Type.GoType
+			} else if propList[0].Type.IsObject() {
+				goType = "map[string]*" + propList[0].Type.GoType
+			} else {
+				goType = "map[string]interface{}"
+			}
+		}
 
 		t := &GoType{
 			Name:   name,
 			GoName: n,
-			GoType: n,
+			GoType: goType,
 			Schema: schema,
 			Props:  propList,
 		}

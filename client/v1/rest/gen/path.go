@@ -16,8 +16,8 @@ func pathOrQueryParamOf(param *Parameter) (*GoParam, error) {
 	}, nil
 }
 
-func urlParts(path string, params map[string]*Parameter) ([]*UrlPart, error) {
-	parts := make([]*UrlPart, 0, 4)
+func parsePath(path string, params map[string]*Parameter) ([]*PathPart, error) {
+	parts := make([]*PathPart, 0, 4)
 	type stateType int
 	const (
 		stateLiteral stateType = 0
@@ -40,7 +40,7 @@ func urlParts(path string, params map[string]*Parameter) ([]*UrlPart, error) {
 			return errors.New("path expression error " + err.Error() + " for path: " + path)
 		}
 
-		parts = append(parts, &UrlPart{
+		parts = append(parts, &PathPart{
 			Param: p,
 		})
 		return nil
@@ -50,7 +50,7 @@ func urlParts(path string, params map[string]*Parameter) ([]*UrlPart, error) {
 		if len(literal) == 0 {
 			return
 		}
-		parts = append(parts, &UrlPart{
+		parts = append(parts, &PathPart{
 			Literal: literal,
 			Param:   nil,
 		})

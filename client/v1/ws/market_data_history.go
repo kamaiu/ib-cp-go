@@ -1,27 +1,17 @@
 package ws
 
-type MarketDataHistory struct {
-	ServerId          string                  `json:"serverId"`
-	Symbol            string                  `json:"symbol"`
-	Text              string                  `json:"text"`
-	PriceFactor       float64                 `json:"priceFactor"`
-	StartTime         string                  `json:"startTime"`
-	High              string                  `json:"high"`
-	Low               string                  `json:"low"`
-	TimePeriod        string                  `json:"timePeriod"`
-	BarLength         int64                   `json:"barLength"`
-	MdAvailability    string                  `json:"mdAvailability"`
-	MktDataDelay      string                  `json:"mktDataDelay"`
-	OutsideRth        bool                    `json:"outsideRth"`
-	VolumeFactor      int64                   `json:"volumeFactor"`
-	PriceDisplayRule  int64                   `json:"priceDisplayRule"`
-	PriceDisplayValue string                  `json:"priceDisplayValue"`
-	NegativeCapable   bool                    `json:"negativeCapable"`
-	MessageVersion    int64                   `json:"messageVersion"`
-	Data              []*MarketDataHistoryBar `json:"data"`
-	Points            int64                   `json:"points"`
-	Topic             TopicType               `json:"topic"`
+import "github.com/kamaiu/ib-cp-go/client/v1/ws/model"
+
+type MarketDataHistorySubscription struct {
+	Conid   int64
+	Request model.MarketDataRequest
+	handler func(data *model.MarketDataHistoryMessage)
 }
 
-type MarketDataHistoryBar struct {
+func (w *WS) SubscribeDataHistory(
+	conid int64,
+	request *model.MarketDataRequest,
+	handler func(data *model.MarketDataHistoryMessage),
+) (error, *MarketDataHistorySubscription) {
+	return nil, nil
 }

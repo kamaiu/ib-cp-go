@@ -1,4 +1,4 @@
-package ws
+package model
 
 type TopicType string
 

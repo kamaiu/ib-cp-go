@@ -1,14 +1,5 @@
-package ws
-
-type PNLSubscribe struct{}
-
-func (p PNLSubscribe) Sub() string {
-	return "spl+{}"
-}
-
-func (p PNLSubscribe) Unsub() string {
-	return "upl{}"
-}
+//go:generate easyjson -all $GOFILE
+package model
 
 type PNL struct {
 	Topic TopicType          `json:"topic"`
